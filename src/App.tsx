@@ -19,7 +19,8 @@ function App() {
           <div className="hero__meta" aria-label="Professional scope">
             <span>{profile.identity.title}</span>
             <span>{profile.identity.location}</span>
-            <span>North America delivery experience</span>
+            <span>Lifecycle SE implementation</span>
+            <span>AI builder and INCOSE contributor</span>
           </div>
           <div className="hero__actions" aria-label="Primary links">
             {profile.links.map((link) => (
@@ -33,13 +34,13 @@ function App() {
           </div>
         </div>
 
-        <div className="hero__visual" aria-label="North America project delivery atlas">
-          <img src="./delivery-atlas.svg" alt="" />
+        <div className="hero__visual" aria-label="Systems engineering practice studio">
+          <img src="./systems-practice-studio.svg" alt="" />
           <div className="visual-caption">
-            <span>aerospace controls</span>
-            <span>rail communications</span>
-            <span>major transit expansion</span>
-            <span>digital assurance</span>
+            <span>lifecycle SE</span>
+            <span>technical leadership</span>
+            <span>AI lab</span>
+            <span>professional society</span>
           </div>
         </div>
       </section>
@@ -59,6 +60,21 @@ function App() {
           <h2 id="thesis-title">Project delivery is a system.</h2>
         </div>
         <p>{profile.positioning.thesis}</p>
+      </section>
+
+      <section className="section persona" aria-labelledby="persona-title">
+        <div className="section-heading section-heading--wide">
+          <p className="section-kicker">Operating range</p>
+          <h2 id="persona-title">Engineer at work. Builder after hours. Practice leader in public.</h2>
+        </div>
+        <div className="persona-grid">
+          {profile.practiceFacets.map((facet) => (
+            <article className="persona-panel" key={facet.title}>
+              <h3>{facet.title}</h3>
+              <p>{facet.summary}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="section experience" aria-labelledby="experience-title">
