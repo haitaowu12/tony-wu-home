@@ -221,7 +221,7 @@ function App() {
         <div className="badge-kit__preview">
           <AuthorBadge />
           <pre>
-            <code>{`Built by [Tony Wu](${profile.canonicalUrl}) - systems engineering tools, assurance workflows, and learning simulations.`}</code>
+            <code>{`<a href="${profile.canonicalUrl}">Built by Tony Wu</a> - systems engineering tools, assurance workflows, and learning simulations.`}</code>
           </pre>
         </div>
       </section>

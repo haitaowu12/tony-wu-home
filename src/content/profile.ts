@@ -67,7 +67,7 @@ export const profile = {
   proofPoints: [
     { value: "15+", label: "years across delivery, systems integration, assurance, and controls" },
     { value: "4", label: "industries and work modes: aerospace, rail, infrastructure, digital practice" },
-    { value: "NA", label: "North America project exposure across Canadian and US transit programs" },
+    { value: "North America", label: "project exposure across Canadian and US transit programs" },
     { value: "2", label: "sensor fault-detection patent records from aerospace control work" },
   ] satisfies ProofPoint[],
   domains: [
