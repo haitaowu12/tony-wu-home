@@ -20,20 +20,20 @@ Maximalist technical editorial page. Dark full-bleed first viewport, dense deliv
 
 ## Tokens
 
-- Ink: `#10201c`
-- Carbon: `#0c1110`
-- Paper: `#f6f4ee`
-- Panel: `#ffffff`
-- Line: `#d8d4c9`
-- Signal: `#0f8f71`
-- Signal dark: `#075744`
+- Ink: `#f7f2e8`
+- Carbon: `#0b0d0d`
+- Paper: `#ede5d6`
+- Panel: `#1d201e`
+- Line: `rgba(247, 242, 232, 0.18)`
+- Signal: `#36d29c`
 - Cyan: `#4dc9ff`
 - Violet: `#bda4ff`
-- Amber: `#b76b19`
-- Focus: `#e1a13b`
+- Amber: `#f2aa45`
+- Red: `#f26d5b`
+- Focus: `#f2aa45`
 
 ## QA Baseline
 
 - Desktop and mobile screenshots stored in `docs/qa/`.
 - Build gate: `npm run build`.
-- Browser gate: no console errors; hero, project list, author badge, and `#work` anchor render cleanly.
+- Browser gate: no console errors; hero, delivery portfolio, project list, author badge, and `#delivery` anchor render cleanly.
