@@ -1,0 +1,13 @@
+node_modules
+dist
+*.tsbuildinfo
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules/
+.codex/
+.openai/
+output/playwright/
+test-results/
+playwright-report/
