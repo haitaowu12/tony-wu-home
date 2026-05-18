@@ -25,6 +25,11 @@ export type ProofPoint = {
   label: string;
 };
 
+export type PracticeFacet = {
+  title: string;
+  summary: string;
+};
+
 export type ExperienceChapter = {
   period: string;
   industry: string;
@@ -54,11 +59,11 @@ export const profile = {
     location: "Vancouver, Canada",
   },
   positioning: {
-    headline: "Project delivery systems engineer across rail, transit, aerospace, and digital assurance",
+    headline: "Systems engineering leader, delivery consultant, AI builder, and practice contributor",
     subhead:
-      "Over 15 years, I have helped delivery teams turn complex technical programs into governed, testable, decision-ready systems across North America.",
+      "Over 15 years, I have helped complex programs move from lifecycle SE intent to governed delivery, testable evidence, and operational readiness across North America.",
     thesis:
-      "My value is not only in writing requirements or building models. It is in making the delivery system itself work: roles, interfaces, evidence, decisions, technical risk, and the tools that keep people aligned under pressure.",
+      "My value is not only in writing requirements or building models. It is in making the delivery system itself work: roles, interfaces, evidence, decisions, technical risk, and the human tools that keep people aligned under pressure.",
   },
   links: [
     { label: "LinkedIn", href: "https://ca.linkedin.com/in/haitonyw" },
@@ -66,10 +71,32 @@ export const profile = {
   ] satisfies Link[],
   proofPoints: [
     { value: "15+", label: "years across delivery, systems integration, assurance, and controls" },
-    { value: "4", label: "industries and work modes: aerospace, rail, infrastructure, digital practice" },
+    { value: "Lifecycle SE", label: "implementation from requirements and interfaces to V&V, assurance, and readiness" },
     { value: "North America", label: "project exposure across Canadian and US transit programs" },
-    { value: "2", label: "sensor fault-detection patent records from aerospace control work" },
+    { value: "INCOSE", label: "Canada past president, current director-at-large, workshop and practice contributor" },
   ] satisfies ProofPoint[],
+  practiceFacets: [
+    {
+      title: "Full lifecycle SE implementation",
+      summary:
+        "Requirements, interfaces, architecture thinking, V&V, assurance, configuration-phase delivery, and acceptance paths made usable by real project teams.",
+    },
+    {
+      title: "Technical leadership and consulting",
+      summary:
+        "Program-level facilitation across clients, designers, contractors, operators, maintainers, and reviewers where decisions need evidence and momentum.",
+    },
+    {
+      title: "AI enthusiast and side-project builder",
+      summary:
+        "Pet projects, games, local tools, and AI-assisted workflows that test how systems engineers can think, learn, review, and decide better.",
+    },
+    {
+      title: "Professional society contributor",
+      summary:
+        "Past President of INCOSE Canada, current Director-at-Large, workshop lead, author, and contributor to transportation infrastructure SE practice.",
+    },
+  ] satisfies PracticeFacet[],
   domains: [
     {
       title: "Rail and Transit Systems",
@@ -84,7 +111,12 @@ export const profile = {
     {
       title: "AI-Augmented Technical Leadership",
       summary:
-        "Practical use of AI to sharpen synthesis, learning, planning, and decision surfaces without delegating safety-critical judgment.",
+        "Practical use of AI, local tools, and learning simulations to sharpen synthesis, planning, review, and decision surfaces without delegating engineering judgment.",
+    },
+    {
+      title: "Professional Society and Practice Leadership",
+      summary:
+        "INCOSE Canada leadership, transportation infrastructure workshop work, papers, and reusable practice artifacts for right-sized systems engineering.",
     },
   ],
   experienceChapters: [
@@ -135,7 +167,7 @@ export const profile = {
       industry: "Digital engineering and professional practice",
       title: "MBSE, assurance tooling, and leadership models",
       geography: "Infrastructure practice and INCOSE community",
-      role: "Builder, author, workshop lead",
+      role: "Builder, author, workshop lead, society contributor",
       summary:
         "Turned delivery lessons into reusable models, tools, workshops, and public-facing practice artifacts for systems engineering adoption.",
       highlights: [
@@ -200,6 +232,7 @@ export const profile = {
     },
   ] satisfies DeliveryWork[],
   rolePatterns: [
+    "Full lifecycle SE implementation",
     "Program systems integration",
     "Requirements and interface governance",
     "Verification, validation, and assurance strategy",
@@ -207,6 +240,7 @@ export const profile = {
     "Configuration-phase delivery and technical gap closure",
     "Digital / MBSE practice development",
     "Technical issue facilitation across client, designer, contractor, operator, maintainer",
+    "AI-assisted synthesis, review, and learning workflows",
     "Workshop design, technical leadership, and reusable practice tools",
   ],
   projects: [
@@ -294,11 +328,12 @@ export const profile = {
     },
   ] satisfies Publication[],
   recognition: [
+    "Past President and current Director-at-Large, INCOSE Canada",
     "Certified Systems Engineering Professional (CSEP), INCOSE",
     "Professional Engineer (P.Eng)",
     "Member of the Institution of Railway Signal Engineers (MIRSE)",
     "Project Management Professional (PMP)",
-    "INCOSE Canada leadership and transportation infrastructure workshop work",
+    "INCOSE transportation infrastructure workshop contributor",
     "2025 Mott MacDonald NASA Award for Technical Excellence",
     "2023 Mott MacDonald Digital Excellence Award",
   ],

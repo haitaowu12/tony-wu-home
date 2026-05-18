@@ -215,6 +215,7 @@ main {
 
 .hero__visual {
   display: grid;
+  gap: 12px;
   align-items: center;
   min-height: 650px;
   margin-right: -16px;
@@ -230,11 +231,9 @@ main {
 }
 
 .visual-caption {
-  position: absolute;
-  right: 18px;
-  bottom: 18px;
-  display: grid;
-  grid-template-columns: repeat(2, max-content);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 7px;
   color: var(--ink);
   font-size: 0.7rem;
@@ -245,7 +244,7 @@ main {
   padding: 5px 8px;
   border: 1px solid rgba(247, 242, 232, 0.18);
   border-radius: 4px;
-  background: rgba(11, 13, 13, 0.82);
+  background: rgba(247, 242, 232, 0.055);
 }
 
 .proof-strip {
@@ -340,6 +339,55 @@ p {
   color: var(--ink);
   font-size: 1.45rem;
   line-height: 1.45;
+}
+
+.persona {
+  border-bottom: 1px solid var(--line);
+}
+
+.persona-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--line);
+}
+
+.persona-panel {
+  min-height: 265px;
+  padding: 24px;
+  border-right: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(247, 242, 232, 0.07), rgba(247, 242, 232, 0.032)),
+    var(--charcoal);
+}
+
+.persona-panel:nth-child(2) {
+  background:
+    linear-gradient(180deg, rgba(77, 201, 255, 0.12), rgba(247, 242, 232, 0.032)),
+    var(--charcoal);
+}
+
+.persona-panel:nth-child(3) {
+  background:
+    linear-gradient(180deg, rgba(189, 164, 255, 0.14), rgba(247, 242, 232, 0.032)),
+    var(--charcoal);
+}
+
+.persona-panel:nth-child(4) {
+  border-right: 0;
+  background:
+    linear-gradient(180deg, rgba(242, 170, 69, 0.14), rgba(247, 242, 232, 0.032)),
+    var(--charcoal);
+}
+
+.persona-panel h3 {
+  max-width: 260px;
+  font-size: 1.45rem;
+  line-height: 1.05;
+}
+
+.persona-panel p {
+  margin-top: 18px;
+  font-size: 0.96rem;
 }
 
 .experience-grid {
@@ -679,12 +727,22 @@ code {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .persona-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .persona-panel,
   .experience-panel {
     min-height: auto;
     border-bottom: 1px solid var(--line);
   }
 
+  .persona-panel:nth-child(2),
   .experience-panel:nth-child(2) {
+    border-right: 0;
+  }
+
+  .persona-panel:nth-child(4) {
     border-right: 0;
   }
 
@@ -765,19 +823,14 @@ code {
     width: 100%;
   }
 
-  .visual-caption {
-    position: static;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 12px;
-  }
-
   .proof-strip,
+  .persona-grid,
   .experience-grid {
     grid-template-columns: 1fr;
   }
 
   .proof-strip__item,
+  .persona-panel,
   .experience-panel {
     border-right: 0;
     border-bottom: 1px solid var(--line);

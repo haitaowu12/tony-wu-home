@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120" role="img" aria-labelledby="title desc">
+  <title id="title">Systems engineering practice studio</title>
+  <desc id="desc">A layered hero graphic showing full lifecycle systems engineering, delivery consulting, AI side projects, and professional society leadership connected through one practice.</desc>
+  <defs>
+    <linearGradient id="desk" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1f2421"/>
+      <stop offset="0.55" stop-color="#101311"/>
+      <stop offset="1" stop-color="#2b2117"/>
+    </linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff8e8"/>
+      <stop offset="1" stop-color="#d9ceb9"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#000000" flood-opacity="0.42"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1120" fill="#0d100f"/>
+  <rect x="48" y="44" width="1504" height="1032" rx="28" fill="url(#desk)" stroke="#343b36" stroke-width="2"/>
+
+  <g opacity="0.32" stroke="#f7f2e8" stroke-width="1">
+    <path d="M120 140H1480M120 260H1480M120 380H1480M120 500H1480M120 620H1480M120 740H1480M120 860H1480M120 980H1480"/>
+    <path d="M160 96V1024M320 96V1024M480 96V1024M640 96V1024M800 96V1024M960 96V1024M1120 96V1024M1280 96V1024M1440 96V1024"/>
+  </g>
+
+  <g font-family="IBM Plex Sans, Inter, Arial, sans-serif">
+    <text x="106" y="122" fill="#36d29c" font-size="32" font-weight="900">SYSTEMS PRACTICE STUDIO</text>
+    <text x="106" y="162" fill="#b8afa2" font-size="22" font-weight="700">delivery consulting + lifecycle SE + AI lab + professional society practice</text>
+    <text x="1490" y="122" text-anchor="end" fill="#f2aa45" font-size="21" font-weight="900">TONY WU</text>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <rect x="112" y="218" width="405" height="616" rx="22" fill="#151918" stroke="#424942" stroke-width="2"/>
+    <rect x="140" y="246" width="349" height="560" rx="18" fill="#0c0f0e" stroke="#26302a" stroke-width="2"/>
+    <text x="166" y="352" fill="#f7f2e8" font-family="IBM Plex Sans, Inter, Arial, sans-serif" font-size="172" line-height="0.8" font-weight="950">TW</text>
+    <text x="170" y="436" fill="#36d29c" font-family="IBM Plex Sans, Inter, Arial, sans-serif" font-size="30" font-weight="900">systems engineer</text>
+    <text x="170" y="478" fill="#b8afa2" font-family="IBM Plex Sans, Inter, Arial, sans-serif" font-size="24" font-weight="700">technical leader</text>
+    <text x="170" y="516" fill="#b8afa2" font-family="IBM Plex Sans, Inter, Arial, sans-serif" font-size="24" font-weight="700">consultant</text>
+    <text x="170" y="554" fill="#b8afa2" font-family="IBM Plex Sans, Inter, Arial, sans-serif" font-size="24" font-weight="700">AI builder</text>
+    <path d="M168 642H458" stroke="#36d29c" stroke-width="7" stroke-linecap="round"/>
+    <path d="M168 682H412" stroke="#4dc9ff" stroke-width="7" stroke-linecap="round"/>
+    <path d="M168 722H440" stroke="#f2aa45" stroke-width="7" stroke-linecap="round"/>
+  </g>
+
+  <g filter="url(#softShadow)" font-family="IBM Plex Sans, Inter, Arial, sans-serif">
+    <rect x="594" y="220" width="720" height="532" rx="26" fill="url(#paper)" stroke="#fff4df" stroke-width="2"/>
+    <text x="636" y="288" fill="#171916" font-size="34" font-weight="950">FULL LIFE CYCLE SE IMPLEMENTATION</text>
+    <text x="638" y="328" fill="#5f554b" font-size="21" font-weight="760">requirements -> interfaces -> V&amp;V -> assurance -> readiness</text>
+
+    <path d="M675 598C765 450 850 382 954 382C1054 382 1146 452 1230 598" fill="none" stroke="#171916" stroke-width="7" stroke-linecap="round"/>
+    <path d="M690 600H1218" stroke="#171916" stroke-width="3" stroke-dasharray="12 14"/>
+    <circle cx="704" cy="572" r="18" fill="#36d29c"/>
+    <circle cx="812" cy="452" r="18" fill="#4dc9ff"/>
+    <circle cx="954" cy="382" r="20" fill="#f2aa45"/>
+    <circle cx="1102" cy="454" r="18" fill="#bda4ff"/>
+    <circle cx="1212" cy="572" r="18" fill="#36d29c"/>
+
+    <g font-size="19" font-weight="900">
+      <rect x="642" y="624" width="162" height="54" rx="8" fill="#171916"/>
+      <text x="664" y="659" fill="#f7f2e8">intent</text>
+      <rect x="824" y="624" width="178" height="54" rx="8" fill="#171916"/>
+      <text x="846" y="659" fill="#f7f2e8">architecture</text>
+      <rect x="1022" y="624" width="144" height="54" rx="8" fill="#171916"/>
+      <text x="1044" y="659" fill="#f7f2e8">evidence</text>
+      <rect x="1186" y="624" width="86" height="54" rx="8" fill="#171916"/>
+      <text x="1208" y="659" fill="#f7f2e8">ready</text>
+    </g>
+  </g>
+
+  <g font-family="IBM Plex Sans, Inter, Arial, sans-serif" filter="url(#softShadow)">
+    <rect x="562" y="804" width="330" height="170" rx="18" fill="#14201c" stroke="#36d29c" stroke-width="2"/>
+    <text x="594" y="862" fill="#36d29c" font-size="27" font-weight="950">AI LAB</text>
+    <text x="594" y="904" fill="#f7f2e8" font-size="21" font-weight="800">agents, games, models</text>
+    <text x="594" y="936" fill="#b8afa2" font-size="18" font-weight="700">side projects as practice probes</text>
+
+    <rect x="934" y="804" width="330" height="170" rx="18" fill="#211a12" stroke="#f2aa45" stroke-width="2"/>
+    <text x="966" y="862" fill="#f2aa45" font-size="27" font-weight="950">PROFESSIONAL SOCIETY</text>
+    <text x="966" y="904" fill="#f7f2e8" font-size="21" font-weight="800">INCOSE Canada leadership</text>
+    <text x="966" y="936" fill="#b8afa2" font-size="18" font-weight="700">workshops, papers, practice</text>
+  </g>
+
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M492 514C560 510 560 510 606 510" stroke="#36d29c" stroke-width="8"/>
+    <path d="M954 752C946 790 922 822 892 850" stroke="#4dc9ff" stroke-width="7"/>
+    <path d="M1078 752C1090 786 1116 822 1162 850" stroke="#f2aa45" stroke-width="7"/>
+    <path d="M232 910C450 1020 708 1022 870 944" stroke="#36d29c" stroke-width="4" opacity="0.62"/>
+    <path d="M320 194C585 110 862 126 1124 198" stroke="#bda4ff" stroke-width="4" opacity="0.58"/>
+  </g>
+
+  <g font-family="IBM Plex Sans, Inter, Arial, sans-serif" font-size="18" font-weight="900">
+    <g fill="#36d29c">
+      <circle cx="492" cy="514" r="13"/>
+      <circle cx="606" cy="510" r="13"/>
+      <circle cx="892" cy="850" r="11"/>
+      <circle cx="870" cy="944" r="10"/>
+    </g>
+    <g fill="#f2aa45">
+      <circle cx="1162" cy="850" r="11"/>
+      <circle cx="1078" cy="752" r="12"/>
+    </g>
+    <g fill="#bda4ff">
+      <circle cx="320" cy="194" r="10"/>
+      <circle cx="1124" cy="198" r="10"/>
+    </g>
+  </g>
+
+  <g font-family="IBM Plex Sans, Inter, Arial, sans-serif" font-size="17" font-weight="850" fill="#82796d">
+    <text x="112" y="1030">rail / transit delivery</text>
+    <text x="374" y="1030">aerospace controls</text>
+    <text x="652" y="1030">MBSE and assurance</text>
+    <text x="970" y="1030">AI-assisted workflows</text>
+    <text x="1278" y="1030">INCOSE practice</text>
+  </g>
+</svg>

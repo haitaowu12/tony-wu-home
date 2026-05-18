@@ -6,7 +6,7 @@ Public author/about page for an engineering consultant and operator-builder. Mai
 
 ## Visual Thesis
 
-Maximalist technical editorial page. Dark full-bleed first viewport, dense delivery atlas, exposed grid, mixed signal colors, long-form career evidence, and project rows with enough detail to show delivery judgment.
+Maximalist technical editorial page. Dark full-bleed first viewport, systems-practice studio hero art, exposed grid, mixed signal colors, long-form career evidence, and project rows with enough detail to show delivery judgment.
 
 ## Rules
 
@@ -14,6 +14,7 @@ Maximalist technical editorial page. Dark full-bleed first viewport, dense deliv
 - Avoid generic developer portfolio language.
 - Keep client/program specifics conservative unless explicitly cleared.
 - Put 15 years of project delivery experience before pet projects.
+- Show the full personality arc: lifecycle systems engineer, technical leader, delivery consultant, AI side-project builder, and INCOSE practice contributor.
 - Use dense evidence panels and rows, not a generic card wall.
 - Keep author badge quiet and reusable.
 - No decorative blobs, hype gradients, floating badge overlays, or modal-style author promos.
