@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">Systems engineering traceability map</title>
+  <desc id="desc">A visual map connecting requirements, interfaces, evidence, risk, and readiness.</desc>
+  <rect width="1200" height="900" fill="#111816"/>
+  <path d="M80 120H1120M80 250H1120M80 380H1120M80 510H1120M80 640H1120M80 770H1120" stroke="#26342f" stroke-width="2"/>
+  <path d="M165 80V820M330 80V820M495 80V820M660 80V820M825 80V820M990 80V820" stroke="#26342f" stroke-width="2"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M165 250C250 180 330 188 410 250S570 322 660 250S815 168 930 210S1080 335 1060 460" stroke="#0f8f71" stroke-width="8"/>
+    <path d="M170 610C290 520 392 500 505 540S705 670 824 590S1005 515 1080 565" stroke="#e1a13b" stroke-width="6"/>
+    <path d="M250 725C390 660 520 705 642 660S830 486 1040 410" stroke="#d9fff0" stroke-opacity="0.58" stroke-width="4"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700">
+    <g transform="translate(120 185)">
+      <rect width="250" height="98" rx="8" fill="#f6f4ee"/>
+      <text x="26" y="40" fill="#10201c">Requirements</text>
+      <text x="26" y="72" fill="#5f6964" font-size="22">intent and bounds</text>
+    </g>
+    <g transform="translate(440 312)">
+      <rect width="250" height="98" rx="8" fill="#f6f4ee"/>
+      <text x="26" y="40" fill="#10201c">Interfaces</text>
+      <text x="26" y="72" fill="#5f6964" font-size="22">handoffs and risk</text>
+    </g>
+    <g transform="translate(765 185)">
+      <rect width="250" height="98" rx="8" fill="#f6f4ee"/>
+      <text x="26" y="40" fill="#10201c">Evidence</text>
+      <text x="26" y="72" fill="#5f6964" font-size="22">claims and proof</text>
+    </g>
+    <g transform="translate(250 590)">
+      <rect width="250" height="98" rx="8" fill="#f6f4ee"/>
+      <text x="26" y="40" fill="#10201c">Decisions</text>
+      <text x="26" y="72" fill="#5f6964" font-size="22">clear enough to use</text>
+    </g>
+    <g transform="translate(700 575)">
+      <rect width="250" height="98" rx="8" fill="#f6f4ee"/>
+      <text x="26" y="40" fill="#10201c">Readiness</text>
+      <text x="26" y="72" fill="#5f6964" font-size="22">visible path forward</text>
+    </g>
+  </g>
+  <g fill="#0f8f71">
+    <circle cx="165" cy="250" r="14"/>
+    <circle cx="410" cy="250" r="14"/>
+    <circle cx="660" cy="250" r="14"/>
+    <circle cx="930" cy="210" r="14"/>
+  </g>
+  <g fill="#e1a13b">
+    <circle cx="170" cy="610" r="12"/>
+    <circle cx="505" cy="540" r="12"/>
+    <circle cx="824" cy="590" r="12"/>
+    <circle cx="1080" cy="565" r="12"/>
+  </g>
+  <g fill="#d9fff0">
+    <circle cx="250" cy="725" r="10"/>
+    <circle cx="642" cy="660" r="10"/>
+    <circle cx="1040" cy="410" r="10"/>
+  </g>
+</svg>
