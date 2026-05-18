@@ -36,7 +36,7 @@ Keep the public page conservative:
 
 ## Canonical Author Link
 
-Current planned URL:
+Live URL:
 
 ```text
 https://haitaowu12.github.io/tony-wu-home/
@@ -81,4 +81,4 @@ Rendered QA artifacts are stored in:
 docs/qa/
 ```
 
-Current checks cover desktop, mobile, console health, and the selected-work anchor route.
+Current checks cover desktop, mobile, console health, and the live GitHub Pages route.
