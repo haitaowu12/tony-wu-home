@@ -16,25 +16,30 @@ function App() {
           <h1 id="hero-title">{profile.identity.name}</h1>
           <p className="hero__title">{profile.positioning.headline}</p>
           <p className="hero__copy">{profile.positioning.subhead}</p>
+          <div className="hero__meta" aria-label="Professional scope">
+            <span>{profile.identity.title}</span>
+            <span>{profile.identity.location}</span>
+            <span>North America delivery experience</span>
+          </div>
           <div className="hero__actions" aria-label="Primary links">
             {profile.links.map((link) => (
               <a className="button" href={link.href} key={link.href}>
                 {link.label}
               </a>
             ))}
-            <a className="button button--quiet" href="#work">
-              Selected work
+            <a className="button button--quiet" href="#delivery">
+              Delivery portfolio
             </a>
           </div>
         </div>
 
-        <div className="hero__visual" aria-label="Systems engineering traceability map">
-          <img src="./systems-map.svg" alt="" />
+        <div className="hero__visual" aria-label="North America project delivery atlas">
+          <img src="./delivery-atlas.svg" alt="" />
           <div className="visual-caption">
-            <span>requirements</span>
-            <span>interfaces</span>
-            <span>evidence</span>
-            <span>readiness</span>
+            <span>aerospace controls</span>
+            <span>rail communications</span>
+            <span>major transit expansion</span>
+            <span>digital assurance</span>
           </div>
         </div>
       </section>
@@ -51,9 +56,75 @@ function App() {
       <section className="section thesis-band" aria-labelledby="thesis-title">
         <div>
           <p className="section-kicker">Working thesis</p>
-          <h2 id="thesis-title">Governance has to become usable.</h2>
+          <h2 id="thesis-title">Project delivery is a system.</h2>
         </div>
         <p>{profile.positioning.thesis}</p>
+      </section>
+
+      <section className="section experience" aria-labelledby="experience-title">
+        <div className="section-heading section-heading--wide">
+          <p className="section-kicker">Experience map</p>
+          <h2 id="experience-title">Fifteen years across controls, rail systems, assurance, and digital practice.</h2>
+        </div>
+        <div className="experience-grid">
+          {profile.experienceChapters.map((chapter) => (
+            <article className="experience-panel" key={chapter.title}>
+              <div className="experience-panel__topline">
+                <span>{chapter.period}</span>
+                <span>{chapter.geography}</span>
+              </div>
+              <p className="type-label">{chapter.industry}</p>
+              <h3>{chapter.title}</h3>
+              <p className="experience-panel__role">{chapter.role}</p>
+              <p>{chapter.summary}</p>
+              <ul>
+                {chapter.highlights.map((highlight) => (
+                  <li key={highlight}>{highlight}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section delivery" id="delivery" aria-labelledby="delivery-title">
+        <div className="section-heading section-heading--wide">
+          <p className="section-kicker">Delivery portfolio</p>
+          <h2 id="delivery-title">Selected project delivery work and roles.</h2>
+        </div>
+        <div className="delivery-list">
+          {profile.deliveryWork.map((work, index) => (
+            <article className="delivery-row" key={work.name}>
+              <div className="delivery-row__index">{String(index + 1).padStart(2, "0")}</div>
+              <div className="delivery-row__body">
+                <div className="delivery-row__meta">
+                  <span>{work.industry}</span>
+                  <span>{work.geography}</span>
+                </div>
+                <h3>{work.name}</h3>
+                <p className="delivery-row__role">{work.role}</p>
+                <p>{work.summary}</p>
+              </div>
+              <ul className="delivery-row__contribution">
+                {work.contribution.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section roles" aria-labelledby="roles-title">
+        <div>
+          <p className="section-kicker">Role pattern</p>
+          <h2 id="roles-title">The recurring job: make complexity executable.</h2>
+        </div>
+        <div className="role-cloud">
+          {profile.rolePatterns.map((role) => (
+            <span key={role}>{role}</span>
+          ))}
+        </div>
       </section>
 
       <section className="section domains" aria-labelledby="domains-title">
@@ -73,8 +144,8 @@ function App() {
 
       <section className="section work" id="work" aria-labelledby="work-title">
         <div className="section-heading">
-          <p className="section-kicker">Proof</p>
-          <h2 id="work-title">Selected Work And Pet Projects</h2>
+          <p className="section-kicker">Builder proof</p>
+          <h2 id="work-title">Public tools, frameworks, and pet projects.</h2>
         </div>
         <div className="project-list">
           {profile.projects.map((project) => (
@@ -162,9 +233,9 @@ function App() {
         </div>
         <div>
           <p>
-            Best fit: systems engineering strategy, MBSE adoption, assurance
-            workflows, technical leadership, and practical tooling for infrastructure
-            delivery teams.
+            Best fit: major-program systems integration, rail/transit technical
+            assurance, operational readiness, MBSE adoption, and project delivery
+            workflows that need sharper evidence and clearer decisions.
           </p>
           <div className="contact__links">
             {profile.links.map((link) => (

@@ -6,14 +6,15 @@ Public author/about page for an engineering consultant and operator-builder. Mai
 
 ## Visual Thesis
 
-Precise technical editorial page. Dark full-bleed first viewport, structured traceability visual, warm paper body, thin rules, restrained signal green accent.
+Maximalist technical editorial page. Dark full-bleed first viewport, dense delivery atlas, exposed grid, mixed signal colors, long-form career evidence, and project rows with enough detail to show delivery judgment.
 
 ## Rules
 
-- Lead with `Tony Wu`, credentials, and rail/transit systems engineering positioning.
+- Lead with `Tony Wu`, credentials, and project delivery systems engineering across rail, transit, aerospace controls, assurance, and digital practice.
 - Avoid generic developer portfolio language.
 - Keep client/program specifics conservative unless explicitly cleared.
-- Use project rows, not a card wall.
+- Put 15 years of project delivery experience before pet projects.
+- Use dense evidence panels and rows, not a generic card wall.
 - Keep author badge quiet and reusable.
 - No decorative blobs, hype gradients, floating badge overlays, or modal-style author promos.
 
@@ -26,6 +27,8 @@ Precise technical editorial page. Dark full-bleed first viewport, structured tra
 - Line: `#d8d4c9`
 - Signal: `#0f8f71`
 - Signal dark: `#075744`
+- Cyan: `#4dc9ff`
+- Violet: `#bda4ff`
 - Amber: `#b76b19`
 - Focus: `#e1a13b`
 

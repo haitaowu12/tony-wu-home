@@ -25,6 +25,25 @@ export type ProofPoint = {
   label: string;
 };
 
+export type ExperienceChapter = {
+  period: string;
+  industry: string;
+  title: string;
+  geography: string;
+  role: string;
+  summary: string;
+  highlights: string[];
+};
+
+export type DeliveryWork = {
+  name: string;
+  geography: string;
+  industry: string;
+  role: string;
+  summary: string;
+  contribution: string[];
+};
+
 export const profile = {
   canonicalUrl: "https://haitaowu12.github.io/tony-wu-home/",
   identity: {
@@ -35,21 +54,21 @@ export const profile = {
     location: "Vancouver, Canada",
   },
   positioning: {
-    headline: "Systems Engineering for Complex Rail and Transit Programs",
+    headline: "Project delivery systems engineer across rail, transit, aerospace, and digital assurance",
     subhead:
-      "I help infrastructure teams turn requirements, interfaces, assurance, and delivery risk into usable systems of work, with practical MBSE and software tools.",
+      "Over 15 years, I have helped delivery teams turn complex technical programs into governed, testable, decision-ready systems across North America.",
     thesis:
-      "My work sits where major-program governance, model-based engineering, technical assurance, and human decision-making have to survive real delivery pressure.",
+      "My value is not only in writing requirements or building models. It is in making the delivery system itself work: roles, interfaces, evidence, decisions, technical risk, and the tools that keep people aligned under pressure.",
   },
   links: [
     { label: "LinkedIn", href: "https://ca.linkedin.com/in/haitonyw" },
     { label: "GitHub", href: "https://github.com/haitaowu12" },
   ] satisfies Link[],
   proofPoints: [
-    { value: "15+", label: "years across systems, integration, assurance, and controls" },
-    { value: "4", label: "credentials spanning engineering, systems, rail, and delivery" },
-    { value: "2", label: "sensor fault-detection patent records" },
-    { value: "2026", label: "INCOSE IS technical leadership paper track" },
+    { value: "15+", label: "years across delivery, systems integration, assurance, and controls" },
+    { value: "4", label: "industries and work modes: aerospace, rail, infrastructure, digital practice" },
+    { value: "NA", label: "North America project exposure across Canadian and US transit programs" },
+    { value: "2", label: "sensor fault-detection patent records from aerospace control work" },
   ] satisfies ProofPoint[],
   domains: [
     {
@@ -67,6 +86,128 @@ export const profile = {
       summary:
         "Practical use of AI to sharpen synthesis, learning, planning, and decision surfaces without delegating safety-critical judgment.",
     },
+  ],
+  experienceChapters: [
+    {
+      period: "Early career",
+      industry: "Aerospace controls",
+      title: "Control-system fault detection",
+      geography: "Canada / aerospace supply chain",
+      role: "Engineer and named inventor",
+      summary:
+        "Developed signal-analysis and event-classification approaches for detecting sensor faults in aircraft engine control systems.",
+      highlights: [
+        "Applied fault detection logic to high-consequence control-system behavior.",
+        "Named inventor on pre-emptive and in-range sensor fault-detection patent records.",
+        "Built early foundation in verification, evidence, thresholds, and technical judgment.",
+      ],
+    },
+    {
+      period: "Rail delivery",
+      industry: "Rail communications and transit systems",
+      title: "LRT and rail communications delivery",
+      geography: "Greater Toronto and Canadian transit context",
+      role: "Rail communications systems contributor",
+      summary:
+        "Supported rail communications delivery work, including Eglinton Crosstown LRT context, with attention to detail, critical duties, and project execution discipline.",
+      highlights: [
+        "Worked inside delivery teams where design, installation, commissioning, and assurance have to converge.",
+        "Built practical understanding of contractor/client/operator delivery friction.",
+        "Received 2020 SNC-Lavalin Recognition Award.",
+      ],
+    },
+    {
+      period: "2021-present",
+      industry: "Major rail expansion programs",
+      title: "Program systems integration and assurance",
+      geography: "Vancouver, Canada, North America",
+      role: "Principal Engineer, Rail Systems / Senior Systems Engineer",
+      summary:
+        "Led and supported program-level systems integration across interdependent rail expansion projects, connecting requirements, interfaces, V&V, readiness, and technical governance.",
+      highlights: [
+        "Established systems engineering management, requirements, interface, V&V, and assurance governance foundations.",
+        "Matured outcome-based assurance, Success Criteria, Path to Acceptance, configuration-phase delivery, technical gap closure, and readiness workflows.",
+        "Supported technical issue closure across control centres, maintenance facilities, headend sequencing, power requirements, and revenue-service readiness.",
+      ],
+    },
+    {
+      period: "Current practice",
+      industry: "Digital engineering and professional practice",
+      title: "MBSE, assurance tooling, and leadership models",
+      geography: "Infrastructure practice and INCOSE community",
+      role: "Builder, author, workshop lead",
+      summary:
+        "Turned delivery lessons into reusable models, tools, workshops, and public-facing practice artifacts for systems engineering adoption.",
+      highlights: [
+        "Connected Capella, Jama Connect, HazOps+/Reliability Workbench, Power BI, Moata, and automation patterns into delivery workflows.",
+        "Co-led INCOSE Transportation Infrastructure Workshop content on right-sized systems engineering.",
+        "Developed public pet projects that test how models, games, and assurance tools help people think and decide.",
+      ],
+    },
+  ] satisfies ExperienceChapter[],
+  deliveryWork: [
+    {
+      name: "Rail Expansion Program systems integration",
+      geography: "Western Canada",
+      industry: "Automated rail / major transit expansion",
+      role: "Program systems integration and assurance lead contributor",
+      summary:
+        "Program-level alignment across requirements, interfaces, V&V, assurance, configuration-phase delivery, and readiness for revenue service.",
+      contribution: [
+        "Built SE management, requirements, interface, and V&V governance foundations.",
+        "Matured outcome-based assurance, Success Criteria, Path to Acceptance, and technical gap closure methods.",
+        "Connected multiple concurrent project teams, designers, contractors, operators, and maintainers around evidence and decisions.",
+      ],
+    },
+    {
+      name: "Control centre, maintenance facility, and headend integration work",
+      geography: "Canada and North America",
+      industry: "Rail systems / operations readiness",
+      role: "Systems engineering and technical assurance support",
+      summary:
+        "Support for technically coupled rail-system work where operations, maintainability, control systems, and handover evidence have to line up.",
+      contribution: [
+        "Supported design review and readiness thinking for control centre and maintenance facility contexts.",
+        "Worked through technical dependencies around headend sequencing, expandability, power requirements, and operational acceptance.",
+        "Helped convert technical ambiguity into forums, criteria, registers, and delivery actions.",
+      ],
+    },
+    {
+      name: "Ontario Line, Crenshaw/LAX, Sound Transit, Newhall Yard, and related advisory contexts",
+      geography: "North America",
+      industry: "Transit advisory and rail delivery",
+      role: "Systems engineering reviewer / advisor / contributor",
+      summary:
+        "Selected North American rail and transit contexts that broadened delivery pattern recognition beyond one program or client.",
+      contribution: [
+        "Supported technical advisory, independent review, and design-review contexts.",
+        "Observed recurring project delivery failure modes around interfaces, requirements, assurance timing, and operational readiness.",
+        "Fed lessons learned back into practical frameworks and reusable work aids.",
+      ],
+    },
+    {
+      name: "Aerospace engine control fault detection",
+      geography: "Canada",
+      industry: "Aerospace controls",
+      role: "Engineer and named inventor",
+      summary:
+        "Control-system health monitoring work focused on detecting sensor faults before they become operational problems.",
+      contribution: [
+        "Developed signal-analysis logic, threshold comparison, event counting, and fault classification methods.",
+        "Produced patent-backed work on pre-emptive and in-range sensor fault detection.",
+        "Carried evidence-first thinking from controls into later rail systems assurance work.",
+      ],
+    },
+  ] satisfies DeliveryWork[],
+  rolePatterns: [
+    "Program systems integration",
+    "Requirements and interface governance",
+    "Verification, validation, and assurance strategy",
+    "Operational readiness and Path to Acceptance",
+    "Configuration-phase delivery and technical gap closure",
+    "Digital / MBSE practice development",
+    "Technical issue facilitation across client, designer, contractor, operator, maintainer",
+    "Workshop design, technical leadership, and reusable practice tools",
   ],
   projects: [
     {
@@ -164,6 +305,6 @@ export const profile = {
   authorBadge: {
     label: "Know the author",
     description:
-      "Built by Tony Wu, systems engineer and developer focused on rail/transit systems engineering, MBSE, assurance workflows, and learning simulations.",
+      "Built by Tony Wu, systems engineer and developer focused on complex project delivery, rail/transit systems engineering, MBSE, assurance workflows, and learning simulations.",
   },
 };
