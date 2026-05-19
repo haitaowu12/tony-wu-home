@@ -64,7 +64,7 @@ export const profile = {
   identity: {
     name: "Tony Wu",
     fullName: "Hai Tao (Tony) Wu",
-    credentials: "P.Eng, MIRSE, PMP, CSEP",
+    credentials: "P.Eng (ON, BC), MIRSE, PMP, CSEP",
     title: "Principal Engineer, Rail Systems",
     location: "Vancouver, Canada",
   },
@@ -209,16 +209,16 @@ export const profile = {
     {
       period: "Early career",
       industry: "Aerospace controls",
-      title: "Control systems analysis and fault detection",
+      title: "Full Authority Digital Engine Control (FADEC) research and development",
       geography: "Canada",
       role: "Control Systems Analyst, Pratt & Whitney Canada",
       summary:
-        "Worked on Full Authority Digital Engine Control (FADEC) research and development, connecting system-level requirements, control logic, simulation, verification evidence, and certification support.",
+        "Built engine-control logic, analysis models, and verification evidence for aircraft engine programs across helicopter, propeller, and turbofan applications.",
       highlights: [
-        "Developed dynamic analysis and simulation models for helicopter, propeller, and turbofan aircraft engine programs.",
-        "Designed FADEC control-system logic through the V lifecycle in a DO-178 B/C environment.",
+        "Developed control algorithms, dynamic analyses, and simulation models for helicopter, propeller, and turbofan engine programs.",
+        "Carried control-system logic through V-model development in a DO-178 B/C environment.",
         "Produced verification reports and supported certification, Safety of Flight, airframe integration, and flight-test needs.",
-        "Named inventor on pre-emptive and in-range sensor fault-detection patent records.",
+        "Named inventor on sensor fault-detection patent records for gas turbine engine control systems.",
       ],
     },
     {
@@ -347,10 +347,10 @@ export const profile = {
       kind: "patent",
       status: "US 9,996,078 B1, issued June 12, 2018",
       summary:
-        "Sensor fault-detection methods and systems for gas turbine engine control systems.",
+        "Pre-emptive detection of intermittent sensor open-circuit faults in gas turbine engine control systems using high-pass signal analysis, spike-rate thresholds, sensor health values, and signal accommodation.",
       link: {
         label: "Patent record",
-        href: "https://patents.justia.com/assignee/pratt-whitney-canada?page=14",
+        href: "https://patentimages.storage.googleapis.com/30/d5/39/be3b3524c63dd1/US9996078.pdf",
       },
     },
     {
@@ -370,7 +370,7 @@ export const profile = {
     "Member, INCOSE Technical Leadership Institute",
     "Certification Application Reviewer, INCOSE Central",
     "Certified Systems Engineering Professional (CSEP), INCOSE",
-    "Professional Engineer (P.Eng)",
+    "Professional Engineer (P.Eng), Ontario and British Columbia",
     "Member of the Institution of Railway Signal Engineers (MIRSE)",
     "Project Management Professional (PMP)",
     "Organizer, INCOSE Transportation Infrastructure Workshop",

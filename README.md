@@ -1,6 +1,6 @@
 # Tony Wu Home
 
-Standalone personal brand and author page for Tony Wu, P.Eng, MIRSE, PMP, CSEP.
+Standalone personal brand and author page for Tony Wu, P.Eng (Ontario and British Columbia), MIRSE, PMP, CSEP.
 
 This is a static Vite + React + TypeScript site. It is designed as the canonical public profile page for linking from project READMEs, project footers, conference materials, and pet-project pages.
 
