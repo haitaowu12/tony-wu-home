@@ -6,10 +6,10 @@ export type Link = {
 export type SelectedProject = {
   title: string;
   summary: string;
-  role: string;
   status: "public" | "prototype" | "local-private";
   themes: string[];
   link?: Link;
+  availabilityLabel?: string;
 };
 
 export type Publication = {
@@ -25,9 +25,28 @@ export type ProofPoint = {
   label: string;
 };
 
-export type PracticeFacet = {
+export type PracticeArea = {
   title: string;
   summary: string;
+  outcomes: string[];
+};
+
+export type MethodStep = {
+  label: string;
+  title: string;
+  summary: string;
+};
+
+export type OperatingPrinciple = {
+  title: string;
+  summary: string;
+};
+
+export type FieldNote = {
+  title: string;
+  status: string;
+  summary: string;
+  linkPlaceholder?: string;
 };
 
 export type ExperienceChapter = {
@@ -40,15 +59,6 @@ export type ExperienceChapter = {
   highlights: string[];
 };
 
-export type DeliveryWork = {
-  name: string;
-  geography: string;
-  industry: string;
-  role: string;
-  summary: string;
-  contribution: string[];
-};
-
 export const profile = {
   canonicalUrl: "https://haitaowu12.github.io/tony-wu-home/",
   identity: {
@@ -59,250 +69,278 @@ export const profile = {
     location: "Vancouver, Canada",
   },
   positioning: {
-    headline: "Systems engineering leader, delivery consultant, AI builder, and practice contributor",
+    headline: "Systems engineering for infrastructure programs where interfaces, evidence, and readiness decide delivery.",
     subhead:
-      "Over 15 years, I have helped complex programs move from lifecycle SE intent to governed delivery, testable evidence, and operational readiness across North America.",
+      "I work in rail systems practice in Vancouver. This site collects field notes, public practice work, and lab experiments around MBSE, assurance, AI-assisted engineering, and technical leadership.",
     thesis:
-      "My value is not only in writing requirements or building models. It is in making the delivery system itself work: roles, interfaces, evidence, decisions, technical risk, and the human tools that keep people aligned under pressure.",
+      "The thread through my work is decision quality: make complexity visible, connect evidence to acceptance, keep interfaces owned, and leave teams with methods they can actually use.",
   },
   links: [
     { label: "LinkedIn", href: "https://ca.linkedin.com/in/haitonyw" },
-    { label: "GitHub", href: "https://github.com/haitaowu12" },
   ] satisfies Link[],
   proofPoints: [
-    { value: "15+", label: "years across delivery, systems integration, assurance, and controls" },
-    { value: "Lifecycle SE", label: "implementation from requirements and interfaces to V&V, assurance, and readiness" },
-    { value: "North America", label: "project exposure across Canadian and US transit programs" },
-    { value: "INCOSE", label: "Canada past president, current director-at-large, workshop and practice contributor" },
+    {
+      value: "15+",
+      label: "years across rail systems, aerospace controls, integration, assurance, and technical leadership",
+    },
+    { value: "Full Lifecycle SE", label: "requirements, interfaces, V&V, assurance, configuration, readiness" },
+    {
+      value: "Rail and Transit",
+      label: "train control, major expansion programs, operational readiness, and systems integration",
+    },
+    {
+      value: "INCOSE",
+      label: "Director-at-Large / Past President, INCOSE Canada; Technical Leadership Institute member",
+    },
   ] satisfies ProofPoint[],
-  practiceFacets: [
+  practiceAreas: [
     {
-      title: "Full lifecycle SE implementation",
+      title: "Rail systems integration and readiness",
       summary:
-        "Requirements, interfaces, architecture thinking, V&V, assurance, configuration-phase delivery, and acceptance paths made usable by real project teams.",
+        "Turn requirements, interfaces, verification, assurance, and operations readiness into a delivery system teams can inspect and act on.",
+      outcomes: [
+        "Interface ownership that survives organizational boundaries",
+        "Acceptance paths connected to evidence and readiness",
+        "Technical forums that move decisions instead of recycling status",
+      ],
     },
     {
-      title: "Technical leadership and consulting",
+      title: "MBSE and digital engineering adoption",
       summary:
-        "Program-level facilitation across clients, designers, contractors, operators, maintainers, and reviewers where decisions need evidence and momentum.",
+        "Use models, traces, and digital workflows when they improve delivery decisions, not because the method looks impressive on paper.",
+      outcomes: [
+        "Model-based work tied to real review questions",
+        "Traceability that exposes assumptions and gaps",
+        "Tooling choices shaped by team behavior and governance",
+      ],
     },
     {
-      title: "AI enthusiast and side-project builder",
+      title: "Evidence, assurance, and decision memory",
       summary:
-        "Pet projects, games, local tools, and AI-assisted workflows that test how systems engineers can think, learn, review, and decide better.",
+        "Build the working memory around why a technical decision was made, what evidence supports it, and what still needs closure.",
+      outcomes: [
+        "Requirements-to-verification paths people can follow",
+        "Assurance reviews with sharper entry and exit criteria",
+        "Decision records that support handover and future learning",
+      ],
     },
     {
-      title: "Professional society contributor",
+      title: "Practice leadership and capability building",
       summary:
-        "Past President of INCOSE Canada, current Director-at-Large, workshop lead, author, and contributor to transportation infrastructure SE practice.",
+        "Turn delivery lessons into workshops, papers, games, public notes, and reusable methods for engineering teams and professional communities.",
+      outcomes: [
+        "Right-sized systems engineering adoption patterns",
+        "Workshop formats that change how people decide",
+        "Practice assets that can outlive a single project",
+      ],
     },
-  ] satisfies PracticeFacet[],
-  domains: [
+  ] satisfies PracticeArea[],
+  methodSteps: [
     {
-      title: "Rail and Transit Systems",
+      label: "01",
+      title: "Frame",
       summary:
-        "Program integration, requirements, interfaces, verification, operational readiness, and technical assurance for complex infrastructure delivery.",
-    },
-    {
-      title: "MBSE and Digital Delivery",
-      summary:
-        "Model-based delivery patterns that make traceability, assumptions, decisions, and evidence visible enough for real project teams to use.",
-    },
-    {
-      title: "AI-Augmented Technical Leadership",
-      summary:
-        "Practical use of AI, local tools, and learning simulations to sharpen synthesis, planning, review, and decision surfaces without delegating engineering judgment.",
+        "Define the system boundary, stakeholder landscape, operating context, success criteria, and decisions the work must support.",
     },
     {
-      title: "Professional Society and Practice Leadership",
+      label: "02",
+      title: "Tailor",
       summary:
-        "INCOSE Canada leadership, transportation infrastructure workshop work, papers, and reusable practice artifacts for right-sized systems engineering.",
+        "Fit the systems engineering rigor to risk, novelty, safety, regulatory burden, delivery pressure, and team maturity.",
     },
-  ],
+    {
+      label: "03",
+      title: "Connect",
+      summary:
+        "Link requirements, interfaces, models, hazards, V&V, assurance evidence, and readiness claims into one inspectable thread.",
+    },
+    {
+      label: "04",
+      title: "Transfer",
+      summary:
+        "Turn delivery lessons into reusable playbooks, templates, field notes, workshop formats, diagrams, tools, and training aids.",
+    },
+  ] satisfies MethodStep[],
+  operatingPrinciples: [
+    {
+      title: "Start with the decision, not the artifact.",
+      summary:
+        "A model, register, workshop, or report earns its place only if it improves a decision, exposes a tradeoff, or changes what the team does next.",
+    },
+    {
+      title: "Fit the rigor to the risk.",
+      summary:
+        "Over-prescribing systems engineering burns trust; under-scoping it hides risk. Tailoring has to make both sides of that trade visible.",
+    },
+    {
+      title: "Make interfaces owned, not just listed.",
+      summary:
+        "Interface work matters when owners, assumptions, timing, evidence, and acceptance responsibilities are clear across organizations.",
+    },
+    {
+      title: "Keep evidence close to readiness.",
+      summary:
+        "Requirements, hazards, tests, concessions, operations constraints, and residual risk should converge into a defensible readiness position.",
+    },
+  ] satisfies OperatingPrinciple[],
+  fieldNotes: [
+    {
+      title: "Right-sized systems engineering for infrastructure programs",
+      status: "Paper - In Progress",
+      summary:
+        "A practical response to a recurring problem: simple projects can be smothered by over-prescribed process, while complex projects can lose the value of SE when rigor is cut too far. The work explores clearer ways to match SE rigor to project drivers and understand how tailoring one process affects the others.",
+      linkPlaceholder: "Paper link pending",
+    },
+    {
+      title: "Building an AI-Augmented Technical Leadership Model",
+      status: "Paper - Finalized",
+      summary:
+        "An INCOSE IS 2026 paper updating the TLI technical leadership model for human-AI collaboration, adaptive decision-making, organizational AI literacy, and ethical technology stewardship.",
+      linkPlaceholder: "Paper link pending",
+    },
+    {
+      title: "Scenario games for practical systems thinking",
+      status: "Note",
+      summary:
+        "A note on using small scenario-based interactions and games to make systems engineering easier to understand for non-SE practitioners. Systems thinking should feel like common sense: a way to bring order to chaos, not a specialist ritual.",
+    },
+  ] satisfies FieldNote[],
   experienceChapters: [
     {
       period: "Early career",
       industry: "Aerospace controls",
-      title: "Control-system fault detection",
-      geography: "Canada / aerospace supply chain",
-      role: "Engineer and named inventor",
+      title: "Control systems analysis and fault detection",
+      geography: "Canada",
+      role: "Control Systems Analyst, Pratt & Whitney Canada",
       summary:
-        "Developed signal-analysis and event-classification approaches for detecting sensor faults in aircraft engine control systems.",
+        "Worked on Full Authority Digital Engine Control (FADEC) research and development, connecting system-level requirements, control logic, simulation, verification evidence, and certification support.",
       highlights: [
-        "Applied fault detection logic to high-consequence control-system behavior.",
+        "Developed dynamic analysis and simulation models for helicopter, propeller, and turbofan aircraft engine programs.",
+        "Designed FADEC control-system logic through the V lifecycle in a DO-178 B/C environment.",
+        "Produced verification reports and supported certification, Safety of Flight, airframe integration, and flight-test needs.",
         "Named inventor on pre-emptive and in-range sensor fault-detection patent records.",
-        "Built early foundation in verification, evidence, thresholds, and technical judgment.",
       ],
     },
     {
-      period: "Rail delivery",
-      industry: "Rail communications and transit systems",
-      title: "LRT and rail communications delivery",
-      geography: "Greater Toronto and Canadian transit context",
-      role: "Rail communications systems contributor",
+      period: "2017-2021",
+      industry: "Signalling and train control systems",
+      title: "Train control, rail systems delivery, and strategic consulting",
+      geography: "Canada",
+      role: "Train Control Systems Engineer, SNC-Lavalin / AtkinsRealis",
       summary:
-        "Supported rail communications delivery work, including Eglinton Crosstown LRT context, with attention to detail, critical duties, and project execution discipline.",
+        "Built rail systems delivery and advisory depth across automated train control, requirements, interfaces, supplier reviews, testing, commissioning, RAMS, V&V, and strategic consulting studies.",
       highlights: [
-        "Worked inside delivery teams where design, installation, commissioning, and assurance have to converge.",
-        "Built practical understanding of contractor/client/operator delivery friction.",
-        "Received 2020 SNC-Lavalin Recognition Award.",
+        "Supported projects including Canada Line Capacity Expansion, SkyTrain OMC3A, Montreal REM, Eglinton Crosstown LRT, and related transit assignments.",
+        "Contributed to strategic consulting and feasibility work including service-hour, station-impact, rail-condition, and switch-machine studies.",
+        "Managed requirements, interface documentation, configuration baselines, design reviews, and supplier technical audits.",
       ],
     },
     {
       period: "2021-present",
       industry: "Major rail expansion programs",
-      title: "Program systems integration and assurance",
-      geography: "Vancouver, Canada, North America",
-      role: "Principal Engineer, Rail Systems / Senior Systems Engineer",
+      title: "Rail expansion systems integration",
+      geography: "Vancouver, Canada",
+      role: "Principal Engineer, Rail Systems / Rail Expansion Systems Integration Lead, Mott MacDonald",
       summary:
-        "Led and supported program-level systems integration across interdependent rail expansion projects, connecting requirements, interfaces, V&V, readiness, and technical governance.",
+        "Progressed from Senior Systems Engineer into Principal Engineer while helping build program-level systems engineering, assurance, integration, and readiness capability for major SkyTrain expansion work.",
       highlights: [
-        "Established systems engineering management, requirements, interface, V&V, and assurance governance foundations.",
-        "Matured outcome-based assurance, Success Criteria, Path to Acceptance, configuration-phase delivery, technical gap closure, and readiness workflows.",
-        "Supported technical issue closure across control centres, maintenance facilities, headend sequencing, power requirements, and revenue-service readiness.",
+        "Led and supported requirements, interfaces, V&V, technical governance, assurance, and readiness across multiple concurrent rail expansion projects.",
+        "Advanced outcome-based assurance, Success Criteria, Path to Acceptance, configuration-phase delivery, headend sequencing, and technical gap closure practices.",
+        "Developed digital and MBSE-enabled ways of working using Capella, Jama Connect, HazOps+/Reliability Workbench, Power BI, Moata, and automation.",
       ],
     },
     {
-      period: "Current practice",
-      industry: "Digital engineering and professional practice",
-      title: "MBSE, assurance tooling, and leadership models",
-      geography: "Infrastructure practice and INCOSE community",
-      role: "Builder, author, workshop lead, society contributor",
+      period: "2023 - Present",
+      industry: "INCOSE and professional community",
+      title: "Professional society leadership",
+      geography: "Canada / International",
+      role: "Director-at-Large / Past President, INCOSE Canada",
       summary:
-        "Turned delivery lessons into reusable models, tools, workshops, and public-facing practice artifacts for systems engineering adoption.",
+        "Contributes to the systems engineering community through INCOSE Canada leadership, technical leadership work, certification review, and transportation infrastructure practice development.",
       highlights: [
-        "Connected Capella, Jama Connect, HazOps+/Reliability Workbench, Power BI, Moata, and automation patterns into delivery workflows.",
-        "Co-led INCOSE Transportation Infrastructure Workshop content on right-sized systems engineering.",
-        "Developed public pet projects that test how models, games, and assurance tools help people think and decide.",
+        "Served as Communications Director, Vice President, President, and now Director-at-Large / Past President for INCOSE Canada.",
+        "Member of the INCOSE Technical Leadership Institute and Certification Application Reviewer for INCOSE Central.",
+        "Organizer of the Transportation Infrastructure Workshop and contributor to the Transportation Working Group.",
       ],
     },
   ] satisfies ExperienceChapter[],
-  deliveryWork: [
-    {
-      name: "Rail Expansion Program systems integration",
-      geography: "Western Canada",
-      industry: "Automated rail / major transit expansion",
-      role: "Program systems integration and assurance lead contributor",
-      summary:
-        "Program-level alignment across requirements, interfaces, V&V, assurance, configuration-phase delivery, and readiness for revenue service.",
-      contribution: [
-        "Built SE management, requirements, interface, and V&V governance foundations.",
-        "Matured outcome-based assurance, Success Criteria, Path to Acceptance, and technical gap closure methods.",
-        "Connected multiple concurrent project teams, designers, contractors, operators, and maintainers around evidence and decisions.",
-      ],
-    },
-    {
-      name: "Control centre, maintenance facility, and headend integration work",
-      geography: "Canada and North America",
-      industry: "Rail systems / operations readiness",
-      role: "Systems engineering and technical assurance support",
-      summary:
-        "Support for technically coupled rail-system work where operations, maintainability, control systems, and handover evidence have to line up.",
-      contribution: [
-        "Supported design review and readiness thinking for control centre and maintenance facility contexts.",
-        "Worked through technical dependencies around headend sequencing, expandability, power requirements, and operational acceptance.",
-        "Helped convert technical ambiguity into forums, criteria, registers, and delivery actions.",
-      ],
-    },
-    {
-      name: "Ontario Line, Crenshaw/LAX, Sound Transit, Newhall Yard, and related advisory contexts",
-      geography: "North America",
-      industry: "Transit advisory and rail delivery",
-      role: "Systems engineering reviewer / advisor / contributor",
-      summary:
-        "Selected North American rail and transit contexts that broadened delivery pattern recognition beyond one program or client.",
-      contribution: [
-        "Supported technical advisory, independent review, and design-review contexts.",
-        "Observed recurring project delivery failure modes around interfaces, requirements, assurance timing, and operational readiness.",
-        "Fed lessons learned back into practical frameworks and reusable work aids.",
-      ],
-    },
-    {
-      name: "Aerospace engine control fault detection",
-      geography: "Canada",
-      industry: "Aerospace controls",
-      role: "Engineer and named inventor",
-      summary:
-        "Control-system health monitoring work focused on detecting sensor faults before they become operational problems.",
-      contribution: [
-        "Developed signal-analysis logic, threshold comparison, event counting, and fault classification methods.",
-        "Produced patent-backed work on pre-emptive and in-range sensor fault detection.",
-        "Carried evidence-first thinking from controls into later rail systems assurance work.",
-      ],
-    },
-  ] satisfies DeliveryWork[],
-  rolePatterns: [
-    "Full lifecycle SE implementation",
-    "Program systems integration",
-    "Requirements and interface governance",
-    "Verification, validation, and assurance strategy",
-    "Operational readiness and Path to Acceptance",
-    "Configuration-phase delivery and technical gap closure",
-    "Digital / MBSE practice development",
-    "Technical issue facilitation across client, designer, contractor, operator, maintainer",
-    "AI-assisted synthesis, review, and learning workflows",
-    "Workshop design, technical leadership, and reusable practice tools",
-  ],
   projects: [
+    {
+      title: "SE Tailoring Model",
+      summary:
+        "A practical framework for right-sizing systems engineering rigor to project drivers, process interdependencies, culture, and delivery risk.",
+      status: "prototype",
+      themes: ["INCOSE TIW 2026", "tailoring", "infrastructure SE"],
+      availabilityLabel: "Public page pending",
+    },
     {
       title: "SysML Viewer",
       summary:
         "A local SysML v2 visual editor with synchronized text, diagrams, Draw.io, SVG, and AI-assisted modeling workflows.",
-      role: "Builder",
       status: "prototype",
       themes: ["SysML v2", "model readability", "diagram workflow"],
-      link: { label: "GitHub", href: "https://github.com/haitaowu12/sysmlv2_viewer" },
+      link: { label: "Open", href: "https://haitaowu12.github.io/sysmlv2_viewer/" },
     },
     {
-      title: "SE Tailoring Model",
+      title: "SE Learning Quest",
       summary:
-        "A practical framework for right-sizing systems engineering rigor to project drivers, culture, and delivery risk.",
-      role: "Author and co-presenter",
+        "A scenario-based systems engineering learning game that teaches evidence threads across lifecycle decisions instead of process memorization.",
       status: "public",
-      themes: ["INCOSE TIW 2026", "tailoring", "infrastructure SE"],
-      link: { label: "GitHub", href: "https://github.com/haitaowu12/se-tailoring-model" },
-    },
-    {
-      title: "Shared Model Under Pressure",
-      summary:
-        "A React training game that turns the INCOSE TLI Shared Model into evidence placement, pressure rounds, and debrief transfer.",
-      role: "Builder",
-      status: "prototype",
-      themes: ["technical leadership", "learning game", "facilitation"],
-      link: { label: "GitHub", href: "https://github.com/haitaowu12/TLI_Shared_Model_game" },
-    },
-    {
-      title: "FOCAL POINT: Hold the Vision",
-      summary:
-        "A static browser game for leadership training around vision drift, stakeholder viewpoints, and local multiplayer facilitation.",
-      role: "Builder",
-      status: "public",
-      themes: ["systems thinking", "workshop game", "GitHub Pages"],
-      link: { label: "GitHub", href: "https://github.com/haitaowu12/Focal-Point-Game" },
+      themes: ["SE education", "Phaser", "scenario learning"],
+      link: { label: "Open", href: "https://haitaowu12.github.io/SE-Learning-Quest/" },
     },
     {
       title: "Compliance Assurance Workbench",
       summary:
         "A local-first assurance prototype for reviewing obligations, evidence, findings, authority, and review snapshots.",
-      role: "Builder",
       status: "local-private",
       themes: ["assurance", "evidence", "review workflow"],
+    },
+    {
+      title: "Systems Engineering Playbook",
+      summary:
+        "A private experiment in ISO 15288-aligned process playbooks, templates, AI prompts, training assets, examples, and practitioner guidance.",
+      status: "local-private",
+      themes: ["ISO 15288", "training", "AI prompts"],
+    },
+    {
+      title: "Systems Engineering Skills Library",
+      summary:
+        "A local/private agent skills library for systems engineering practitioners, including SysML v2 support, diagram creation workflows, and reusable practice skills.",
+      status: "local-private",
+      themes: ["agent skills", "SysML v2", "diagram workflows"],
+    },
+    {
+      title: "Shared Model Under Pressure",
+      summary:
+        "A React training game that turns the INCOSE TLI Shared Model into evidence placement, pressure rounds, and debrief transfer.",
+      status: "prototype",
+      themes: ["technical leadership", "learning game", "facilitation"],
+      link: { label: "Open", href: "https://haitaowu12.github.io/TLI_Shared_Model_game/" },
+    },
+    {
+      title: "FOCAL POINT: Hold the Vision",
+      summary:
+        "A static browser game for leadership training around vision drift, stakeholder viewpoints, and local multiplayer facilitation.",
+      status: "public",
+      themes: ["systems thinking", "workshop game", "static web game"],
+      link: { label: "Open", href: "https://haitaowu12.github.io/Focal-Point-Game/" },
     },
   ] satisfies SelectedProject[],
   publications: [
     {
       title: "Building an AI-Augmented Technical Leadership Model",
       kind: "conference",
-      status: "Accepted for INCOSE International Symposium 2026",
+      status: "Accepted for INCOSE International Symposium 2026, Yokohama",
       summary:
-        "A technical leadership model for using AI as a decision-support and learning amplifier in systems engineering practice.",
+        "An accepted INCOSE IS 2026 paper proposing an AI-augmented extension of the TLI technical leadership model, retaining the six original behaviors while adding competencies for human-AI collaboration, adaptive leadership, AI literacy, and ethical technology stewardship.",
     },
     {
-      title: "Right-Sizing the SE Approach via an SE Tailoring Framework",
+      title: "A Modular Framework for Tailoring Systems Engineering Processes",
       kind: "conference",
       status: "Presented at INCOSE Transportation Infrastructure Workshop 2026",
       summary:
-        "A workshop presentation with Cleo Wong on fitting systems engineering rigor to real infrastructure project conditions.",
+        "A practical SE tailoring approach, developed with Cleo Wong, using ISO/IEC/IEEE 15288 process modules, Basic/Standard/Comprehensive rigor levels, project metrics, scoring logic, and process interdependencies.",
     },
     {
       title: "Pre-emptive Fault Detection Through Advanced Signal Analysis",
@@ -328,14 +366,17 @@ export const profile = {
     },
   ] satisfies Publication[],
   recognition: [
-    "Past President and current Director-at-Large, INCOSE Canada",
+    "Director-at-Large / Past President, INCOSE Canada",
+    "Member, INCOSE Technical Leadership Institute",
+    "Certification Application Reviewer, INCOSE Central",
     "Certified Systems Engineering Professional (CSEP), INCOSE",
     "Professional Engineer (P.Eng)",
     "Member of the Institution of Railway Signal Engineers (MIRSE)",
     "Project Management Professional (PMP)",
-    "INCOSE transportation infrastructure workshop contributor",
-    "2025 Mott MacDonald NASA Award for Technical Excellence",
-    "2023 Mott MacDonald Digital Excellence Award",
+    "Organizer, INCOSE Transportation Infrastructure Workshop",
+    "Contributor, INCOSE Transportation Working Group",
+    "2025 Mott MacDonald technical excellence recognition",
+    "2023 Regional Winner, Mott MacDonald Digital Excellence Award",
   ],
   authorBadge: {
     label: "Know the author",
