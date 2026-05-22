@@ -21,6 +21,8 @@ Editorial technical practice page. Dark first viewport, briefing-board hero art,
 - Use dense evidence panels and rows, not a generic card wall.
 - Keep author badge quiet and reusable.
 - No decorative blobs, hype gradients, floating badge overlays, or modal-style author promos.
+- Motion should feel like a systems briefing coming into focus: one staged hero entrance, restrained section reveals, subtle scan/trace cues, and hover affordance that helps scanning. No looping spectacle, parallax dependency, or animation that hides content when JavaScript is unavailable.
+- HyperFrames belongs to separate video or social assets, not the live responsive page runtime.
 
 ## Tokens
 
