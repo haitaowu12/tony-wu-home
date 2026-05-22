@@ -269,9 +269,9 @@ export const profile = {
       title: "SE Tailoring Model",
       summary:
         "A practical framework for right-sizing systems engineering rigor to project drivers, process interdependencies, culture, and delivery risk.",
-      status: "prototype",
+      status: "public",
       themes: ["INCOSE TIW 2026", "tailoring", "infrastructure SE"],
-      availabilityLabel: "Public page pending",
+      link: { label: "Open", href: "https://haitaowu12.github.io/SE_Tailoring_Framework" },
     },
     {
       title: "SysML Viewer",
