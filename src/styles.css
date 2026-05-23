@@ -36,12 +36,14 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: clip;
 }
 
 a {
@@ -67,7 +69,7 @@ img {
 }
 
 main {
-  overflow-x: hidden;
+  overflow-x: clip;
   background:
     repeating-linear-gradient(
       90deg,
@@ -1224,28 +1226,41 @@ code {
   }
 
   .site-nav__links {
-    display: grid;
-    grid-template-columns: repeat(4, max-content);
+    display: flex;
+    flex-wrap: wrap;
     gap: 8px 12px;
     width: 100%;
     min-width: 0;
-    max-width: calc(100vw - 36px);
-    overflow: hidden;
+    max-width: 100%;
     font-size: 0.7rem;
+  }
+
+  .site-nav__links a {
     white-space: nowrap;
   }
 
   .hero {
+    display: block;
+    max-width: 100%;
     padding-inline: 18px;
     padding-top: 28px;
     padding-bottom: 22px;
-    overflow: hidden;
+    overflow: clip;
+  }
+
+  .hero * {
+    min-width: 0;
   }
 
   .hero__content {
-    max-width: calc(100vw - 36px);
+    max-width: 100%;
     width: 100%;
-    overflow: hidden;
+    overflow: visible;
+  }
+
+  .eyebrow {
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 
   .hero h1 {
@@ -1255,11 +1270,13 @@ code {
   .hero__title {
     font-size: 1.16rem;
     max-width: 100%;
+    overflow-wrap: anywhere;
   }
 
   .hero__copy {
     margin-top: 12px;
     max-width: 100%;
+    overflow-wrap: anywhere;
   }
 
   h2 {
@@ -1292,15 +1309,15 @@ code {
 
   .hero__actions,
   .contact__links {
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr;
     margin-top: 16px;
   }
 
   .button,
   .contact__links a {
     justify-content: center;
-    flex: 1 1 150px;
-    width: auto;
+    width: 100%;
     padding-inline: 12px;
   }
 
@@ -1349,6 +1366,14 @@ code {
     border-right: 0;
     border-bottom: 1px solid var(--line);
     min-height: auto;
+  }
+
+  .proof-strip__item {
+    padding-inline: 18px;
+  }
+
+  .proof-strip__item span {
+    overflow-wrap: anywhere;
   }
 
   .section {
