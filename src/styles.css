@@ -18,7 +18,9 @@
   --charcoal: #141615;
   --panel: #1d201e;
   --paper: #ede5d6;
+  --paper-soft: #d8d0c0;
   --paper-ink: #171916;
+  --steel: #94a7a0;
   --line: rgba(247, 242, 232, 0.18);
   --line-dark: rgba(23, 25, 22, 0.14);
   --signal: #36d29c;
@@ -145,10 +147,10 @@ main {
 }
 
 .hero {
-  min-height: calc(82svh - 64px);
+  min-height: calc(78svh - 64px);
   display: grid;
-  grid-template-columns: minmax(430px, 0.84fr) minmax(540px, 1.16fr);
-  gap: 32px;
+  grid-template-columns: minmax(440px, 0.86fr) minmax(540px, 1.14fr);
+  gap: 40px;
   align-items: center;
   padding: 28px max(24px, calc((100vw - var(--max)) / 2)) 24px;
   position: relative;
@@ -202,7 +204,7 @@ main {
   margin: 18px 0 0;
   max-width: 640px;
   color: var(--ink-strong);
-  font-size: 1.55rem;
+  font-size: clamp(1.38rem, 2vw, 1.68rem);
   line-height: 1.12;
   font-weight: 850;
 }
@@ -400,6 +402,83 @@ main {
   color: var(--muted);
 }
 
+.brand-platform {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.82fr) minmax(0, 1.18fr);
+  gap: 40px;
+  align-items: stretch;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand-platform__intro {
+  display: grid;
+  align-content: center;
+  padding-right: 20px;
+}
+
+.brand-platform__intro h2 {
+  font-size: clamp(2.5rem, 5.8vw, 5.3rem);
+  line-height: 0.92;
+}
+
+.brand-platform__intro p:last-child {
+  max-width: 620px;
+  margin-top: 22px;
+  color: var(--ink);
+  font-size: 1.04rem;
+}
+
+.brand-platform__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(135deg, rgba(54, 210, 156, 0.08), transparent 38%),
+    rgba(247, 242, 232, 0.035);
+}
+
+.brand-pillar {
+  min-height: 340px;
+  padding: 24px;
+  border-right: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(247, 242, 232, 0.07), rgba(247, 242, 232, 0.025)),
+    var(--charcoal);
+}
+
+.brand-pillar:nth-child(2) {
+  background:
+    linear-gradient(180deg, rgba(77, 201, 255, 0.13), rgba(247, 242, 232, 0.025)),
+    var(--charcoal);
+}
+
+.brand-pillar:nth-child(3) {
+  border-right: 0;
+  background:
+    linear-gradient(180deg, rgba(242, 170, 69, 0.16), rgba(247, 242, 232, 0.025)),
+    var(--charcoal);
+}
+
+.brand-pillar span {
+  display: inline-flex;
+  margin-bottom: 44px;
+  color: var(--signal);
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.brand-pillar h3 {
+  max-width: 300px;
+  font-size: 1.55rem;
+  line-height: 1.04;
+}
+
+.brand-pillar p {
+  margin-top: 16px;
+  color: var(--ink);
+}
+
 .section {
   max-width: var(--max);
   margin: 0 auto;
@@ -506,6 +585,7 @@ p {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   border: 1px solid var(--line);
+  background: rgba(247, 242, 232, 0.035);
 }
 
 .practice-panel {
@@ -577,6 +657,56 @@ p {
   align-items: start;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
+}
+
+.notes {
+  position: relative;
+  max-width: none;
+  padding-inline: max(24px, calc((100vw - var(--max)) / 2));
+  border-block: 1px solid var(--line);
+  background:
+    linear-gradient(90deg, rgba(237, 229, 214, 0.96), rgba(216, 208, 192, 0.96)),
+    var(--paper);
+}
+
+.notes .section-kicker,
+.notes .note-row__status,
+.notes .note-row__body span {
+  color: #0c6f54;
+}
+
+.notes h2,
+.notes h3 {
+  color: var(--paper-ink);
+}
+
+.notes p,
+.notes .section-intro {
+  color: rgba(23, 25, 22, 0.72);
+}
+
+.notes .note-list {
+  border-top-color: rgba(23, 25, 22, 0.18);
+}
+
+.notes .note-row {
+  border-bottom-color: rgba(23, 25, 22, 0.18);
+}
+
+.notes .note-row__index {
+  color: #a86213;
+}
+
+.notes .notes__toggle {
+  color: var(--paper-ink);
+  border-color: rgba(12, 111, 84, 0.38);
+  background: rgba(12, 111, 84, 0.08);
+}
+
+.notes .notes__toggle:hover {
+  color: var(--ink-strong);
+  border-color: #0c6f54;
+  background: #0c6f54;
 }
 
 .method-steps {
@@ -892,11 +1022,16 @@ p {
 
 .project-row {
   display: grid;
-  grid-template-columns: 170px 1fr 110px;
+  grid-template-columns: 150px 1fr 118px;
   gap: 32px;
-  padding: 30px 0;
+  padding: 26px 24px;
   border-bottom: 1px solid var(--line);
   align-items: start;
+  background: rgba(247, 242, 232, 0.028);
+}
+
+.project-row:nth-child(odd) {
+  background: rgba(247, 242, 232, 0.052);
 }
 
 .project-row__meta {
@@ -908,7 +1043,14 @@ p {
 }
 
 .project-row__meta span:first-child {
+  display: inline-flex;
+  width: fit-content;
+  padding: 5px 8px;
+  border: 1px solid rgba(54, 210, 156, 0.32);
+  border-radius: 4px;
   color: var(--signal);
+  background: rgba(54, 210, 156, 0.08);
+  text-transform: uppercase;
 }
 
 .project-row__body p {
@@ -937,6 +1079,16 @@ p {
   justify-self: end;
   color: var(--muted);
   font-weight: 740;
+}
+
+.project-row__link a {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  text-decoration: none;
 }
 
 .credential-list {
@@ -970,6 +1122,7 @@ p {
 .diagnostic-row,
 .publication-row,
 .proof-strip__item,
+.brand-pillar,
 .practice-panel,
 .method-step,
 .experience-panel {
@@ -992,6 +1145,7 @@ p {
   }
 
   .proof-strip__item:hover,
+  .brand-pillar:hover,
   .practice-panel:hover,
   .method-step:hover,
   .experience-panel:hover {
@@ -1005,8 +1159,13 @@ p {
   .diagnostic-row:hover h3,
   .publication-row:hover h3,
   .practice-panel:hover h3,
+  .brand-pillar:hover h3,
   .experience-panel:hover h3 {
     color: var(--ink-strong);
+  }
+
+  .notes .note-row:hover h3 {
+    color: #0b0d0d;
   }
 }
 
@@ -1075,6 +1234,10 @@ code {
 
 .contact {
   padding-bottom: 96px;
+  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(120deg, rgba(54, 210, 156, 0.1), transparent 52%),
+    rgba(247, 242, 232, 0.035);
 }
 
 .contact h2 {
@@ -1120,8 +1283,13 @@ code {
 
   .experience-grid,
   .practice-grid,
-  .method-steps {
+  .method-steps,
+  .brand-platform__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .brand-platform {
+    grid-template-columns: 1fr;
   }
 
   .persona-grid {
@@ -1131,6 +1299,19 @@ code {
   .practice-panel {
     min-height: auto;
     border-bottom: 1px solid var(--line);
+  }
+
+  .brand-pillar {
+    min-height: auto;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .brand-pillar:nth-child(2) {
+    border-right: 0;
+  }
+
+  .brand-pillar:nth-child(3) {
+    grid-column: 1 / -1;
   }
 
   .practice-panel:nth-child(2) {
@@ -1187,6 +1368,7 @@ code {
   .section-heading--wide,
   .thesis-band,
   .method,
+  .brand-platform,
   .roles,
   .badge-kit,
   .contact,
@@ -1240,7 +1422,7 @@ code {
   }
 
   .hero {
-    display: block;
+    display: grid;
     max-width: 100%;
     padding-inline: 18px;
     padding-top: 28px;
@@ -1326,40 +1508,42 @@ code {
   }
 
   .hero__visual {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    display: block;
+    position: relative;
+    z-index: 1;
+    display: grid;
     min-height: 0;
-    opacity: 0.2;
-    pointer-events: none;
+    margin-top: 6px;
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .hero__visual::before,
   .hero__visual::after {
-    display: none;
+    display: block;
   }
 
   .hero__visual img {
     width: 100%;
-    height: 100%;
-    max-height: none;
-    border: 0;
-    border-radius: 0;
+    height: auto;
+    max-height: 260px;
+    border: 1px solid rgba(247, 242, 232, 0.18);
+    border-radius: 8px;
     object-fit: cover;
     object-position: center top;
-    box-shadow: none;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.34);
   }
 
   .proof-strip,
   .practice-grid,
   .method-steps,
+  .brand-platform__grid,
   .persona-grid,
   .experience-grid {
     grid-template-columns: 1fr;
   }
 
   .proof-strip__item,
+  .brand-pillar,
   .practice-panel,
   .persona-panel,
   .experience-panel {
@@ -1378,6 +1562,14 @@ code {
 
   .section {
     padding: 64px 18px;
+  }
+
+  .notes {
+    padding-inline: 18px;
+  }
+
+  .brand-pillar:nth-child(3) {
+    grid-column: auto;
   }
 
   .delivery-row {
