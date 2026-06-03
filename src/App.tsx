@@ -10,6 +10,27 @@ const statusLabels = {
 
 const visibleNoteLimit = 4;
 
+const brandPillars = [
+  {
+    label: "Consultant",
+    title: "Infrastructure engineering judgment",
+    summary:
+      "Systems integration, assurance, readiness, and decision support for teams working across hard technical and organizational boundaries.",
+  },
+  {
+    label: "Developer",
+    title: "Working tools, not just opinions",
+    summary:
+      "Local-first prototypes, model viewers, learning games, and AI-assisted workflows that test how engineering practice can become easier to use.",
+  },
+  {
+    label: "Thought leader",
+    title: "Public practice, papers, and community work",
+    summary:
+      "INCOSE leadership, conference papers, field notes, and workshop formats that turn delivery lessons into reusable engineering practice.",
+  },
+];
+
 const navItems = [
   { id: "practice", label: "Practice" },
   { id: "principles", label: "Principles" },
@@ -119,7 +140,7 @@ function App() {
 
       <section className="hero" id="top" aria-labelledby="hero-title">
         <div className="hero__content">
-          <p className="eyebrow">Systems thinking / Rail and transit / MBSE / Assurance / AI practice</p>
+          <p className="eyebrow">Trusted engineering consultant / Developer / Industry thought leader</p>
           <h1 id="hero-title">{profile.identity.name}</h1>
           <p className="hero__title">{profile.positioning.headline}</p>
           <p className="hero__copy">{profile.positioning.subhead}</p>
@@ -131,10 +152,10 @@ function App() {
           </div>
           <div className="hero__actions" aria-label="Primary links">
             <a className="button" href="#practice">
-              Explore the practice
+              Explore the consulting practice
             </a>
             <a className="button button--quiet" href="#lab">
-              See the lab
+              See the developer lab
             </a>
           </div>
           <div className="hero__social" aria-label="External profiles">
@@ -160,18 +181,38 @@ function App() {
         ))}
       </section>
 
+      <section className="section brand-platform" aria-labelledby="brand-platform-title">
+        <div className="brand-platform__intro" data-reveal>
+          <p className="section-kicker">Brand platform</p>
+          <h2 id="brand-platform-title">Engineering credibility with builder energy.</h2>
+          <p>
+            The work sits at the intersection of trusted advisory, hands-on systems delivery, and
+            practical experimentation with AI, MBSE, assurance, and technical leadership.
+          </p>
+        </div>
+        <div className="brand-platform__grid">
+          {brandPillars.map((pillar) => (
+            <article className="brand-pillar" data-reveal key={pillar.label}>
+              <span>{pillar.label}</span>
+              <h3>{pillar.title}</h3>
+              <p>{pillar.summary}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="section thesis-band" aria-labelledby="thesis-title" data-reveal>
         <div>
           <p className="section-kicker">Personal practice</p>
-          <h2 id="thesis-title">Practical systems thinking for complex delivery.</h2>
+          <h2 id="thesis-title">Practical systems thinking for teams that need decisions to hold.</h2>
         </div>
         <p>{profile.positioning.thesis}</p>
       </section>
 
       <section className="section practice" id="practice" aria-labelledby="practice-title">
         <div className="section-heading section-heading--wide" data-reveal>
-          <p className="section-kicker">Practice areas</p>
-          <h2 id="practice-title">Where I keep sharpening the work.</h2>
+          <p className="section-kicker">Consulting practice</p>
+          <h2 id="practice-title">Where senior systems engineering judgment creates leverage.</h2>
         </div>
         <div className="practice-grid">
           {profile.practiceAreas.map((area) => (
@@ -191,7 +232,7 @@ function App() {
       <section className="section diagnostic" id="principles" aria-labelledby="principles-title">
         <div className="section-heading section-heading--wide" data-reveal>
           <p className="section-kicker">Operating principles</p>
-          <h2 id="principles-title">Useful systems engineering shows up in decisions.</h2>
+          <h2 id="principles-title">The work is only useful when it changes decisions.</h2>
         </div>
         <div className="diagnostic-list">
           {profile.operatingPrinciples.map((principle, index) => (
@@ -222,11 +263,11 @@ function App() {
 
       <section className="section notes" id="notes" aria-labelledby="notes-title">
         <div className="section-heading" data-reveal>
-          <p className="section-kicker">Field notes</p>
-          <h2 id="notes-title">Papers, notes, and ideas in progress.</h2>
+          <p className="section-kicker">Thought leadership</p>
+          <h2 id="notes-title">Public thinking from real engineering practice.</h2>
           <p className="section-intro">
-            A public shelf for selected writing and thought pieces. More notes, papers, and
-            working essays will be added as they become ready to share.
+            Papers, field notes, and working ideas that connect systems engineering practice,
+            infrastructure delivery, technical leadership, and AI-assisted engineering.
           </p>
         </div>
         <div className="note-list">
@@ -258,8 +299,8 @@ function App() {
 
       <section className="section work" id="lab" aria-labelledby="work-title">
         <div className="section-heading" data-reveal>
-          <p className="section-kicker">AI + Systems Lab</p>
-          <h2 id="work-title">Experiments that sharpen practice.</h2>
+          <p className="section-kicker">Developer lab</p>
+          <h2 id="work-title">Prototype the methods before turning them into advice.</h2>
         </div>
         <div className="project-list">
           {profile.projects.map((project: SelectedProject) => (
@@ -290,8 +331,8 @@ function App() {
 
       <section className="section practice-proof" id="proof" aria-labelledby="background-title">
         <div className="section-heading" data-reveal>
-          <p className="section-kicker">Background</p>
-          <h2 id="background-title">Professional society work and public record.</h2>
+          <p className="section-kicker">Authority signals</p>
+          <h2 id="background-title">Credentials, public record, and community trust.</h2>
         </div>
         <div className="proof-columns">
           <div>
@@ -352,13 +393,13 @@ function App() {
       <section className="section contact" id="contact" aria-labelledby="contact-title" data-reveal>
         <div>
           <p className="section-kicker">Contact</p>
-          <h2 id="contact-title">Connect on LinkedIn.</h2>
+          <h2 id="contact-title">Start a professional conversation.</h2>
         </div>
         <div>
           <p>
-            The easiest way to start a professional conversation is through LinkedIn. I use this
-            site to collect public writing, lab experiments, and systems engineering practice notes.
-            Views are my own.
+            The easiest place to connect is LinkedIn. I use this site to collect public writing,
+            developer experiments, and systems engineering practice notes for people working on
+            complex technical delivery.
           </p>
           <div className="contact__links">
             {profile.links.map((link) => (
