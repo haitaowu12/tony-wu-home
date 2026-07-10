@@ -6,14 +6,16 @@ Public author/about page for a full-time systems engineering practitioner, profe
 
 ## Visual Thesis
 
-Editorial technical practice page. Dark first viewport, briefing-board hero art, exposed grid, restrained signal colors, field-note structure, lab proof, and delivery evidence without starting as a CV or active consulting funnel.
+Artifact-first editorial technical practice page. Dark workbench hero, briefing-board art, exposed grid, restrained signal colors, real public-project proof, field-note structure, and delivery evidence without starting as a CV or active consulting funnel.
 
 ## Rules
 
 - Lead with `Tony Wu`, credentials, and a personal practice thesis: complex infrastructure programs need usable systems engineering, evidence, readiness, and decision support.
+- Position Tony as a practitioner-builder working with a consultant's lens. Do not imply an active independent consulting shop.
 - Avoid generic developer portfolio language.
 - Keep client/program specifics conservative unless explicitly cleared.
-- Put practice areas, operating principles, field notes, and AI + Systems Lab before the career timeline.
+- Use exact names for Tony's public projects and publicly documented professional programs. Never invent generic case studies to fill a visual slot.
+- Page order: hero, selected public work, about/now, practice, writing and talks, selected experience, contact.
 - Show the full personality arc: full-time rail systems engineer, technical leader, AI side-project builder, and INCOSE practice contributor.
 - Keep collaboration language low-pressure: speaking, writing, professional society work, workshops, independent review, and selective future advisory.
 - Keep the reusable author badge available for other repos, but do not render it on the homepage.
@@ -21,7 +23,11 @@ Editorial technical practice page. Dark first viewport, briefing-board hero art,
 - Use dense evidence panels and rows, not a generic card wall.
 - Keep author badge quiet and reusable.
 - No decorative blobs, hype gradients, floating badge overlays, or modal-style author promos.
-- Motion should feel like a systems briefing coming into focus: one staged hero entrance, restrained section reveals, subtle scan/trace cues, and hover affordance that helps scanning. No looping spectacle, parallax dependency, or animation that hides content when JavaScript is unavailable.
+- No portrait in the primary page direction. The work is the visual identity. Revisit portraiture only with a deliberately commissioned editorial asset that avoids photorealistic or uncanny generated likenesses.
+- Motion donors: asymmetric editorial composition, ordered hero reveal, hero-to-proof transition, and layered interface depth from the local MotionSites-derived pattern library.
+- Motion should feel like a systems briefing coming into focus: one 450-900 ms semantic hero entrance, one native-scroll hero-to-proof handoff, bounded depth in real project rows, restrained section reveals, and hover/focus affordance that helps scanning.
+- No looping spectacle, cursor chase, particles, perpetual float, scroll hijacking, or animation that hides content when JavaScript is unavailable.
+- `prefers-reduced-motion` renders the identical final hierarchy immediately, removes scroll-linked transforms, and keeps every action available.
 - HyperFrames belongs to separate video or social assets, not the live responsive page runtime.
 
 ## Tokens

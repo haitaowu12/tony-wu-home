@@ -69,9 +69,9 @@ export const profile = {
     location: "Vancouver, Canada",
   },
   positioning: {
-    headline: "Systems engineering for infrastructure programs where interfaces, evidence, and readiness decide delivery.",
+    headline: "Systems engineering for complex delivery. Practical methods. Usable tools.",
     subhead:
-      "I work in rail systems practice in Vancouver. This site collects field notes, public practice work, and lab experiments around MBSE, assurance, AI-assisted engineering, and technical leadership.",
+      "I help complex infrastructure programs turn interfaces, evidence, and readiness into decisions teams can act on. Outside delivery work, I build public tools and field notes that make systems practice easier to use.",
     thesis:
       "The thread through my work is decision quality: make complexity visible, connect evidence to acceptance, keep interfaces owned, and leave teams with methods they can actually use.",
   },
@@ -188,21 +188,20 @@ export const profile = {
       title: "Right-sized systems engineering for infrastructure programs",
       status: "Paper - In Progress",
       summary:
-        "A practical response to a recurring problem: simple projects can be smothered by over-prescribed process, while complex projects can lose the value of SE when rigor is cut too far. The work explores clearer ways to match SE rigor to project drivers and understand how tailoring one process affects the others.",
+        "A practical framework for matching systems engineering rigor to project drivers, process interdependencies, culture, and delivery risk.",
       linkPlaceholder: "Paper link pending",
     },
     {
       title: "Building an AI-Augmented Technical Leadership Model",
-      status: "Paper - Finalized",
+      status: "Presented at INCOSE IS 2026",
       summary:
-        "An INCOSE IS 2026 paper updating the TLI technical leadership model for human-AI collaboration, adaptive decision-making, organizational AI literacy, and ethical technology stewardship.",
-      linkPlaceholder: "Paper link pending",
+        "An update to the TLI technical leadership model for human-AI collaboration, adaptive decision-making, organizational AI literacy, and ethical technology stewardship.",
     },
     {
       title: "Scenario games for practical systems thinking",
       status: "Note",
       summary:
-        "A note on using small scenario-based interactions and games to make systems engineering easier to understand for non-SE practitioners. Systems thinking should feel like common sense: a way to bring order to chaos, not a specialist ritual.",
+        "How small scenario-based games can make systems thinking tangible to people who do not work formally as systems engineers.",
     },
   ] satisfies FieldNote[],
   experienceChapters: [
@@ -213,7 +212,7 @@ export const profile = {
       geography: "Canada",
       role: "Control Systems Analyst, Pratt & Whitney Canada",
       summary:
-        "Built engine-control logic, analysis models, and verification evidence for aircraft engine programs across helicopter, propeller, and turbofan applications.",
+        "Developed and verified control logic and analysis models for helicopter, propeller, and turbofan engine programs in a DO-178 B/C environment.",
       highlights: [
         "Developed control algorithms, dynamic analyses, and simulation models for helicopter, propeller, and turbofan engine programs.",
         "Carried control-system logic through V-model development in a DO-178 B/C environment.",
@@ -228,7 +227,7 @@ export const profile = {
       geography: "Canada",
       role: "Train Control Systems Engineer, SNC-Lavalin / AtkinsRealis",
       summary:
-        "Built rail systems delivery and advisory depth across automated train control, requirements, interfaces, supplier reviews, testing, commissioning, RAMS, V&V, and strategic consulting studies.",
+        "Delivered train-control, requirements, interfaces, testing, RAMS, V&V, and advisory work across Canada Line Capacity Expansion, SkyTrain OMC3A, Montréal REM, and Eglinton Crosstown LRT.",
       highlights: [
         "Supported projects including Canada Line Capacity Expansion, SkyTrain OMC3A, Montreal REM, Eglinton Crosstown LRT, and related transit assignments.",
         "Contributed to strategic consulting and feasibility work including service-hour, station-impact, rail-condition, and switch-machine studies.",
@@ -242,7 +241,7 @@ export const profile = {
       geography: "Vancouver, Canada",
       role: "Principal Engineer, Rail Systems / Rail Expansion Systems Integration Lead, Mott MacDonald",
       summary:
-        "Progressed from Senior Systems Engineer into Principal Engineer while helping build program-level systems engineering, assurance, integration, and readiness capability for major SkyTrain expansion work.",
+        "Leads systems engineering, assurance, integration, and readiness for major SkyTrain expansion work, supported by practical MBSE and digital workflows.",
       highlights: [
         "Led and supported requirements, interfaces, V&V, technical governance, assurance, and readiness across multiple concurrent rail expansion projects.",
         "Advanced outcome-based assurance, Success Criteria, Path to Acceptance, configuration-phase delivery, headend sequencing, and technical gap closure practices.",
@@ -256,7 +255,7 @@ export const profile = {
       geography: "Canada / International",
       role: "Director-at-Large / Past President, INCOSE Canada",
       summary:
-        "Contributes to the systems engineering community through INCOSE Canada leadership, technical leadership work, certification review, and transportation infrastructure practice development.",
+        "Contributes through INCOSE Canada leadership, Technical Leadership Institute work, certification review, and transportation practice development.",
       highlights: [
         "Served as Communications Director, Vice President, President, and now Director-at-Large / Past President for INCOSE Canada.",
         "Member of the INCOSE Technical Leadership Institute and Certification Application Reviewer for INCOSE Central.",
@@ -331,9 +330,9 @@ export const profile = {
     {
       title: "Building an AI-Augmented Technical Leadership Model",
       kind: "conference",
-      status: "Accepted for INCOSE International Symposium 2026, Yokohama",
+      status: "Presented at INCOSE International Symposium 2026; proceedings and public version pending",
       summary:
-        "An accepted INCOSE IS 2026 paper proposing an AI-augmented extension of the TLI technical leadership model, retaining the six original behaviors while adding competencies for human-AI collaboration, adaptive leadership, AI literacy, and ethical technology stewardship.",
+        "An INCOSE IS 2026 paper proposing an AI-augmented extension of the TLI technical leadership model, retaining the six original behaviors while adding competencies for human-AI collaboration, adaptive leadership, AI literacy, and ethical technology stewardship.",
     },
     {
       title: "A Modular Framework for Tailoring Systems Engineering Processes",
