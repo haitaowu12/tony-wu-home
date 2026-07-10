@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { profile } from "./content/profile";
-import type { SelectedProject } from "./content/profile";
 
 const statusLabels = {
   public: "Public",
@@ -8,120 +7,135 @@ const statusLabels = {
   "local-private": "Local/private",
 };
 
-const visibleNoteLimit = 4;
-
-const brandPillars = [
-  {
-    label: "Consultant",
-    title: "Infrastructure engineering judgment",
-    summary:
-      "Systems integration, assurance, readiness, and decision support for teams working across hard technical and organizational boundaries.",
-  },
-  {
-    label: "Developer",
-    title: "Working tools, not just opinions",
-    summary:
-      "Local-first prototypes, model viewers, learning games, and AI-assisted workflows that test how engineering practice can become easier to use.",
-  },
-  {
-    label: "Thought leader",
-    title: "Public practice, papers, and community work",
-    summary:
-      "INCOSE leadership, conference papers, field notes, and workshop formats that turn delivery lessons into reusable engineering practice.",
-  },
-];
-
 const navItems = [
+  { id: "work", label: "Work" },
+  { id: "about", label: "About" },
   { id: "practice", label: "Practice" },
-  { id: "principles", label: "Principles" },
-  { id: "notes", label: "Field notes" },
-  { id: "lab", label: "Lab" },
-  { id: "proof", label: "Background" },
-  { id: "delivery", label: "Experience" },
+  { id: "writing", label: "Writing" },
+  { id: "experience", label: "Experience" },
   { id: "contact", label: "Contact" },
 ];
 
 function App() {
-  const [showAllNotes, setShowAllNotes] = useState(false);
   const [activeSection, setActiveSection] = useState("top");
-  const hasMoreNotes = profile.fieldNotes.length > visibleNoteLimit;
-  const visibleNotes = showAllNotes
-    ? profile.fieldNotes
-    : profile.fieldNotes.slice(0, visibleNoteLimit);
+  const featuredProjects = useMemo(
+    () => profile.projects.filter((project) => project.link).slice(0, 4),
+    [],
+  );
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (prefersReducedMotion) {
-      return;
-    }
-
-    document.documentElement.classList.add("motion-ready");
-
+    const root = document.documentElement;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const revealItems = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    let pageFrame = 0;
+    let scrollFrame = 0;
 
-    if (!("IntersectionObserver" in window)) {
-      revealItems.forEach((item) => item.classList.add("is-visible"));
-      return;
+    if (!reducedMotion) {
+      root.classList.add("motion-ready");
+      pageFrame = window.requestAnimationFrame(() => root.classList.add("page-ready"));
     }
 
-    revealItems.forEach((item, index) => {
-      item.style.setProperty("--reveal-order", String(index % 8));
-    });
+    if (!reducedMotion && "IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: "0px 0px -12% 0px", threshold: 0.12 },
+      );
 
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { rootMargin: "0px 0px -14% 0px", threshold: 0.1 },
-    );
+      revealItems.forEach((item) => revealObserver.observe(item));
 
-    revealItems.forEach((item) => revealObserver.observe(item));
+      const updateHeroProgress = () => {
+        scrollFrame = 0;
+        const hero = document.getElementById("top");
+        if (!hero) return;
+        const progress = Math.min(Math.max(window.scrollY / (hero.offsetHeight * 0.82), 0), 1);
+        root.style.setProperty("--hero-progress", progress.toFixed(3));
+        root.style.setProperty("--hero-shift", `${Math.round(progress * -18)}px`);
+        root.style.setProperty("--hero-scale", (1.02 + progress * 0.025).toFixed(3));
+      };
 
-    return () => {
-      revealObserver.disconnect();
-    };
-  }, [showAllNotes]);
+      const queueHeroProgress = () => {
+        if (!scrollFrame) scrollFrame = window.requestAnimationFrame(updateHeroProgress);
+      };
+
+      updateHeroProgress();
+      window.addEventListener("scroll", queueHeroProgress, { passive: true });
+
+      return () => {
+        revealObserver.disconnect();
+        window.removeEventListener("scroll", queueHeroProgress);
+        window.cancelAnimationFrame(pageFrame);
+        window.cancelAnimationFrame(scrollFrame);
+        root.classList.remove("motion-ready", "page-ready");
+        root.style.removeProperty("--hero-progress");
+        root.style.removeProperty("--hero-shift");
+        root.style.removeProperty("--hero-scale");
+      };
+    }
+
+    revealItems.forEach((item) => item.classList.add("is-visible"));
+    return () => window.cancelAnimationFrame(pageFrame);
+  }, []);
 
   useEffect(() => {
+    const root = document.documentElement;
+    let hashTimer = 0;
+    let activeFrame = 0;
     const sectionIds = ["top", ...navItems.map((item) => item.id)];
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => Boolean(section));
 
-    if (!("IntersectionObserver" in window)) {
-      return;
+    const updateActiveSection = () => {
+      activeFrame = 0;
+      const navHeight = document.querySelector(".site-nav")?.getBoundingClientRect().height ?? 0;
+      const marker = window.scrollY + navHeight + 28;
+      const current = sections.reduce(
+        (active, section) => (section.offsetTop <= marker ? section.id : active),
+        "top",
+      );
+      setActiveSection(current);
+    };
+
+    const queueActiveSection = () => {
+      if (!activeFrame) activeFrame = window.requestAnimationFrame(updateActiveSection);
+    };
+
+    const hashTarget = window.location.hash.slice(1);
+    if (hashTarget) {
+      root.classList.add("hash-jump");
+      hashTimer = window.setTimeout(() => {
+        const target = document.getElementById(hashTarget);
+        const navHeight = document.querySelector(".site-nav")?.getBoundingClientRect().height ?? 0;
+        if (target) window.scrollTo(0, Math.max(0, target.offsetTop - navHeight - 16));
+        root.classList.remove("hash-jump");
+        updateActiveSection();
+      }, 60);
     }
 
-    const navObserver = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visibleEntry?.target.id) {
-          setActiveSection(visibleEntry.target.id);
-        }
-      },
-      { rootMargin: "-35% 0px -55% 0px", threshold: [0.05, 0.2, 0.45] },
-    );
-
-    sections.forEach((section) => navObserver.observe(section));
+    updateActiveSection();
+    window.addEventListener("scroll", queueActiveSection, { passive: true });
+    window.addEventListener("resize", queueActiveSection);
 
     return () => {
-      navObserver.disconnect();
+      window.clearTimeout(hashTimer);
+      window.cancelAnimationFrame(activeFrame);
+      window.removeEventListener("scroll", queueActiveSection);
+      window.removeEventListener("resize", queueActiveSection);
+      root.classList.remove("hash-jump");
     };
   }, []);
 
   return (
     <main>
       <nav className="site-nav" aria-label="Page sections">
-        <a className="site-nav__brand" href="#top">
+        <a className="site-nav__brand" href="#top" aria-current={activeSection === "top" ? "page" : undefined}>
           Tony Wu
         </a>
         <div className="site-nav__links">
@@ -140,175 +154,93 @@ function App() {
 
       <section className="hero" id="top" aria-labelledby="hero-title">
         <div className="hero__content">
-          <p className="eyebrow">Trusted engineering consultant / Developer / Industry thought leader</p>
-          <h1 id="hero-title">{profile.identity.name}</h1>
-          <p className="hero__title">{profile.positioning.headline}</p>
-          <p className="hero__copy">{profile.positioning.subhead}</p>
-          <div className="hero__meta" aria-label="Professional scope">
-            <span>{profile.identity.credentials}</span>
-            <span>{profile.identity.title}</span>
-            <span>{profile.identity.location}</span>
-            <span>Director-at-Large / Past President, INCOSE Canada</span>
-          </div>
-          <div className="hero__actions" aria-label="Primary links">
-            <a className="button" href="#practice">
-              Explore the consulting practice
+          <p className="eyebrow" data-hero-item="1">
+            Rail systems / MBSE / assurance / AI-augmented practice
+          </p>
+          <h1 id="hero-title" data-hero-item="2">
+            {profile.identity.name}
+          </h1>
+          <p className="hero__title" data-hero-item="3">
+            {profile.positioning.headline}
+          </p>
+          <p className="hero__copy" data-hero-item="4">
+            {profile.positioning.subhead}
+          </p>
+          <div className="hero__actions" data-hero-item="5" aria-label="Primary links">
+            <a className="button" href="#work">
+              Explore selected work
             </a>
-            <a className="button button--quiet" href="#lab">
-              See the developer lab
+            <a className="button button--quiet" href="#writing">
+              Read field notes
             </a>
           </div>
-          <div className="hero__social" aria-label="External profiles">
-            {profile.links.map((link) => (
-              <a href={link.href} key={link.href}>
-                {link.label}
-              </a>
-            ))}
-          </div>
+          <dl className="hero__identity" data-hero-item="6">
+            <div>
+              <dt>Role</dt>
+              <dd>{profile.identity.title}</dd>
+            </div>
+            <div>
+              <dt>Based</dt>
+              <dd>{profile.identity.location}</dd>
+            </div>
+            <div>
+              <dt>Practice</dt>
+              <dd>Full lifecycle systems engineering</dd>
+            </div>
+          </dl>
         </div>
 
-        <div className="hero__visual" aria-label="Systems engineering briefing">
-          <img src="./hero-systems-briefing.webp" alt="" />
+        <div className="hero__stage" data-hero-item="7" aria-label="Systems engineering workbench">
+          <div className="hero__visual">
+            <img src="./hero-systems-briefing.webp" alt="Systems engineering briefing board with rail, model, evidence, and readiness artifacts" />
+          </div>
+          <div className="hero__project-index" aria-label="Featured public work">
+            <p>Public work index</p>
+            <ol>
+              {featuredProjects.slice(0, 3).map((project, index) => (
+                <li key={project.title}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  {project.title}
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </section>
 
-      <section className="proof-strip" aria-label="Professional proof points">
-        {profile.proofPoints.map((item) => (
-          <div className="proof-strip__item" data-reveal key={item.label}>
-            <strong>{item.value}</strong>
-            <span>{item.label}</span>
-          </div>
-        ))}
-      </section>
+      <aside className="evidence-rail" aria-label="Professional context" data-reveal="handoff">
+        <div>
+          <strong>{profile.proofPoints[0].value}</strong>
+          <span>{profile.proofPoints[0].label}</span>
+        </div>
+        <p>{profile.identity.credentials}</p>
+        <p>Director-at-Large / Past President, INCOSE Canada</p>
+      </aside>
 
-      <section className="section brand-platform" aria-labelledby="brand-platform-title">
-        <div className="brand-platform__intro" data-reveal>
-          <p className="section-kicker">Brand platform</p>
-          <h2 id="brand-platform-title">Engineering credibility with builder energy.</h2>
+      <section className="section work" id="work" aria-labelledby="work-title">
+        <header className="section-heading section-heading--work" data-reveal="handoff">
+          <div>
+            <p className="section-kicker">Selected public work</p>
+            <h2 id="work-title">Methods made tangible.</h2>
+          </div>
           <p>
-            The work sits at the intersection of trusted advisory, hands-on systems delivery, and
-            practical experimentation with AI, MBSE, assurance, and technical leadership.
+            Open tools, models, and learning experiences built to test how systems engineering can
+            become clearer, more usable, and easier to transfer.
           </p>
-        </div>
-        <div className="brand-platform__grid">
-          {brandPillars.map((pillar) => (
-            <article className="brand-pillar" data-reveal key={pillar.label}>
-              <span>{pillar.label}</span>
-              <h3>{pillar.title}</h3>
-              <p>{pillar.summary}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+        </header>
 
-      <section className="section thesis-band" aria-labelledby="thesis-title" data-reveal>
-        <div>
-          <p className="section-kicker">Personal practice</p>
-          <h2 id="thesis-title">Practical systems thinking for teams that need decisions to hold.</h2>
-        </div>
-        <p>{profile.positioning.thesis}</p>
-      </section>
-
-      <section className="section practice" id="practice" aria-labelledby="practice-title">
-        <div className="section-heading section-heading--wide" data-reveal>
-          <p className="section-kicker">Consulting practice</p>
-          <h2 id="practice-title">Where senior systems engineering judgment creates leverage.</h2>
-        </div>
-        <div className="practice-grid">
-          {profile.practiceAreas.map((area) => (
-            <article className="practice-panel" data-reveal key={area.title}>
-              <h3>{area.title}</h3>
-              <p>{area.summary}</p>
-              <ul>
-                {area.outcomes.map((outcome) => (
-                  <li key={outcome}>{outcome}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section diagnostic" id="principles" aria-labelledby="principles-title">
-        <div className="section-heading section-heading--wide" data-reveal>
-          <p className="section-kicker">Operating principles</p>
-          <h2 id="principles-title">The work is only useful when it changes decisions.</h2>
-        </div>
-        <div className="diagnostic-list">
-          {profile.operatingPrinciples.map((principle, index) => (
-            <article className="diagnostic-row" data-reveal key={principle.title}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <h3>{principle.title}</h3>
-              <p>{principle.summary}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section method" aria-labelledby="method-title" data-reveal>
-        <div>
-          <p className="section-kicker">Working method</p>
-          <h2 id="method-title">Frame, tailor, connect, transfer.</h2>
-        </div>
-        <div className="method-steps">
-          {profile.methodSteps.map((step) => (
-            <article className="method-step" key={step.label}>
-              <span>{step.label}</span>
-              <h3>{step.title}</h3>
-              <p>{step.summary}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section notes" id="notes" aria-labelledby="notes-title">
-        <div className="section-heading" data-reveal>
-          <p className="section-kicker">Thought leadership</p>
-          <h2 id="notes-title">Public thinking from real engineering practice.</h2>
-          <p className="section-intro">
-            Papers, field notes, and working ideas that connect systems engineering practice,
-            infrastructure delivery, technical leadership, and AI-assisted engineering.
-          </p>
-        </div>
-        <div className="note-list">
-          {visibleNotes.map((note, index) => (
-            <article className="note-row" data-reveal key={note.title}>
-              <div className="note-row__index">{String(index + 1).padStart(2, "0")}</div>
-              <div>
-                <p className="note-row__status">{note.status}</p>
-                <h3>{note.title}</h3>
-              </div>
-              <div className="note-row__body">
-                <p>{note.summary}</p>
-                {note.linkPlaceholder && <span>{note.linkPlaceholder}</span>}
-              </div>
-            </article>
-          ))}
-        </div>
-        {hasMoreNotes && (
-          <button
-            className="notes__toggle"
-            type="button"
-            aria-expanded={showAllNotes}
-            onClick={() => setShowAllNotes((value) => !value)}
-          >
-            {showAllNotes ? "Show fewer notes" : `Show ${profile.fieldNotes.length - visibleNoteLimit} more`}
-          </button>
-        )}
-      </section>
-
-      <section className="section work" id="lab" aria-labelledby="work-title">
-        <div className="section-heading" data-reveal>
-          <p className="section-kicker">Developer lab</p>
-          <h2 id="work-title">Prototype the methods before turning them into advice.</h2>
-        </div>
-        <div className="project-list">
-          {profile.projects.map((project: SelectedProject) => (
-            <article className="project-row" data-reveal key={project.title}>
-              <div className="project-row__meta">
+        <div className="project-stack">
+          {featuredProjects.map((project, index) => (
+            <article
+              className="project-entry"
+              data-reveal="project"
+              key={project.title}
+            >
+              <div className="project-entry__meta">
+                <span>{String(index + 1).padStart(2, "0")}</span>
                 <span>{statusLabels[project.status]}</span>
               </div>
-              <div className="project-row__body">
+              <div className="project-entry__body">
                 <h3>{project.title}</h3>
                 <p>{project.summary}</p>
                 <ul aria-label={`${project.title} themes`}>
@@ -317,94 +249,133 @@ function App() {
                   ))}
                 </ul>
               </div>
-              <div className="project-row__link">
-                {project.link ? (
-                  <a href={project.link.href}>{project.link.label}</a>
-                ) : (
-                  <span>{project.availabilityLabel ?? "Private for now"}</span>
-                )}
+              {project.link && (
+                <a className="project-entry__link" href={project.link.href}>
+                  Open project
+                </a>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="statement" id="about" aria-labelledby="about-title">
+        <div className="statement__label" data-reveal>
+          <p className="section-kicker">About / Now</p>
+          <p>{profile.identity.title}</p>
+          <p>{profile.identity.location}</p>
+        </div>
+        <div className="statement__body" data-reveal>
+          <h2 id="about-title">Make complexity visible. Leave teams with something they can use.</h2>
+          <p>{profile.positioning.thesis}</p>
+        </div>
+      </section>
+
+      <section className="section practice" id="practice" aria-labelledby="practice-title">
+        <header className="section-heading" data-reveal>
+          <div>
+            <p className="section-kicker">Practice</p>
+            <h2 id="practice-title">Systems engineering that holds up in delivery.</h2>
+          </div>
+          <p>
+            The focus is delivery: enough rigor to expose risk, enough tailoring to remain usable,
+            and enough evidence for decisions to hold.
+          </p>
+        </header>
+        <div className="practice-list">
+          {profile.practiceAreas.map((area, index) => (
+            <article className="practice-entry" data-reveal key={area.title}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <div>
+                <h3>{area.title}</h3>
+                <p>{area.summary}</p>
               </div>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="section practice-proof" id="proof" aria-labelledby="background-title">
-        <div className="section-heading" data-reveal>
-          <p className="section-kicker">Authority signals</p>
-          <h2 id="background-title">Credentials, public record, and community trust.</h2>
-        </div>
-        <div className="proof-columns">
+      <section className="section writing" id="writing" aria-labelledby="writing-title">
+        <header className="section-heading" data-reveal>
           <div>
-            <h3>Credentials, leadership, recognition</h3>
-            <ul className="credential-list">
-              {profile.recognition.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+            <p className="section-kicker">Writing & talks</p>
+            <h2 id="writing-title">Field notes from real practice.</h2>
           </div>
-          <div>
-            <h3>Public record</h3>
-            <div className="publication-list">
-              {profile.publications.map((item) => (
-                <article className="publication-row" data-reveal key={item.title}>
-                  <div>
-                    <span className="type-label">{item.kind}</span>
-                    <h3>{item.title}</h3>
-                  </div>
-                  <div>
-                    <p className="publication-row__status">{item.status}</p>
-                    <p>{item.summary}</p>
-                    {item.link && <a href={item.link.href}>{item.link.label}</a>}
-                  </div>
-                </article>
-              ))}
-            </div>
+          <p>
+            Papers and working ideas across systems engineering tailoring, technical leadership,
+            infrastructure delivery, and human-AI collaboration.
+          </p>
+        </header>
+        <div className="writing-grid">
+          <div className="note-list">
+            {profile.fieldNotes.map((note, index) => (
+              <article className="note-entry" data-reveal key={note.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <p className="type-label">{note.status}</p>
+                  <h3>{note.title}</h3>
+                  <p>{note.summary}</p>
+                </div>
+              </article>
+            ))}
           </div>
+          <aside className="publication-index" data-reveal aria-label="Public record">
+            <p className="section-kicker">Public record</p>
+            {profile.publications.slice(0, 3).map((item) => (
+              <article key={item.title}>
+                <p className="type-label">{item.kind}</p>
+                <h3>{item.title}</h3>
+                <p>{item.status}</p>
+                {item.link && <a href={item.link.href}>{item.link.label}</a>}
+              </article>
+            ))}
+          </aside>
         </div>
       </section>
 
-      <section className="section delivery" id="delivery" aria-labelledby="delivery-title">
-        <div className="section-heading section-heading--wide" data-reveal>
-          <p className="section-kicker">Selected experience contexts</p>
-          <h2 id="delivery-title">Experience behind the point of view.</h2>
-        </div>
-        <div className="experience-grid">
+      <section className="section experience" id="experience" aria-labelledby="experience-title">
+        <header className="section-heading" data-reveal>
+          <div>
+            <p className="section-kicker">Selected experience</p>
+            <h2 id="experience-title">The record behind the point of view.</h2>
+          </div>
+          <p>
+            Aerospace controls, rail systems delivery, strategic consulting, major expansion
+            programs, and professional community leadership.
+          </p>
+        </header>
+        <div className="experience-list">
           {profile.experienceChapters.map((chapter) => (
-            <article className="experience-panel" data-reveal key={chapter.title}>
-              <div className="experience-panel__topline">
+            <article className="experience-entry" data-reveal key={chapter.title}>
+              <div>
                 <span>{chapter.period}</span>
                 <span>{chapter.geography}</span>
               </div>
-              <p className="type-label">{chapter.industry}</p>
-              <h3>{chapter.title}</h3>
-              <p className="experience-panel__role">{chapter.role}</p>
+              <div>
+                <p className="type-label">{chapter.industry}</p>
+                <h3>{chapter.title}</h3>
+                <p className="experience-entry__role">{chapter.role}</p>
+              </div>
               <p>{chapter.summary}</p>
-              <ul>
-                {chapter.highlights.map((highlight) => (
-                  <li key={highlight}>{highlight}</li>
-                ))}
-              </ul>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="section contact" id="contact" aria-labelledby="contact-title" data-reveal>
+      <section className="contact" id="contact" aria-labelledby="contact-title" data-reveal>
         <div>
           <p className="section-kicker">Contact</p>
-          <h2 id="contact-title">Start a professional conversation.</h2>
+          <h2 id="contact-title">Compare notes. Build better practice.</h2>
         </div>
         <div>
           <p>
-            The easiest place to connect is LinkedIn. I use this site to collect public writing,
-            developer experiments, and systems engineering practice notes for people working on
-            complex technical delivery.
+            I welcome conversations around systems engineering practice, technical leadership,
+            public-interest infrastructure, workshops, writing, and selective future advisory work.
           </p>
           <div className="contact__links">
             {profile.links.map((link) => (
               <a href={link.href} key={link.href}>
-                {link.label}
+                Connect on {link.label}
               </a>
             ))}
           </div>
