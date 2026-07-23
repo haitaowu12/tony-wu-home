@@ -34,7 +34,10 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Build
+      - name: Audit production dependencies
+        run: npm run audit
+
+      - name: Type-check and build
         run: npm run build
 
       - name: Configure Pages
