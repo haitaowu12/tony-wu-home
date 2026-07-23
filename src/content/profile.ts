@@ -9,6 +9,10 @@ export type SelectedProject = {
   status: "public" | "prototype" | "local-private";
   themes: string[];
   link?: Link;
+  preview?: {
+    src: string;
+    alt: string;
+  };
   availabilityLabel?: string;
 };
 
@@ -271,6 +275,10 @@ export const profile = {
       status: "public",
       themes: ["INCOSE TIW 2026", "tailoring", "infrastructure SE"],
       link: { label: "Open", href: "https://haitaowu12.github.io/SE_Tailoring_Framework" },
+      preview: {
+        src: "./project-previews/se-tailoring-model.webp",
+        alt: "SE Tailoring Model assessment interface showing its right-size-the-work introduction",
+      },
     },
     {
       title: "SysML Viewer",
@@ -279,6 +287,10 @@ export const profile = {
       status: "prototype",
       themes: ["SysML v2", "model readability", "diagram workflow"],
       link: { label: "Open", href: "https://haitaowu12.github.io/sysmlv2_viewer/" },
+      preview: {
+        src: "./project-previews/sysml-viewer.webp",
+        alt: "SysML Viewer with synchronized model explorer, source editor, and system diagram",
+      },
     },
     {
       title: "SE Learning Quest",
@@ -287,6 +299,10 @@ export const profile = {
       status: "public",
       themes: ["SE education", "Phaser", "scenario learning"],
       link: { label: "Open", href: "https://haitaowu12.github.io/SE-Learning-Quest/" },
+      preview: {
+        src: "./project-previews/se-learning-quest.webp",
+        alt: "SE Learning Quest homepage introducing evidence-backed systems engineering scenarios",
+      },
     },
     {
       title: "Compliance Assurance Workbench",

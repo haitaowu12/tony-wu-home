@@ -11,9 +11,12 @@ npm install
 npm run dev
 ```
 
+`npm run dev` binds to localhost. Use `npm run dev:lan` only when another device must access the development server, and use it only on a trusted network.
+
 ## Build
 
 ```bash
+npm run audit
 npm run build
 npm run preview
 ```
@@ -81,4 +84,4 @@ Rendered QA artifacts are stored in:
 docs/qa/
 ```
 
-Current checks cover desktop, mobile, console health, and the live GitHub Pages route.
+Current checks cover the documented responsive matrix, mobile navigation, console health, dependency audit, and the live GitHub Pages route.

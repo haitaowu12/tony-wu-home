@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { profile } from "./content/profile";
 
 const statusLabels = {
@@ -16,72 +16,40 @@ const navItems = [
   { id: "contact", label: "Contact" },
 ];
 
+const featuredProjects = profile.projects.filter((project) => project.link).slice(0, 4);
+const spotlightProject = featuredProjects[0]!;
+const indexedProjects = featuredProjects.slice(1);
+
 function App() {
   const [activeSection, setActiveSection] = useState("top");
-  const featuredProjects = useMemo(
-    () => profile.projects.filter((project) => project.link).slice(0, 4),
-    [],
-  );
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const root = document.documentElement;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const revealItems = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
     let pageFrame = 0;
-    let scrollFrame = 0;
 
     if (!reducedMotion) {
       root.classList.add("motion-ready");
       pageFrame = window.requestAnimationFrame(() => root.classList.add("page-ready"));
     }
 
-    if (!reducedMotion && "IntersectionObserver" in window) {
-      const revealObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              revealObserver.unobserve(entry.target);
-            }
-          });
-        },
-        { rootMargin: "0px 0px -12% 0px", threshold: 0.12 },
-      );
-
-      revealItems.forEach((item) => revealObserver.observe(item));
-
-      const updateHeroProgress = () => {
-        scrollFrame = 0;
-        const hero = document.getElementById("top");
-        if (!hero) return;
-        const progress = Math.min(Math.max(window.scrollY / (hero.offsetHeight * 0.82), 0), 1);
-        root.style.setProperty("--hero-progress", progress.toFixed(3));
-        root.style.setProperty("--hero-shift", `${Math.round(progress * -18)}px`);
-        root.style.setProperty("--hero-scale", (1.02 + progress * 0.025).toFixed(3));
-      };
-
-      const queueHeroProgress = () => {
-        if (!scrollFrame) scrollFrame = window.requestAnimationFrame(updateHeroProgress);
-      };
-
-      updateHeroProgress();
-      window.addEventListener("scroll", queueHeroProgress, { passive: true });
-
-      return () => {
-        revealObserver.disconnect();
-        window.removeEventListener("scroll", queueHeroProgress);
-        window.cancelAnimationFrame(pageFrame);
-        window.cancelAnimationFrame(scrollFrame);
-        root.classList.remove("motion-ready", "page-ready");
-        root.style.removeProperty("--hero-progress");
-        root.style.removeProperty("--hero-shift");
-        root.style.removeProperty("--hero-scale");
-      };
-    }
-
-    revealItems.forEach((item) => item.classList.add("is-visible"));
-    return () => window.cancelAnimationFrame(pageFrame);
+    return () => {
+      window.cancelAnimationFrame(pageFrame);
+      root.classList.remove("motion-ready", "page-ready");
+    };
   }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -96,10 +64,14 @@ function App() {
       activeFrame = 0;
       const navHeight = document.querySelector(".site-nav")?.getBoundingClientRect().height ?? 0;
       const marker = window.scrollY + navHeight + 28;
-      const current = sections.reduce(
-        (active, section) => (section.offsetTop <= marker ? section.id : active),
-        "top",
-      );
+      const atPageEnd =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      const current = atPageEnd
+        ? sectionIds[sectionIds.length - 1]
+        : sections.reduce(
+            (active, section) => (section.offsetTop <= marker ? section.id : active),
+            "top",
+          );
       setActiveSection(current);
     };
 
@@ -115,7 +87,7 @@ function App() {
         const navHeight = document.querySelector(".site-nav")?.getBoundingClientRect().height ?? 0;
         if (target) window.scrollTo(0, Math.max(0, target.offsetTop - navHeight - 16));
         root.classList.remove("hash-jump");
-        updateActiveSection();
+        setActiveSection(hashTarget);
       }, 60);
     }
 
@@ -133,18 +105,44 @@ function App() {
   }, []);
 
   return (
-    <main>
+    <>
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
       <nav className="site-nav" aria-label="Page sections">
-        <a className="site-nav__brand" href="#top" aria-current={activeSection === "top" ? "page" : undefined}>
+        <a
+          className="site-nav__brand"
+          href="#top"
+          aria-current={activeSection === "top" ? "location" : undefined}
+          onClick={() => setMenuOpen(false)}
+        >
           Tony Wu
         </a>
-        <div className="site-nav__links">
+        <button
+          className="site-nav__toggle"
+          type="button"
+          aria-label={menuOpen ? "Close page menu" : "Open page menu"}
+          aria-controls="site-nav-links"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span aria-hidden="true">Menu</span>
+          <span className="site-nav__toggle-lines" aria-hidden="true" />
+        </button>
+        <div
+          className={`site-nav__links${menuOpen ? " is-open" : ""}`}
+          id="site-nav-links"
+        >
           {navItems.map((item) => (
             <a
-              aria-current={activeSection === item.id ? "page" : undefined}
+              aria-current={activeSection === item.id ? "location" : undefined}
               className={activeSection === item.id ? "is-active" : undefined}
               href={`#${item.id}`}
               key={item.id}
+              onClick={() => {
+                setActiveSection(item.id);
+                setMenuOpen(false);
+              }}
             >
               {item.label}
             </a>
@@ -152,6 +150,7 @@ function App() {
         </div>
       </nav>
 
+      <main id="main-content">
       <section className="hero" id="top" aria-labelledby="hero-title">
         <div className="hero__content">
           <p className="eyebrow" data-hero-item="1">
@@ -229,15 +228,51 @@ function App() {
           </p>
         </header>
 
-        <div className="project-stack">
-          {featuredProjects.map((project, index) => (
+        <article className="project-spotlight" data-reveal="project">
+          {spotlightProject.preview && (
+            <a
+              className="project-spotlight__visual"
+              href={spotlightProject.link?.href}
+              aria-label={`Open ${spotlightProject.title}`}
+            >
+              <img
+                src={spotlightProject.preview.src}
+                alt={spotlightProject.preview.alt}
+                width="1440"
+                height="900"
+              />
+            </a>
+          )}
+          <div className="project-spotlight__body">
+            <div className="project-entry__meta">
+              <span>01</span>
+              <span>{statusLabels[spotlightProject.status]}</span>
+            </div>
+            <p className="project-spotlight__label">Featured practice tool</p>
+            <h3>{spotlightProject.title}</h3>
+            <p>{spotlightProject.summary}</p>
+            <ul aria-label={`${spotlightProject.title} themes`}>
+              {spotlightProject.themes.map((theme) => (
+                <li key={theme}>{theme}</li>
+              ))}
+            </ul>
+            {spotlightProject.link && (
+              <a className="project-entry__link" href={spotlightProject.link.href}>
+                Open project
+              </a>
+            )}
+          </div>
+        </article>
+
+        <div className="project-stack" aria-label="More selected public work">
+          {indexedProjects.map((project, index) => (
             <article
-              className="project-entry"
+              className={`project-entry${project.preview ? " has-preview" : ""}`}
               data-reveal="project"
               key={project.title}
             >
               <div className="project-entry__meta">
-                <span>{String(index + 1).padStart(2, "0")}</span>
+                <span>{String(index + 2).padStart(2, "0")}</span>
                 <span>{statusLabels[project.status]}</span>
               </div>
               <div className="project-entry__body">
@@ -248,10 +283,24 @@ function App() {
                     <li key={theme}>{theme}</li>
                   ))}
                 </ul>
+                {project.link && (
+                  <a className="project-entry__link" href={project.link.href}>
+                    Open project
+                  </a>
+                )}
               </div>
-              {project.link && (
-                <a className="project-entry__link" href={project.link.href}>
-                  Open project
+              {project.preview && project.link && (
+                <a
+                  className="project-entry__preview"
+                  href={project.link.href}
+                  aria-label={`Open ${project.title}`}
+                >
+                  <img
+                    src={project.preview.src}
+                    alt={project.preview.alt}
+                    width="1440"
+                    height="900"
+                  />
                 </a>
               )}
             </article>
@@ -381,7 +430,8 @@ function App() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
 

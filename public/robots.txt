@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://haitaowu12.github.io/tony-wu-home/sitemap.xml
