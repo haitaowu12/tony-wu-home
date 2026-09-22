@@ -16,7 +16,8 @@ const navItems = [
   { id: "contact", label: "Contact" },
 ];
 
-const featuredProjects = profile.projects.filter((project) => project.link).slice(0, 4);
+const featuredProjects = profile.projects.filter((project) => project.featured);
+const privateProjects = profile.projects.filter((project) => project.status === "local-private");
 const spotlightProject = featuredProjects[0]!;
 const indexedProjects = featuredProjects.slice(1);
 
@@ -25,81 +26,112 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const root = document.documentElement;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let pageFrame = 0;
-
-    if (!reducedMotion) {
-      root.classList.add("motion-ready");
-      pageFrame = window.requestAnimationFrame(() => root.classList.add("page-ready"));
-    }
-
-    return () => {
-      window.cancelAnimationFrame(pageFrame);
-      root.classList.remove("motion-ready", "page-ready");
-    };
-  }, []);
-
-  useEffect(() => {
     if (!menuOpen) return;
 
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMenuOpen(false);
     };
 
+    const closeOnOutsidePress = (event: PointerEvent) => {
+      const nav = event.target instanceof Element ? event.target.closest(".site-nav") : null;
+      if (!nav) setMenuOpen(false);
+    };
+
     window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
+    window.addEventListener("pointerdown", closeOnOutsidePress);
+
+    return () => {
+      window.removeEventListener("keydown", closeOnEscape);
+      window.removeEventListener("pointerdown", closeOnOutsidePress);
+    };
   }, [menuOpen]);
 
   useEffect(() => {
     const root = document.documentElement;
+    const nav = document.querySelector<HTMLElement>(".site-nav");
+    const targets = ["top", ...navItems.map((item) => item.id)]
+      .map((id) => ({ id, element: document.getElementById(id) }))
+      .filter((entry): entry is { id: string; element: HTMLElement } => entry.element !== null);
+
+    let frame = 0;
     let hashTimer = 0;
-    let activeFrame = 0;
-    const sectionIds = ["top", ...navItems.map((item) => item.id)];
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((section): section is HTMLElement => Boolean(section));
+    let cancelled = false;
+    let navHeight = 0;
+    let pageHeight = 0;
+    let offsets: number[] = [];
+
+    const measure = () => {
+      navHeight = nav?.offsetHeight ?? 0;
+      pageHeight = root.scrollHeight;
+      offsets = targets.map((entry) => entry.element.offsetTop);
+    };
 
     const updateActiveSection = () => {
-      activeFrame = 0;
-      const navHeight = document.querySelector(".site-nav")?.getBoundingClientRect().height ?? 0;
+      frame = 0;
       const marker = window.scrollY + navHeight + 28;
-      const atPageEnd =
-        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-      const current = atPageEnd
-        ? sectionIds[sectionIds.length - 1]
-        : sections.reduce(
-            (active, section) => (section.offsetTop <= marker ? section.id : active),
-            "top",
-          );
-      setActiveSection(current);
+      const atPageEnd = window.innerHeight + window.scrollY >= pageHeight - 2;
+      let current = targets[0]?.id ?? "top";
+      if (atPageEnd) {
+        current = targets[targets.length - 1]?.id ?? "top";
+      } else {
+        for (let index = 0; index < offsets.length; index += 1) {
+          if (offsets[index] <= marker) current = targets[index].id;
+        }
+      }
+      setActiveSection((previous) => (previous === current ? previous : current));
     };
 
     const queueActiveSection = () => {
-      if (!activeFrame) activeFrame = window.requestAnimationFrame(updateActiveSection);
+      if (!frame) frame = window.requestAnimationFrame(updateActiveSection);
     };
+
+    const remeasureAndRefresh = () => {
+      measure();
+      queueActiveSection();
+    };
+
+    measure();
+    updateActiveSection();
+
+    // Pre-rendered markup plus lazily loaded images and late webfonts keep
+    // changing section offsets after first paint, so geometry is refreshed on
+    // layout growth instead of being read from the DOM on every scroll frame.
+    const resizeObserver = new ResizeObserver(remeasureAndRefresh);
+    resizeObserver.observe(root);
+
+    window.addEventListener("scroll", queueActiveSection, { passive: true });
+    window.addEventListener("resize", remeasureAndRefresh);
 
     const hashTarget = window.location.hash.slice(1);
     if (hashTarget) {
       root.classList.add("hash-jump");
-      hashTimer = window.setTimeout(() => {
+      const jumpToHashTarget = () => {
+        if (cancelled) return;
+        measure();
         const target = document.getElementById(hashTarget);
-        const navHeight = document.querySelector(".site-nav")?.getBoundingClientRect().height ?? 0;
         if (target) window.scrollTo(0, Math.max(0, target.offsetTop - navHeight - 16));
         root.classList.remove("hash-jump");
         setActiveSection(hashTarget);
-      }, 60);
+      };
+
+      if (document.fonts?.ready) {
+        // Measure after webfont metrics settle; a fixed timer would scroll
+        // against a layout the font swap then moves.
+        document.fonts.ready.then(() => {
+          frame = window.requestAnimationFrame(jumpToHashTarget);
+        });
+      } else {
+        hashTimer = window.setTimeout(jumpToHashTarget, 60);
+      }
     }
 
-    updateActiveSection();
-    window.addEventListener("scroll", queueActiveSection, { passive: true });
-    window.addEventListener("resize", queueActiveSection);
-
     return () => {
+      cancelled = true;
+      resizeObserver.disconnect();
       window.clearTimeout(hashTimer);
-      window.cancelAnimationFrame(activeFrame);
+      window.cancelAnimationFrame(frame);
       window.removeEventListener("scroll", queueActiveSection);
-      window.removeEventListener("resize", queueActiveSection);
+      window.removeEventListener("resize", remeasureAndRefresh);
       root.classList.remove("hash-jump");
     };
   }, []);
@@ -170,7 +202,7 @@ function App() {
               Explore selected work
             </a>
             <a className="button button--quiet" href="#writing">
-              Read field notes
+              Read papers & field notes
             </a>
           </div>
           <dl className="hero__identity" data-hero-item="6">
@@ -191,7 +223,19 @@ function App() {
 
         <div className="hero__stage" data-hero-item="7" aria-label="Systems engineering workbench">
           <div className="hero__visual">
-            <img src="./hero-systems-briefing.webp" alt="Systems engineering briefing board with rail, model, evidence, and readiness artifacts" />
+            {/* Measured against the rendered .hero__visual box at each breakpoint: it never
+                exceeds ~722px, so every band resolves to the 720w variant on 1x screens and
+                1080w/1239w are only fetched on high-DPR displays. */}
+            <img
+              src="./hero-systems-briefing.webp"
+              srcSet="./hero-systems-briefing-720.webp 720w, ./hero-systems-briefing-1080.webp 1080w, ./hero-systems-briefing.webp 1239w"
+              sizes="(max-width: 620px) 93vw, (max-width: 900px) min(87vw, 715px), min(53vw, 715px)"
+              width="1239"
+              height="948"
+              fetchPriority="high"
+              decoding="async"
+              alt="Systems engineering briefing board with rail, model, evidence, and readiness artifacts"
+            />
           </div>
           <div className="hero__project-index" aria-label="Featured public work">
             <p>Public work index</p>
@@ -235,11 +279,18 @@ function App() {
               href={spotlightProject.link?.href}
               aria-label={`Open ${spotlightProject.title}`}
             >
+              {/* The spotlight visual is ~857px wide on desktop and ~718px on a
+                  768px tablet, so a flat "700px / 100vw" pair mis-served it in both
+                  directions: too small on large screens, past the 720w candidate below 900px. */}
               <img
                 src={spotlightProject.preview.src}
+                srcSet={`${spotlightProject.preview.smallSrc} 720w, ${spotlightProject.preview.src} ${spotlightProject.preview.width}w`}
+                sizes="(min-width: 901px) min(61vw, 860px), 91vw"
+                width={spotlightProject.preview.width}
+                height={spotlightProject.preview.height}
+                loading="lazy"
+                decoding="async"
                 alt={spotlightProject.preview.alt}
-                width="1440"
-                height="900"
               />
             </a>
           )}
@@ -273,7 +324,7 @@ function App() {
             >
               <div className="project-entry__meta">
                 <span>{String(index + 2).padStart(2, "0")}</span>
-                <span>{statusLabels[project.status]}</span>
+                <span>{project.availabilityLabel ?? statusLabels[project.status]}</span>
               </div>
               <div className="project-entry__body">
                 <h3>{project.title}</h3>
@@ -285,7 +336,7 @@ function App() {
                 </ul>
                 {project.link && (
                   <a className="project-entry__link" href={project.link.href}>
-                    Open project
+                    {project.link.label === "Open" ? "Open project" : project.link.label}
                   </a>
                 )}
               </div>
@@ -297,15 +348,32 @@ function App() {
                 >
                   <img
                     src={project.preview.src}
+                    srcSet={`${project.preview.smallSrc} 720w, ${project.preview.src} ${project.preview.width}w`}
+                    sizes="min(90vw, 365px)"
+                    width={project.preview.width}
+                    height={project.preview.height}
+                    loading="lazy"
+                    decoding="async"
                     alt={project.preview.alt}
-                    width="1440"
-                    height="900"
                   />
                 </a>
               )}
             </article>
           ))}
         </div>
+
+        <aside className="private-work" aria-label="Unpublished lab work" data-reveal>
+          <p className="private-work__label">Also in the lab</p>
+          <ul>
+            {privateProjects.map((project) => (
+              <li key={project.title}>
+                <h3>{project.title}</h3>
+                <p>{project.summary}</p>
+                <span className="private-work__status">{statusLabels["local-private"]}</span>
+              </li>
+            ))}
+          </ul>
+        </aside>
       </section>
 
       <section className="statement" id="about" aria-labelledby="about-title">
@@ -313,10 +381,13 @@ function App() {
           <p className="section-kicker">About / Now</p>
           <p>{profile.identity.title}</p>
           <p>{profile.identity.location}</p>
+          <p>Updated {profile.now.reviewed}</p>
         </div>
         <div className="statement__body" data-reveal>
           <h2 id="about-title">Make complexity visible. Leave teams with something they can use.</h2>
           <p>{profile.positioning.thesis}</p>
+          <p>{profile.now.summary}</p>
+          <p>{profile.now.research}</p>
         </div>
       </section>
 
@@ -338,21 +409,45 @@ function App() {
               <div>
                 <h3>{area.title}</h3>
                 <p>{area.summary}</p>
+                <ul className="practice-entry__outcomes" aria-label={`${area.title} outcomes`}>
+                  {area.outcomes.map((outcome) => (
+                    <li key={outcome}>{outcome}</li>
+                  ))}
+                </ul>
               </div>
             </article>
           ))}
         </div>
+
+        <ol className="method-steps" aria-label="Method" data-reveal>
+          {profile.methodSteps.map((step) => (
+            <li key={step.label}>
+              <span>{step.label}</span>
+              <h3>{step.title}</h3>
+              <p>{step.summary}</p>
+            </li>
+          ))}
+        </ol>
+
+        <ul className="principle-grid" aria-label="Operating principles" data-reveal>
+          {profile.operatingPrinciples.map((principle) => (
+            <li key={principle.title}>
+              <h3>{principle.title}</h3>
+              <p>{principle.summary}</p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="section writing" id="writing" aria-labelledby="writing-title">
         <header className="section-heading" data-reveal>
           <div>
-            <p className="section-kicker">Writing & talks</p>
+            <p className="section-kicker">Writing & standards</p>
             <h2 id="writing-title">Field notes from real practice.</h2>
           </div>
           <p>
-            Papers and working ideas across systems engineering tailoring, technical leadership,
-            infrastructure delivery, and human-AI collaboration.
+            Published work, papers in development, and contributions to transit standards across
+            tailoring, adaptability, operational readiness, and technical leadership.
           </p>
         </header>
         <div className="writing-grid">
@@ -364,13 +459,14 @@ function App() {
                   <p className="type-label">{note.status}</p>
                   <h3>{note.title}</h3>
                   <p>{note.summary}</p>
+                  {"link" in note && note.link && <a href={note.link.href}>{note.link.label}</a>}
                 </div>
               </article>
             ))}
           </div>
           <aside className="publication-index" data-reveal aria-label="Public record">
             <p className="section-kicker">Public record</p>
-            {profile.publications.slice(0, 3).map((item) => (
+            {profile.publications.map((item) => (
               <article key={item.title}>
                 <p className="type-label">{item.kind}</p>
                 <h3>{item.title}</h3>
@@ -405,10 +501,26 @@ function App() {
                 <h3>{chapter.title}</h3>
                 <p className="experience-entry__role">{chapter.role}</p>
               </div>
-              <p>{chapter.summary}</p>
+              <div className="experience-entry__detail">
+                <p>{chapter.summary}</p>
+                <ul aria-label={`${chapter.title} highlights`}>
+                  {chapter.highlights.map((highlight) => (
+                    <li key={highlight}>{highlight}</li>
+                  ))}
+                </ul>
+              </div>
             </article>
           ))}
         </div>
+
+        <aside className="recognition" aria-label="Recognition and credentials" data-reveal>
+          <p className="section-kicker">Recognition &amp; credentials</p>
+          <ul>
+            {profile.recognition.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </aside>
       </section>
 
       <section className="contact" id="contact" aria-labelledby="contact-title" data-reveal>
