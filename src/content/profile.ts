@@ -7,11 +7,20 @@ export type SelectedProject = {
   title: string;
   summary: string;
   status: "public" | "prototype" | "local-private";
+  /** Rendered in the Selected public work section. Set explicitly so no
+   *  positional slice can silently drop a project. */
+  featured?: boolean;
   themes: string[];
   link?: Link;
   preview?: {
+    /** Full-resolution capture; also the largest srcset entry. */
     src: string;
+    /** 720px-wide variant served to narrow viewports. */
+    smallSrc: string;
     alt: string;
+    /** Intrinsic pixel size, so the browser can reserve layout space. */
+    width: number;
+    height: number;
   };
   availabilityLabel?: string;
 };
@@ -51,6 +60,7 @@ export type FieldNote = {
   status: string;
   summary: string;
   linkPlaceholder?: string;
+  link?: Link;
 };
 
 export type ExperienceChapter = {
@@ -61,6 +71,16 @@ export type ExperienceChapter = {
   role: string;
   summary: string;
   highlights: string[];
+};
+
+const leadershipPaper = {
+  title: "Building an AI-Augmented Technical Leadership Model",
+  summary:
+    "Co-authored with INCOSE TLI Cohort 10, this paper extends the original six leadership pillars for human-AI collaboration and adds a seventh on ethical and responsible technology use. Human judgment and accountability remain central.",
+  link: {
+    label: "Read the published paper",
+    href: "https://incose.onlinelibrary.wiley.com/doi/10.1002/iis2.70143",
+  },
 };
 
 export const profile = {
@@ -75,9 +95,16 @@ export const profile = {
   positioning: {
     headline: "Systems engineering for complex delivery. Practical methods. Usable tools.",
     subhead:
-      "I help complex infrastructure programs turn interfaces, evidence, and readiness into decisions teams can act on. Outside delivery work, I build public tools and field notes that make systems practice easier to use.",
+      "I help complex infrastructure programs turn interfaces, evidence, and readiness into decisions teams can act on. Alongside rail delivery, I write about responsible technical leadership and build tools and learning experiences that make systems practice easier to use.",
     thesis:
       "The thread through my work is decision quality: make complexity visible, connect evidence to acceptance, keep interfaces owned, and leave teams with methods they can actually use.",
+  },
+  now: {
+    reviewed: "September 2026",
+    summary:
+      "My current public work connects responsible AI, engineering judgment, and learning through practice: a published INCOSE paper on AI-augmented technical leadership, the Asterfall systems-thinking adventure, and Personal Growth Copilot, an early-stage reflection and learning tool.",
+    research:
+      "My current writing explores SE tailoring, changing transit concepts of operations, future upgrades, and whole-facility operation. Alongside these papers, I am helping advance development of the proposed INCOSE–APTA Systems Lifecycle Engineering standard for transit.",
   },
   links: [
     { label: "LinkedIn", href: "https://ca.linkedin.com/in/haitonyw" },
@@ -189,23 +216,49 @@ export const profile = {
   ] satisfies OperatingPrinciple[],
   fieldNotes: [
     {
+      ...leadershipPaper,
+      status: "Published 11 September 2026 · INCOSE IS",
+    },
+    {
       title: "Right-sized systems engineering for infrastructure programs",
-      status: "Paper - In Progress",
+      status: "Paper in development",
       summary:
-        "A practical framework for matching systems engineering rigor to project drivers, process interdependencies, culture, and delivery risk.",
+        "Developing an inspectable method for matching systems engineering rigor to project drivers, process dependencies, organizational conditions, and delivery risk. The paper explains how tailoring decisions are justified and revisited as a project changes; evaluation remains in progress.",
       linkPlaceholder: "Paper link pending",
     },
     {
-      title: "Building an AI-Augmented Technical Leadership Model",
-      status: "Presented at INCOSE IS 2026",
+      title: "Applying Adaptability Practices to Transit Concepts of Operations",
+      status: "Working paper",
       summary:
-        "An update to the TLI technical leadership model for human-AI collaboration, adaptive decision-making, organizational AI literacy, and ethical technology stewardship.",
+        "How should a transit concept of operations respond when service needs, operating assumptions, or system configurations change? This paper draws on published cases and established adaptability practices to connect operating intent with justified revisions to requirements, design, and operating arrangements over long development and service lives.",
     },
     {
-      title: "Scenario games for practical systems thinking",
-      status: "Note",
+      title: "Designing for the Next Upgrade: Applying Adaptability to Rail and Transit Procurement",
+      status: "Abstract and outline in development",
       summary:
-        "How small scenario-based games can make systems thinking tangible to people who do not work formally as systems engineers.",
+        "Examining how today's requirements and architecture choices shape tomorrow's upgrades. Published procurement and migration cases inform review questions and requirement-drafting patterns for interfaces, configuration management, migration, and support, including the engineering effort, service disruption, and cost of preserving future options.",
+    },
+    {
+      title: "Beyond System Completion: Planning for Operable and Adaptable Transit Facilities",
+      status: "Abstract and outline in development",
+      summary:
+        "Contract completion and subsystem tests leave a further question: can the whole facility deliver its intended service with the people, procedures, and maintenance support available? This paper uses mission analysis, human systems integration, validation, and adaptability practices to connect service outcomes with requirements, responsibilities, and evidence before handover and during later change.",
+    },
+    {
+      title: "INCOSE–APTA Systems Lifecycle Engineering (SLE)",
+      status: "Standards development in progress",
+      summary:
+        "Helping advance the proposed SLE standard through a transit lifecycle framework, reusable practice modules, and guidance for applying them to different projects. Current preparation focuses on lifecycle responsibilities, interfaces, tailoring, and evidence, with scoped volunteer authoring and lead/deputy continuity. The working material remains a development candidate, not an approved standard.",
+    },
+    {
+      title: "Learning through decisions, practice, and reflection",
+      status: "Work in progress",
+      summary:
+        "Asterfall explores systems thinking through story and consequences; Personal Growth Copilot adds source-grounded practice, written application, and delayed retrieval. These are learning experiments, with effectiveness still to be evaluated.",
+      link: {
+        label: "Explore Asterfall",
+        href: "https://haitaowu12.github.io/SE-Learning-Quest/",
+      },
     },
   ] satisfies FieldNote[],
   experienceChapters: [
@@ -273,35 +326,53 @@ export const profile = {
       summary:
         "A practical framework for right-sizing systems engineering rigor to project drivers, process interdependencies, culture, and delivery risk.",
       status: "public",
+      featured: true,
       themes: ["INCOSE TIW 2026", "tailoring", "infrastructure SE"],
       link: { label: "Open", href: "https://haitaowu12.github.io/SE_Tailoring_Framework" },
       preview: {
         src: "./project-previews/se-tailoring-model.webp",
+        smallSrc: "./project-previews/se-tailoring-model-720.webp",
         alt: "SE Tailoring Model assessment interface showing its right-size-the-work introduction",
+        width: 1440,
+        height: 900,
       },
     },
     {
       title: "SysML Viewer",
       summary:
-        "A local SysML v2 visual editor with synchronized text, diagrams, Draw.io, SVG, and AI-assisted modeling workflows.",
+        "A visual editor for a supported subset of SysML v2, connecting text, diagrams, and Draw.io. The public prototype runs in the browser; AI-assisted workflows require a separately configured local service.",
       status: "prototype",
+      featured: true,
       themes: ["SysML v2", "model readability", "diagram workflow"],
       link: { label: "Open", href: "https://haitaowu12.github.io/sysmlv2_viewer/" },
       preview: {
         src: "./project-previews/sysml-viewer.webp",
+        smallSrc: "./project-previews/sysml-viewer-720.webp",
         alt: "SysML Viewer with synchronized model explorer, source editor, and system diagram",
+        width: 1280,
+        height: 720,
       },
     },
     {
       title: "SE Learning Quest",
       summary:
-        "A scenario-based systems engineering learning game that teaches evidence threads across lifecycle decisions instead of process memorization.",
+        "Asterfall: The Last Relay is a browser roleplaying adventure about a failed warning network. Its 24-quest Classic campaign turns stakeholder needs, interfaces, trade-offs, verification, and change into decisions with consequences.",
       status: "public",
-      themes: ["SE education", "Phaser", "scenario learning"],
-      link: { label: "Open", href: "https://haitaowu12.github.io/SE-Learning-Quest/" },
-      preview: {
-        src: "./project-previews/se-learning-quest.webp",
-        alt: "SE Learning Quest homepage introducing evidence-backed systems engineering scenarios",
+      featured: true,
+      themes: ["systems thinking", "story-driven learning", "lifecycle decisions"],
+      link: { label: "Play Asterfall", href: "https://haitaowu12.github.io/SE-Learning-Quest/" },
+    },
+    {
+      title: "Personal Growth Copilot",
+      summary:
+        "An early-stage tool for reflective dialogue, small behavior-change experiments, and learning through practice. Its development version includes an offline requirements-writing lesson with source-linked explanations, written exercises, and delayed retrieval.",
+      status: "prototype",
+      featured: true,
+      availabilityLabel: "Public alpha",
+      themes: ["reflection", "source-grounded learning", "user-owned progress"],
+      link: {
+        label: "View project and alpha status",
+        href: "https://github.com/haitaowu12/personal-growth-copilot",
       },
     },
     {
@@ -330,6 +401,7 @@ export const profile = {
       summary:
         "A React training game that turns the INCOSE TLI Shared Model into evidence placement, pressure rounds, and debrief transfer.",
       status: "prototype",
+      featured: true,
       themes: ["technical leadership", "learning game", "facilitation"],
       link: { label: "Open", href: "https://haitaowu12.github.io/TLI_Shared_Model_game/" },
     },
@@ -338,17 +410,16 @@ export const profile = {
       summary:
         "A static browser game for leadership training around vision drift, stakeholder viewpoints, and local multiplayer facilitation.",
       status: "public",
+      featured: true,
       themes: ["systems thinking", "workshop game", "static web game"],
       link: { label: "Open", href: "https://haitaowu12.github.io/Focal-Point-Game/" },
     },
   ] satisfies SelectedProject[],
   publications: [
     {
-      title: "Building an AI-Augmented Technical Leadership Model",
+      ...leadershipPaper,
       kind: "conference",
-      status: "Presented at INCOSE International Symposium 2026; proceedings and public version pending",
-      summary:
-        "An INCOSE IS 2026 paper proposing an AI-augmented extension of the TLI technical leadership model, retaining the six original behaviors while adding competencies for human-AI collaboration, adaptive leadership, AI literacy, and ethical technology stewardship.",
+      status: "INCOSE International Symposium, 36(1), 459–481. First published 11 September 2026. DOI: 10.1002/iis2.70143.",
     },
     {
       title: "A Modular Framework for Tailoring Systems Engineering Processes",
@@ -390,6 +461,7 @@ export const profile = {
     "Project Management Professional (PMP)",
     "Organizer, INCOSE Transportation Infrastructure Workshop",
     "Contributor, INCOSE Transportation Working Group",
+    "2026 Mott MacDonald Award - Thought Leadership Award",
     "2025 Mott MacDonald technical excellence recognition",
     "2023 Regional Winner, Mott MacDonald Digital Excellence Award",
   ],
