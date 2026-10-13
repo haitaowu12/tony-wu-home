@@ -182,8 +182,8 @@ function App() {
         </div>
       </nav>
 
-      <main id="main-content">
-      <section className="hero" id="top" aria-labelledby="hero-title">
+      <main id="main-content" tabIndex={-1}>
+      <section className="hero" id="top" aria-labelledby="hero-title" tabIndex={-1}>
         <div className="hero__content">
           <p className="eyebrow" data-hero-item="1">
             Rail systems / MBSE / assurance / AI-augmented practice
@@ -260,7 +260,7 @@ function App() {
         <p>Director-at-Large / Past President, INCOSE Canada</p>
       </aside>
 
-      <section className="section work" id="work" aria-labelledby="work-title">
+      <section className="section work" id="work" aria-labelledby="work-title" tabIndex={-1}>
         <header className="section-heading section-heading--work" data-reveal="handoff">
           <div>
             <p className="section-kicker">Selected public work</p>
@@ -308,7 +308,11 @@ function App() {
               ))}
             </ul>
             {spotlightProject.link && (
-              <a className="project-entry__link" href={spotlightProject.link.href}>
+              <a
+                className="project-entry__link"
+                href={spotlightProject.link.href}
+                aria-label={`Open project: ${spotlightProject.title}`}
+              >
                 Open project
               </a>
             )}
@@ -335,7 +339,11 @@ function App() {
                   ))}
                 </ul>
                 {project.link && (
-                  <a className="project-entry__link" href={project.link.href}>
+                  <a
+                    className="project-entry__link"
+                    href={project.link.href}
+                    aria-label={`${project.link.label === "Open" ? "Open project" : project.link.label}: ${project.title}`}
+                  >
                     {project.link.label === "Open" ? "Open project" : project.link.label}
                   </a>
                 )}
@@ -376,7 +384,7 @@ function App() {
         </aside>
       </section>
 
-      <section className="statement" id="about" aria-labelledby="about-title">
+      <section className="statement" id="about" aria-labelledby="about-title" tabIndex={-1}>
         <div className="statement__label" data-reveal>
           <p className="section-kicker">About / Now</p>
           <p>{profile.identity.title}</p>
@@ -391,7 +399,7 @@ function App() {
         </div>
       </section>
 
-      <section className="section practice" id="practice" aria-labelledby="practice-title">
+      <section className="section practice" id="practice" aria-labelledby="practice-title" tabIndex={-1}>
         <header className="section-heading" data-reveal>
           <div>
             <p className="section-kicker">Practice</p>
@@ -439,7 +447,7 @@ function App() {
         </ul>
       </section>
 
-      <section className="section writing" id="writing" aria-labelledby="writing-title">
+      <section className="section writing" id="writing" aria-labelledby="writing-title" tabIndex={-1}>
         <header className="section-heading" data-reveal>
           <div>
             <p className="section-kicker">Writing & standards</p>
@@ -459,7 +467,11 @@ function App() {
                   <p className="type-label">{note.status}</p>
                   <h3>{note.title}</h3>
                   <p>{note.summary}</p>
-                  {"link" in note && note.link && <a href={note.link.href}>{note.link.label}</a>}
+                  {"link" in note && note.link && (
+                    <a href={note.link.href} aria-label={`${note.link.label}: ${note.title}`}>
+                      {note.link.label}
+                    </a>
+                  )}
                 </div>
               </article>
             ))}
@@ -471,14 +483,18 @@ function App() {
                 <p className="type-label">{item.kind}</p>
                 <h3>{item.title}</h3>
                 <p>{item.status}</p>
-                {item.link && <a href={item.link.href}>{item.link.label}</a>}
+                {item.link && (
+                  <a href={item.link.href} aria-label={`${item.link.label}: ${item.title}`}>
+                    {item.link.label}
+                  </a>
+                )}
               </article>
             ))}
           </aside>
         </div>
       </section>
 
-      <section className="section experience" id="experience" aria-labelledby="experience-title">
+      <section className="section experience" id="experience" aria-labelledby="experience-title" tabIndex={-1}>
         <header className="section-heading" data-reveal>
           <div>
             <p className="section-kicker">Selected experience</p>
@@ -523,7 +539,7 @@ function App() {
         </aside>
       </section>
 
-      <section className="contact" id="contact" aria-labelledby="contact-title" data-reveal>
+      <section className="contact" id="contact" aria-labelledby="contact-title" data-reveal tabIndex={-1}>
         <div>
           <p className="section-kicker">Contact</p>
           <h2 id="contact-title">Compare notes. Build better practice.</h2>
