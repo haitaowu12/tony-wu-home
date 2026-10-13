@@ -1,0 +1,3 @@
+## 2024-03-24 - Contextual Aria Labels for Generic Links
+**Learning:** Screen reader users navigating by landmarks or link lists struggle when encountering repeating cards containing links with identical generic text (like "Open project" or "Patent record").
+**Action:** When creating repeating components (e.g. lists, cards) where a link has visually clear context but generic text, append the context (like the item's title) visually hidden or via `aria-label` to the link (e.g. `aria-label="Open project: My Cool Tool"`).

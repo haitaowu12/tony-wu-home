@@ -308,7 +308,11 @@ function App() {
               ))}
             </ul>
             {spotlightProject.link && (
-              <a className="project-entry__link" href={spotlightProject.link.href}>
+              <a
+                className="project-entry__link"
+                href={spotlightProject.link.href}
+                aria-label={`Open project: ${spotlightProject.title}`}
+              >
                 Open project
               </a>
             )}
@@ -335,7 +339,11 @@ function App() {
                   ))}
                 </ul>
                 {project.link && (
-                  <a className="project-entry__link" href={project.link.href}>
+                  <a
+                    className="project-entry__link"
+                    href={project.link.href}
+                    aria-label={`${project.link.label === "Open" ? "Open project" : project.link.label}: ${project.title}`}
+                  >
                     {project.link.label === "Open" ? "Open project" : project.link.label}
                   </a>
                 )}
@@ -459,7 +467,11 @@ function App() {
                   <p className="type-label">{note.status}</p>
                   <h3>{note.title}</h3>
                   <p>{note.summary}</p>
-                  {"link" in note && note.link && <a href={note.link.href}>{note.link.label}</a>}
+                  {"link" in note && note.link && (
+                    <a href={note.link.href} aria-label={`${note.link.label}: ${note.title}`}>
+                      {note.link.label}
+                    </a>
+                  )}
                 </div>
               </article>
             ))}
@@ -471,7 +483,11 @@ function App() {
                 <p className="type-label">{item.kind}</p>
                 <h3>{item.title}</h3>
                 <p>{item.status}</p>
-                {item.link && <a href={item.link.href}>{item.link.label}</a>}
+                {item.link && (
+                  <a href={item.link.href} aria-label={`${item.link.label}: ${item.title}`}>
+                    {item.link.label}
+                  </a>
+                )}
               </article>
             ))}
           </aside>
