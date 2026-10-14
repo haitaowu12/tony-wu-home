@@ -15,7 +15,7 @@ export default defineConfig({
   projects: [320, 375, 414, 768, 1440].flatMap((width) =>
     (["no-preference", "reduce"] as const).map((reducedMotion) => ({
       name: `${width}-${reducedMotion}`,
-      use: { viewport: { width, height: 900 }, reducedMotion },
+      use: { viewport: { width, height: 900 }, contextOptions: { reducedMotion } },
     })),
   ),
   webServer: {
