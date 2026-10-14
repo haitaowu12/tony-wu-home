@@ -75,7 +75,9 @@ test("skip link keeps a visible destination and resumes within main", async ({ p
   await expect(page.locator(".skip-link")).toBeInViewport();
   await page.keyboard.press("Enter");
   await expectVisibleTargetFocus(page, "main-content");
-  await testInfo.attach("skip-destination", { body: await page.screenshot(), contentType: "image/png" });
+  const screenshot = testInfo.outputPath("skip-destination.png");
+  await page.screenshot({ path: screenshot });
+  await testInfo.attach("skip-destination", { path: screenshot, contentType: "image/png" });
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "Explore selected work" })).toBeFocused();
 });
@@ -93,7 +95,9 @@ test("keyboard hash navigation shows focus on every section", async ({ page }, t
     await expectVisibleTargetFocus(page, id);
     await expect(page.locator(".site-nav__toggle")).toHaveAttribute("aria-expanded", "false");
     if (["top", "work", "contact"].includes(id)) {
-      await testInfo.attach(`${id}-destination`, { body: await page.screenshot(), contentType: "image/png" });
+      const screenshot = testInfo.outputPath(`${id}-destination.png`);
+      await page.screenshot({ path: screenshot });
+      await testInfo.attach(`${id}-destination`, { path: screenshot, contentType: "image/png" });
     }
   }
 });
