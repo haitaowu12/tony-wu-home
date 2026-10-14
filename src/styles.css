@@ -1648,8 +1648,8 @@ section[id]:focus {
 }
 
 /* Amber is low-contrast on paper and signal surfaces. */
-.work:focus,
-.writing:focus,
-.contact:focus {
+section.work:focus,
+section.writing:focus,
+section.contact:focus {
   outline-color: var(--carbon);
 }
