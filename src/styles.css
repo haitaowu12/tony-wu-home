@@ -1636,3 +1636,8 @@ section[id] {
     clip-path: none !important;
   }
 }
+
+main:focus,
+section:focus {
+  outline: none;
+}
