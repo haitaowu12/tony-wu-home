@@ -277,7 +277,9 @@ function App() {
             <a
               className="project-spotlight__visual"
               href={spotlightProject.link?.href}
-              aria-label={`Open ${spotlightProject.title}`}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Open ${spotlightProject.title} (opens in a new tab)`}
             >
               {/* The spotlight visual is ~857px wide on desktop and ~718px on a
                   768px tablet, so a flat "700px / 100vw" pair mis-served it in both
@@ -311,7 +313,9 @@ function App() {
               <a
                 className="project-entry__link"
                 href={spotlightProject.link.href}
-                aria-label={`Open project: ${spotlightProject.title}`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Open project: ${spotlightProject.title} (opens in a new tab)`}
               >
                 Open project
               </a>
@@ -342,7 +346,9 @@ function App() {
                   <a
                     className="project-entry__link"
                     href={project.link.href}
-                    aria-label={`${project.link.label === "Open" ? "Open project" : project.link.label}: ${project.title}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${project.link.label === "Open" ? "Open project" : project.link.label}: ${project.title} (opens in a new tab)`}
                   >
                     {project.link.label === "Open" ? "Open project" : project.link.label}
                   </a>
@@ -352,7 +358,9 @@ function App() {
                 <a
                   className="project-entry__preview"
                   href={project.link.href}
-                  aria-label={`Open ${project.title}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Open ${project.title} (opens in a new tab)`}
                 >
                   <img
                     src={project.preview.src}
@@ -468,7 +476,7 @@ function App() {
                   <h3>{note.title}</h3>
                   <p>{note.summary}</p>
                   {"link" in note && note.link && (
-                    <a href={note.link.href} aria-label={`${note.link.label}: ${note.title}`}>
+                    <a href={note.link.href} target="_blank" rel="noreferrer" aria-label={`${note.link.label}: ${note.title} (opens in a new tab)`}>
                       {note.link.label}
                     </a>
                   )}
@@ -484,7 +492,7 @@ function App() {
                 <h3>{item.title}</h3>
                 <p>{item.status}</p>
                 {item.link && (
-                  <a href={item.link.href} aria-label={`${item.link.label}: ${item.title}`}>
+                  <a href={item.link.href} target="_blank" rel="noreferrer" aria-label={`${item.link.label}: ${item.title} (opens in a new tab)`}>
                     {item.link.label}
                   </a>
                 )}
@@ -551,7 +559,7 @@ function App() {
           </p>
           <div className="contact__links">
             {profile.links.map((link) => (
-              <a href={link.href} key={link.href}>
+              <a href={link.href} key={link.href} target="_blank" rel="noreferrer" aria-label={`Connect on ${link.label} (opens in a new tab)`}>
                 Connect on {link.label}
               </a>
             ))}
