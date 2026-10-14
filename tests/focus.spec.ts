@@ -68,8 +68,21 @@ async function expectVisibleTargetFocus(page: Page, id: string) {
   expect(indicator.width).toBeGreaterThanOrEqual(3);
   expect(indicator.offset).toBeLessThanOrEqual(-indicator.width);
   expect(indicator.contrast).toBeGreaterThanOrEqual(3);
-  // Wait for native smooth scrolling, then ensure the target's top indicator
-  // is below the sticky navigation and its inset sides fit the viewport.
+  // Native smooth scrolling is not a CSS animation. Wait for consecutive
+  // stable frames so clearance checks and screenshots use its final position.
+  await page.evaluate(() => new Promise<void>((resolve) => {
+    let previousY = scrollY;
+    let stableFrames = 0;
+    const check = () => {
+      stableFrames = scrollY === previousY ? stableFrames + 1 : 0;
+      previousY = scrollY;
+      if (stableFrames >= 4) resolve();
+      else requestAnimationFrame(check);
+    };
+    requestAnimationFrame(check);
+  }));
+  // The top indicator is below the sticky navigation and its inset sides fit
+  // the viewport, including at the end of the page where scroll is clamped.
   await expect.poll(() => target.evaluate((element) => {
     const rect = element.getBoundingClientRect();
     const navBottom = document.querySelector(".site-nav")!.getBoundingClientRect().bottom;
