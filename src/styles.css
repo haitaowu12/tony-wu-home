@@ -104,6 +104,7 @@ main {
   background-size: 96px 100%;
 }
 
+main[id],
 section[id] {
   scroll-margin-top: calc(var(--nav-height) + 16px);
 }
@@ -1637,7 +1638,18 @@ section[id] {
   }
 }
 
+/* Hash and programmatic focus need a visible destination even when the
+   browser does not match :focus-visible. Inset rings stay on-screen for
+   full-bleed sections and do not change the layout. */
 main:focus,
-section:focus {
-  outline: none;
+section[id]:focus {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+}
+
+/* Amber is low-contrast on paper and signal surfaces. */
+.work:focus,
+.writing:focus,
+.contact:focus {
+  outline-color: var(--carbon);
 }
