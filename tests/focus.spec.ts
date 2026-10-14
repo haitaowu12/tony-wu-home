@@ -14,6 +14,17 @@ const test = base.extend<{ browserErrors: void }>({
 
 const sectionIds = ["top", "work", "about", "practice", "writing", "experience", "contact"];
 
+async function openPage(page: Page) {
+  await page.goto(".");
+  await page.evaluate(() => document.fonts.ready);
+  if (!await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+    await expect(page.locator("html")).toHaveClass(/page-ready/);
+    await page.evaluate(() => Promise.all(document.getAnimations().map((animation) =>
+      animation.finished.catch(() => {}),
+    )));
+  }
+}
+
 async function tabTo(page: Page, selector: string) {
   for (let attempt = 0; attempt < 80; attempt += 1) {
     await page.keyboard.press("Tab");
@@ -65,9 +76,10 @@ async function expectVisibleTargetFocus(page: Page, id: string) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 }
 
-test.beforeEach(async ({ page }) => {
-  await page.goto(".");
-  await page.evaluate(() => document.fonts.ready);
+test.beforeEach(async ({ page }, testInfo) => {
+  await openPage(page);
+  expect(await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches))
+    .toBe(testInfo.project.name.endsWith("-reduce"));
 });
 
 test("skip link keeps a visible destination and resumes within main", async ({ page }, testInfo) => {
@@ -76,7 +88,7 @@ test("skip link keeps a visible destination and resumes within main", async ({ p
   await page.keyboard.press("Enter");
   await expectVisibleTargetFocus(page, "main-content");
   const screenshot = testInfo.outputPath("skip-destination.png");
-  await page.screenshot({ path: screenshot });
+  await page.screenshot({ path: screenshot, animations: "disabled" });
   await testInfo.attach("skip-destination", { path: screenshot, contentType: "image/png" });
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "Explore selected work" })).toBeFocused();
@@ -84,8 +96,7 @@ test("skip link keeps a visible destination and resumes within main", async ({ p
 
 test("keyboard hash navigation shows focus on every section", async ({ page }, testInfo) => {
   for (const id of sectionIds) {
-    await page.goto(".");
-    await page.evaluate(() => document.fonts.ready);
+    await openPage(page);
     if (id !== "top" && await page.locator(".site-nav__toggle").isVisible()) {
       await tabTo(page, ".site-nav__toggle");
       await page.keyboard.press("Enter");
@@ -96,7 +107,7 @@ test("keyboard hash navigation shows focus on every section", async ({ page }, t
     await expect(page.locator(".site-nav__toggle")).toHaveAttribute("aria-expanded", "false");
     if (["top", "work", "contact"].includes(id)) {
       const screenshot = testInfo.outputPath(`${id}-destination.png`);
-      await page.screenshot({ path: screenshot });
+      await page.screenshot({ path: screenshot, animations: "disabled" });
       await testInfo.attach(`${id}-destination`, { path: screenshot, contentType: "image/png" });
     }
   }
