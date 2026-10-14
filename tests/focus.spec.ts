@@ -36,6 +36,9 @@ async function tabTo(page: Page, selector: string) {
 async function expectVisibleTargetFocus(page: Page, id: string) {
   const target = page.locator(`#${id}`);
   await expect(target).toBeFocused();
+  // The site's reduced-motion rule gives all properties a 0.01ms transition.
+  // Wait for the rendered focus state instead of sampling before its first paint.
+  await expect(target).toHaveCSS("outline-offset", "-3px");
   const indicator = await target.evaluate((element) => {
     const style = getComputedStyle(element);
     let surface: Element | null = element;
