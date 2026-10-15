@@ -467,11 +467,19 @@ function App() {
                   <p className="type-label">{note.status}</p>
                   <h3>{note.title}</h3>
                   <p>{note.summary}</p>
-                  {"link" in note && note.link && (
+                  {"link" in note && note.link ? (
                     <a href={note.link.href} aria-label={`${note.link.label}: ${note.title}`}>
                       {note.link.label}
                     </a>
-                  )}
+                  ) : "linkPlaceholder" in note && note.linkPlaceholder ? (
+                    <a
+                      aria-disabled="true"
+                      aria-label={`${note.linkPlaceholder}: ${note.title}`}
+                      style={{ color: "var(--muted)", cursor: "not-allowed", textDecoration: "none" }}
+                    >
+                      {note.linkPlaceholder}
+                    </a>
+                  ) : null}
                 </div>
               </article>
             ))}
@@ -484,8 +492,14 @@ function App() {
                 <h3>{item.title}</h3>
                 <p>{item.status}</p>
                 {item.link && (
-                  <a href={item.link.href} aria-label={`${item.link.label}: ${item.title}`}>
+                  <a
+                    href={item.link.href}
+                    aria-label={`${item.link.label}: ${item.title}${
+                      item.link.href.endsWith(".pdf") ? " (PDF)" : ""
+                    }`}
+                  >
                     {item.link.label}
+                    {item.link.href.endsWith(".pdf") && " (PDF)"}
                   </a>
                 )}
               </article>
