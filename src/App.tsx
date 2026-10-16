@@ -197,7 +197,7 @@ function App() {
           <p className="hero__copy" data-hero-item="4">
             {profile.positioning.subhead}
           </p>
-          <div className="hero__actions" data-hero-item="5" aria-label="Primary links">
+          <div className="hero__actions" data-hero-item="5" role="group" aria-label="Primary links">
             <a className="button" href="#work">
               Explore selected work
             </a>
@@ -221,7 +221,7 @@ function App() {
           </dl>
         </div>
 
-        <div className="hero__stage" data-hero-item="7" aria-label="Systems engineering workbench">
+        <div className="hero__stage" data-hero-item="7" role="group" aria-label="Systems engineering workbench">
           <div className="hero__visual">
             {/* Measured against the rendered .hero__visual box at each breakpoint: it never
                 exceeds ~722px, so every band resolves to the 720w variant on 1x screens and
@@ -237,12 +237,12 @@ function App() {
               alt="Systems engineering briefing board with rail, model, evidence, and readiness artifacts"
             />
           </div>
-          <div className="hero__project-index" aria-label="Featured public work">
+          <div className="hero__project-index" role="group" aria-label="Featured public work">
             <p>Public work index</p>
             <ol>
               {featuredProjects.slice(0, 3).map((project, index) => (
                 <li key={project.title}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
                   {project.title}
                 </li>
               ))}
@@ -319,7 +319,7 @@ function App() {
           </div>
         </article>
 
-        <div className="project-stack" aria-label="More selected public work">
+        <div className="project-stack" role="group" aria-label="More selected public work">
           {indexedProjects.map((project, index) => (
             <article
               className={`project-entry${project.preview ? " has-preview" : ""}`}
@@ -430,7 +430,7 @@ function App() {
         <ol className="method-steps" aria-label="Method" data-reveal>
           {profile.methodSteps.map((step) => (
             <li key={step.label}>
-              <span>{step.label}</span>
+              <span aria-hidden="true">{step.label}</span>
               <h3>{step.title}</h3>
               <p>{step.summary}</p>
             </li>
