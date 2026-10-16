@@ -277,7 +277,8 @@ function App() {
             <a
               className="project-spotlight__visual"
               href={spotlightProject.link?.href}
-              aria-label={`Open ${spotlightProject.title}`}
+              tabIndex={-1}
+              aria-hidden="true"
             >
               {/* The spotlight visual is ~857px wide on desktop and ~718px on a
                   768px tablet, so a flat "700px / 100vw" pair mis-served it in both
@@ -352,7 +353,8 @@ function App() {
                 <a
                   className="project-entry__preview"
                   href={project.link.href}
-                  aria-label={`Open ${project.title}`}
+                  tabIndex={-1}
+                  aria-hidden="true"
                 >
                   <img
                     src={project.preview.src}
