@@ -85,3 +85,18 @@ docs/qa/
 ```
 
 Current checks cover the documented responsive matrix, mobile navigation, console health, dependency audit, and the live GitHub Pages route.
+
+Keyboard-focus regression checks run against the production build in Chromium:
+
+```bash
+npm ci
+npx playwright install chromium
+npm run build
+npm run test:focus
+```
+
+The tests cover skip-link and section-link keyboard activation, programmatic
+focus after pointer use, focus-ring contrast, sticky-navigation clearance,
+and page overflow at 320, 375, 414, 768, and 1440 pixels with normal and reduced
+motion. Set `CHROMIUM_PATH` to use an existing Chromium installation. Test
+screenshots and failure traces are written under `test-results/`.
