@@ -1074,6 +1074,11 @@ section[id] {
   font-weight: 600;
 }
 
+.writing .note-entry__pending {
+  color: var(--paper-ink);
+  font-weight: 600;
+}
+
 .publication-index {
   align-self: start;
   padding-left: 30px;
