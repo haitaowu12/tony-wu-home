@@ -13,3 +13,7 @@
 ## 2026-10-14 - Semantic Containers and Redundant List Numbers
 **Learning:** Screen readers often ignore `aria-label` when applied to non-semantic elements like `<div>` unless they are explicitly given a role (like `role="group"`). Additionally, when using ordered lists (`<ol>`), adding visual decorative numbers in spans causes screen readers to read the number twice (once natively, once from the DOM).
 **Action:** Always add `role="group"` to generic `<div>` containers if giving them an `aria-label`, and always add `aria-hidden="true"` to explicitly styled numeral spans inside natively numbered lists (`<ol>`).
+
+## 2026-10-16 - File Type Context and Pending Links
+**Learning:** When linking directly to non-HTML resources (like PDFs), screen reader users and visual users can be disoriented if they expect a webpage. Additionally, pending links need semantic representation without breaking layout styles.
+**Action:** Append the file type visually and in the `aria-label` for direct file links (e.g., ` (PDF)`). Render pending links as plain text in their existing content context, with sufficient contrast on the section background; do not imply an unavailable navigation action.
