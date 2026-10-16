@@ -6,6 +6,6 @@
 **Learning:** Reusable card components (like `project-entry`) often reuse generic link labels (like "Open project" or "Read"). Screen reader users navigating by links-list lose all context.
 **Action:** Append the contextual title to the `aria-label` of generic links (`aria-label={\`Open project: \${project.title}\`}`) to ensure every link's purpose is unambiguous out of context.
 
-## 2026-10-25 - File Type Context and Disabled States
+## 2026-10-16 - File Type Context and Pending Links
 **Learning:** When linking directly to non-HTML resources (like PDFs), screen reader users and visual users can be disoriented if they expect a webpage. Additionally, pending links need semantic representation without breaking layout styles.
-**Action:** Always append the file type visually and in the `aria-label` for direct file links (e.g., ` (PDF)`). Use an `<a>` element without an `href` attribute and `aria-disabled="true"` to natively represent disabled/pending links while inheriting base anchor styles.
+**Action:** Append the file type visually and in the `aria-label` for direct file links (e.g., ` (PDF)`). Render pending links as plain text in their existing content context, with sufficient contrast on the section background; do not imply an unavailable navigation action.

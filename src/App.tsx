@@ -472,13 +472,9 @@ function App() {
                       {note.link.label}
                     </a>
                   ) : "linkPlaceholder" in note && note.linkPlaceholder ? (
-                    <a
-                      aria-disabled="true"
-                      aria-label={`${note.linkPlaceholder}: ${note.title}`}
-                      style={{ color: "var(--muted)", cursor: "not-allowed", textDecoration: "none" }}
-                    >
+                    <p className="note-entry__pending">
                       {note.linkPlaceholder}
-                    </a>
+                    </p>
                   ) : null}
                 </div>
               </article>
