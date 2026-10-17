@@ -17,3 +17,7 @@
 ## 2026-10-16 - File Type Context and Pending Links
 **Learning:** When linking directly to non-HTML resources (like PDFs), screen reader users and visual users can be disoriented if they expect a webpage. Additionally, pending links need semantic representation without breaking layout styles.
 **Action:** Append the file type visually and in the `aria-label` for direct file links (e.g., ` (PDF)`). Render pending links as plain text in their existing content context, with sufficient contrast on the section background; do not imply an unavailable navigation action.
+
+## 2026-10-17 - Focus Management on Dismissible Elements
+**Learning:** When a keyboard user dismisses an interactive container (like a mobile menu) using the `Escape` key, keyboard focus drops to the document `<body>` if the focused element within the container is hidden or removed. This disrupts the navigation flow.
+**Action:** Always programmatically return focus (`element.focus()`) to the trigger element that originally opened the container when it is dismissed.
