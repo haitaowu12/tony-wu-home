@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { profile } from "./content/profile";
 
 const statusLabels = {
@@ -24,12 +24,16 @@ const indexedProjects = featuredProjects.slice(1);
 function App() {
   const [activeSection, setActiveSection] = useState("top");
   const [menuOpen, setMenuOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!menuOpen) return;
 
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        toggleRef.current?.focus();
+      }
     };
 
     const closeOnOutsidePress = (event: PointerEvent) => {
@@ -151,6 +155,7 @@ function App() {
           Tony Wu
         </a>
         <button
+          ref={toggleRef}
           className="site-nav__toggle"
           type="button"
           aria-label={menuOpen ? "Close page menu" : "Open page menu"}
