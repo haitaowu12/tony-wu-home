@@ -17,3 +17,7 @@
 ## 2026-10-16 - File Type Context and Pending Links
 **Learning:** When linking directly to non-HTML resources (like PDFs), screen reader users and visual users can be disoriented if they expect a webpage. Additionally, pending links need semantic representation without breaking layout styles.
 **Action:** Append the file type visually and in the `aria-label` for direct file links (e.g., ` (PDF)`). Render pending links as plain text in their existing content context, with sufficient contrast on the section background; do not imply an unavailable navigation action.
+
+## 2026-10-18 - Manage Focus on Menu Dismissal
+**Learning:** Disappearing active elements in disclosure widgets disrupt the tab sequence. When a mobile menu is dismissed via the Escape key, the browser often resets focus to the document body because the active element is removed from the normal flow or hidden. This forces keyboard users to tab from the beginning of the page again.
+**Action:** Attach a `ref` to the disclosure toggle button and explicitly call `.focus()` on it when the widget is closed via keyboard interaction to maintain continuity.
