@@ -17,3 +17,7 @@
 ## 2026-10-16 - File Type Context and Pending Links
 **Learning:** When linking directly to non-HTML resources (like PDFs), screen reader users and visual users can be disoriented if they expect a webpage. Additionally, pending links need semantic representation without breaking layout styles.
 **Action:** Append the file type visually and in the `aria-label` for direct file links (e.g., ` (PDF)`). Render pending links as plain text in their existing content context, with sufficient contrast on the section background; do not imply an unavailable navigation action.
+
+## 2026-10-16 - Screen Reader Context on External Links
+**Learning:** External links missing `target="_blank"` hijack the current page, breaking flow, and if they miss context, screen reader users might not expect the new tab context.
+**Action:** Add `target="_blank"`, `rel="noopener noreferrer"` and an `aria-label` stating "opens in a new tab" to social profile or explicitly outbound links to ensure smooth navigation context.

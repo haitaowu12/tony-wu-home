@@ -563,7 +563,13 @@ function App() {
           </p>
           <div className="contact__links">
             {profile.links.map((link) => (
-              <a href={link.href} key={link.href}>
+              <a
+                href={link.href}
+                key={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Connect on ${link.label} (opens in a new tab)`}
+              >
                 Connect on {link.label}
               </a>
             ))}
