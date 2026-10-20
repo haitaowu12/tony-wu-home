@@ -21,3 +21,7 @@
 ## 2026-10-16 - Screen Reader Context on External Links
 **Learning:** External links missing `target="_blank"` hijack the current page, breaking flow, and if they miss context, screen reader users might not expect the new tab context.
 **Action:** Add `target="_blank"`, `rel="noopener noreferrer"` and an `aria-label` stating "opens in a new tab" to social profile or explicitly outbound links to ensure smooth navigation context.
+
+## 2026-10-16 - Rejected UX Change: target="_blank"
+**Learning:** Forcing links to open in a new tab (`target="_blank"`) is explicitly rejected in this repository as an anti-pattern. Users should retain control over link behavior.
+**Action:** Do not use `target="_blank"` on links unless there is an exceptional and explicit requirement. Rely on the user's default browser behavior for navigation.
