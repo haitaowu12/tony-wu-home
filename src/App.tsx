@@ -310,7 +310,7 @@ function App() {
           )}
           <div className="project-spotlight__body">
             <div className="project-entry__meta">
-              <span>01</span>
+              <span aria-hidden="true">01</span>
               <span>{statusLabels[spotlightProject.status]}</span>
             </div>
             <p className="project-spotlight__label">Featured practice tool</p>
@@ -341,7 +341,7 @@ function App() {
               key={project.title}
             >
               <div className="project-entry__meta">
-                <span>{String(index + 2).padStart(2, "0")}</span>
+                <span aria-hidden="true">{String(index + 2).padStart(2, "0")}</span>
                 <span>{project.availabilityLabel ?? statusLabels[project.status]}</span>
               </div>
               <div className="project-entry__body">
@@ -428,7 +428,7 @@ function App() {
         <div className="practice-list">
           {profile.practiceAreas.map((area, index) => (
             <article className="practice-entry" data-reveal key={area.title}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
+              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
               <div>
                 <h3>{area.title}</h3>
                 <p>{area.summary}</p>
@@ -477,7 +477,7 @@ function App() {
           <div className="note-list">
             {profile.fieldNotes.map((note, index) => (
               <article className="note-entry" data-reveal key={note.title}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
+                <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
                 <div>
                   <p className="type-label">{note.status}</p>
                   <h3>{note.title}</h3>

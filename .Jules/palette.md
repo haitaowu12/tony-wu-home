@@ -21,3 +21,7 @@
 ## 2026-10-18 - Mobile Menu Focus Management
 **Learning:** Mobile navigation menus that use a toggle button to reveal links need explicit focus management. If a keyboard user tabs out of the open menu, it should close automatically to prevent hidden elements from receiving focus and confusing the user. Furthermore, if they press `Escape` to close it, focus must return to the toggle button rather than being lost.
 **Action:** Added a `focusout` event listener to close the menu when focus leaves the `.site-nav` container, and updated the `Escape` key handler to programmatically call `.focus()` on the `.site-nav__toggle` button when closing the menu via keyboard.
+
+## 2026-10-20 - Decorative List Numbers Outside `<ol>`
+**Learning:** Purely decorative list numbers (e.g., '01', '02') placed outside of native `<ol>` tags are read out of context by screen readers, causing confusion.
+**Action:** Always include `aria-hidden="true"` (e.g., `<span aria-hidden="true">01</span>`) on decorative numeral spans used to visually imply a list without native list semantics.
