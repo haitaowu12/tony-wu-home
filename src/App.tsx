@@ -29,7 +29,11 @@ function App() {
     if (!menuOpen) return;
 
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        const toggleButton = document.querySelector<HTMLButtonElement>(".site-nav__toggle");
+        if (toggleButton) toggleButton.focus();
+      }
     };
 
     const closeOnOutsidePress = (event: PointerEvent) => {
@@ -37,12 +41,21 @@ function App() {
       if (!nav) setMenuOpen(false);
     };
 
+    const closeOnFocusOut = (event: FocusEvent) => {
+      const nav = document.querySelector(".site-nav");
+      if (nav && !nav.contains(event.relatedTarget as Node)) {
+        setMenuOpen(false);
+      }
+    };
+
     window.addEventListener("keydown", closeOnEscape);
     window.addEventListener("pointerdown", closeOnOutsidePress);
+    window.addEventListener("focusout", closeOnFocusOut);
 
     return () => {
       window.removeEventListener("keydown", closeOnEscape);
       window.removeEventListener("pointerdown", closeOnOutsidePress);
+      window.removeEventListener("focusout", closeOnFocusOut);
     };
   }, [menuOpen]);
 
