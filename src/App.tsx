@@ -38,7 +38,11 @@ function App() {
     if (!menuOpen) return;
 
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        const toggleButton = document.querySelector<HTMLButtonElement>(".site-nav__toggle");
+        if (toggleButton) toggleButton.focus();
+      }
     };
 
     const closeOnOutsidePress = (event: PointerEvent) => {
@@ -46,12 +50,21 @@ function App() {
       if (!nav) setMenuOpen(false);
     };
 
+    const closeOnFocusOut = (event: FocusEvent) => {
+      const nav = document.querySelector(".site-nav");
+      if (nav && !nav.contains(event.relatedTarget as Node)) {
+        setMenuOpen(false);
+      }
+    };
+
     window.addEventListener("keydown", closeOnEscape);
     window.addEventListener("pointerdown", closeOnOutsidePress);
+    window.addEventListener("focusout", closeOnFocusOut);
 
     return () => {
       window.removeEventListener("keydown", closeOnEscape);
       window.removeEventListener("pointerdown", closeOnOutsidePress);
+      window.removeEventListener("focusout", closeOnFocusOut);
     };
   }, [menuOpen]);
 
@@ -194,8 +207,8 @@ function App() {
         </div>
       </nav>
 
-      <main id="main-content">
-      <section className="hero" id="top" aria-labelledby="hero-title">
+      <main id="main-content" tabIndex={-1}>
+      <section className="hero" id="top" aria-labelledby="hero-title" tabIndex={-1}>
         <div className="hero__content">
           <h1 id="hero-title" data-hero-item="2">
             <span className="hero__greeting">Hi, I’m</span>
@@ -207,7 +220,7 @@ function App() {
           <p className="hero__copy" data-hero-item="4">
             {profile.positioning.subhead}
           </p>
-          <div className="hero__actions" data-hero-item="5" aria-label="Primary links">
+          <div className="hero__actions" data-hero-item="5" role="group" aria-label="Primary links">
             <a className="button" href="#work">
               See what I’m building <span aria-hidden="true">↘</span>
             </a>
@@ -257,7 +270,7 @@ function App() {
         <p>Director-at-Large / Past President, INCOSE Canada</p>
       </aside>
 
-      <section className="section work" id="work" aria-labelledby="work-title">
+      <section className="section work" id="work" aria-labelledby="work-title" tabIndex={-1}>
         <header className="section-heading section-heading--work" data-reveal="handoff">
           <div>
             <p className="section-kicker">Selected work</p>
@@ -303,7 +316,8 @@ function App() {
               <a
                 className="project-spotlight__visual"
                 href={spotlightProject.link?.href}
-                aria-label={`Open ${spotlightProject.title}`}
+                tabIndex={-1}
+                aria-hidden="true"
               >
                 <img
                   src={spotlightProject.preview.src}
@@ -344,7 +358,7 @@ function App() {
           </details>
         </article>
 
-        <div className="project-stack" aria-label="More selected work">
+        <div className="project-stack" role="group" aria-label="More selected work">
           {indexedProjects.map((project) => (
             <article
               className={`project-entry${project.preview ? " has-preview" : ""}`}
@@ -358,7 +372,11 @@ function App() {
                 <h3>{project.title}</h3>
                 <p>{project.summary}</p>
                 {project.link && (
-                  <a className="project-entry__link" href={project.link.href}>
+                  <a
+                    className="project-entry__link"
+                    href={project.link.href}
+                    aria-label={`${project.link.label === "Open" ? "Open project" : project.link.label}: ${project.title}`}
+                  >
                     {project.link.label === "Open" ? "Open project" : project.link.label}
                   </a>
                 )}
@@ -367,7 +385,8 @@ function App() {
                 <a
                   className="project-entry__preview"
                   href={project.link.href}
-                  aria-label={`Open ${project.title}`}
+                  tabIndex={-1}
+                  aria-hidden="true"
                 >
                   <img
                     src={project.preview.src}
@@ -399,7 +418,7 @@ function App() {
         </details>
       </section>
 
-      <section className="section playground" id="playground" aria-labelledby="playground-title">
+      <section className="section playground" id="playground" aria-labelledby="playground-title" tabIndex={-1}>
         <header className="section-heading">
           <div>
             <p className="section-kicker">Playground</p>
@@ -431,7 +450,7 @@ function App() {
             <p className="learning-feature__limit">{profile.learningStory.limitation}</p>
           </div>
         </article>
-        <div className="learning-experiments" aria-label="More learning experiments">
+        <div className="learning-experiments" role="group" aria-label="More learning experiments">
           {learningExperiments.map((project) => (
             <article key={project.title}>
               <p className="type-label">{project.availabilityLabel ?? statusLabels[project.status]}</p>
@@ -443,7 +462,7 @@ function App() {
         </div>
       </section>
 
-      <section className="section about-section" id="about" aria-labelledby="about-title">
+      <section className="section about-section" id="about" aria-labelledby="about-title" tabIndex={-1}>
         <div className="about-overview">
           <div>
             <p className="section-kicker">About &amp; practice</p>
@@ -518,7 +537,7 @@ function App() {
         </div>
       </section>
 
-      <section className="section writing" id="writing" aria-labelledby="writing-title">
+      <section className="section writing" id="writing" aria-labelledby="writing-title" tabIndex={-1}>
         <header className="section-heading" data-reveal>
           <div>
             <p className="section-kicker">Published &amp; in progress</p>
@@ -570,7 +589,7 @@ function App() {
         </div>
       </section>
 
-      <section className="contact" id="contact" aria-labelledby="contact-title" data-reveal>
+      <section className="contact" id="contact" aria-labelledby="contact-title" data-reveal tabIndex={-1}>
         <div>
           <p className="section-kicker">Contact</p>
           <h2 id="contact-title">Let’s compare notes.</h2>
