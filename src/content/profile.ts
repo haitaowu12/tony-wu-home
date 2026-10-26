@@ -7,9 +7,11 @@ export type SelectedProject = {
   title: string;
   summary: string;
   status: "public" | "prototype" | "local-private";
-  /** Rendered in the Selected public work section. Set explicitly so no
+  /** Rendered in Work or Playground. Set explicitly so no
    *  positional slice can silently drop a project. */
   featured?: boolean;
+  group?: "tool" | "learning" | "atlas";
+  teaser?: string;
   themes: string[];
   link?: Link;
   preview?: {
@@ -93,16 +95,60 @@ export const profile = {
     location: "Vancouver, Canada",
   },
   positioning: {
-    headline: "Systems engineering for complex delivery. Practical methods. Usable tools.",
+    headline: "Systems thinker. Engineer. Builder.",
     subhead:
-      "I help complex infrastructure programs turn interfaces, evidence, and readiness into decisions teams can act on. Alongside rail delivery, I write about responsible technical leadership and build tools and learning experiences that make systems practice easier to use.",
+      "I build tools for understanding complex systems—from engineering decisions to world history and learning through play.",
     thesis:
       "The thread through my work is decision quality: make complexity visible, connect evidence to acceptance, keep interfaces owned, and leave teams with methods they can actually use.",
   },
+  about: {
+    title: "My route into systems thinking.",
+    paragraphs: [
+      "I started in aerospace controls, then moved into rail systems integration. Across models, interfaces, assurance, and readiness, I look for the connections that make a whole system work.",
+      "My work now connects engineering with technical leadership, responsible AI, writing, and learning. I build models, tools, and experiences that help people examine assumptions and make decisions.",
+    ],
+  },
+  learningStory: {
+    title: "What if a systems problem were an adventure?",
+    summary: "In Asterfall: The Last Relay, a warning network has gone silent. Across 24 connected quests, play a keeper in training, cross six island realms, and discover why working parts do not always make a working whole.",
+    invitation: "Read the scene. Choose an action. Explore the consequences.",
+    limitation: "A learning experiment; its effectiveness has not been evaluated.",
+  },
+  atlasStory: {
+    title: "A world of histories, side by side.",
+    basis: "I expanded Jiangshan Map into a bilingual world-history atlas, connecting historical entries, biographies, places, and guided reading. Historical views and modern reference geography are labeled separately. The collection is selective and continues to grow.",
+    source: {
+      label: "Project source and lineage",
+      href: "https://github.com/haitaowu12/jiangshan-map/tree/world-history-atlas/world",
+    },
+  },
+  featuredStory: {
+    projectTitle: "SE Tailoring Model",
+    title: "How much engineering is enough?",
+    introduction:
+      "A practical framework for deciding how much systems engineering rigor a project needs, and making the reasoning behind that choice visible.",
+    steps: [
+      {
+        label: "The problem",
+        title: "One process, different projects.",
+        text: "Risk, complexity, and delivery conditions vary. A process checklist alone cannot explain where to invest more effort or where a lighter approach makes sense.",
+      },
+      {
+        label: "The approach",
+        title: "Make the reasoning inspectable.",
+        text: "The framework connects project drivers with process rigor and interdependencies. I developed the tailoring approach with Cleo Wong and built a browser tool to explore it.",
+      },
+      {
+        label: "The artifact",
+        title: "A tool you can question.",
+        text: "Explore the assessment, inspect process recommendations, and review the guidance behind them. It is a research tool; evaluation of the method remains in progress.",
+      },
+    ],
+  },
   now: {
-    reviewed: "September 2026",
+    reviewed: "October 2026",
     summary:
-      "My current public work connects responsible AI, engineering judgment, and learning through practice: a published INCOSE paper on AI-augmented technical leadership, the Asterfall systems-thinking adventure, and Personal Growth Copilot, an early-stage reflection and learning tool.",
+      "My current work spans World History Atlas, the browser-based Modeling Lab, Leadership Toolbox, SE Tailoring, and RailClear, a private prototype for railway safety-distance studies. Learning experiments include Asterfall and Personal Growth Copilot. A published INCOSE paper connects technical leadership with responsible human–AI collaboration.",
     research:
       "My current writing explores SE tailoring, changing transit concepts of operations, future upgrades, and whole-facility operation. Alongside these papers, I am helping advance development of the proposed INCOSE–APTA Systems Lifecycle Engineering standard for transit.",
   },
@@ -126,7 +172,7 @@ export const profile = {
   ] satisfies ProofPoint[],
   practiceAreas: [
     {
-      title: "Rail systems integration and readiness",
+      title: "Systems integration and readiness",
       summary:
         "Turn requirements, interfaces, verification, assurance, and operations readiness into a delivery system teams can inspect and act on.",
       outcomes: [
@@ -254,7 +300,7 @@ export const profile = {
       title: "Learning through decisions, practice, and reflection",
       status: "Work in progress",
       summary:
-        "Asterfall explores systems thinking through story and consequences; Personal Growth Copilot adds source-grounded practice, written application, and delayed retrieval. These are learning experiments, with effectiveness still to be evaluated.",
+        "World History Atlas connects histories, places, lives, and sources in English and Chinese. Asterfall explores systems thinking through story and consequences; Personal Growth Copilot adds source-grounded practice and reflection. These are learning experiments, with effectiveness still to be evaluated.",
       link: {
         label: "Explore Asterfall",
         href: "https://haitaowu12.github.io/SE-Learning-Quest/",
@@ -322,7 +368,25 @@ export const profile = {
   ] satisfies ExperienceChapter[],
   projects: [
     {
+      title: "World History Atlas",
+      group: "atlas",
+      summary: "A bilingual atlas for exploring what was happening in different parts of the world at the same time. Move through time, follow lives and reading paths, and inspect the sources behind each entry.",
+      status: "public",
+      availabilityLabel: "Public · English / 中文",
+      featured: true,
+      themes: ["history & geography", "connected lives", "English / 中文"],
+      link: { label: "Explore World Atlas", href: "https://world-history-atlas-tony.techiesea.chatgpt.site/" },
+      preview: {
+        src: "./project-previews/world-history-atlas-2026-10-25.webp",
+        smallSrc: "./project-previews/world-history-atlas-2026-10-25-720.webp",
+        alt: "World History Atlas at 1200 CE, with a world map, concurrent histories, and an interactive time slider",
+        width: 1280,
+        height: 720,
+      },
+    },
+    {
       title: "SE Tailoring Model",
+      group: "tool",
       summary:
         "A practical framework for right-sizing systems engineering rigor to project drivers, process interdependencies, culture, and delivery risk.",
       status: "public",
@@ -330,40 +394,72 @@ export const profile = {
       themes: ["INCOSE TIW 2026", "tailoring", "infrastructure SE"],
       link: { label: "Open", href: "https://haitaowu12.github.io/SE_Tailoring_Framework" },
       preview: {
-        src: "./project-previews/se-tailoring-model.webp",
-        smallSrc: "./project-previews/se-tailoring-model-720.webp",
-        alt: "SE Tailoring Model assessment interface showing its right-size-the-work introduction",
-        width: 1440,
-        height: 900,
+        src: "./project-previews/se-tailoring-2026-10-25.webp",
+        smallSrc: "./project-previews/se-tailoring-2026-10-25-720.webp",
+        alt: "Current SE Tailoring Model home screen with project questions, process recommendations, and assessment guidance",
+        width: 1075,
+        height: 717,
       },
     },
     {
-      title: "SysML Viewer",
+      title: "Modeling Lab",
+      group: "tool",
       summary:
-        "A visual editor for a supported subset of SysML v2, connecting text, diagrams, and Draw.io. The public prototype runs in the browser; AI-assisted workflows require a separately configured local service.",
+        "Evolved from SysML Viewer, this browser-based SysML v2 workspace offers Engineering and Stakeholder views. Open a model, explore its architecture, review supported changes, and export a reader. The browser profile has explicit language and diagram coverage limits.",
       status: "prototype",
       featured: true,
-      themes: ["SysML v2", "model readability", "diagram workflow"],
-      link: { label: "Open", href: "https://haitaowu12.github.io/sysmlv2_viewer/" },
+      availabilityLabel: "Browser prototype",
+      themes: ["SysML v2", "engineering & stakeholder views", "source-grounded models"],
+      link: { label: "Open Modeling Lab", href: "https://haitaowu12.github.io/sysmlv2_viewer/" },
       preview: {
-        src: "./project-previews/sysml-viewer.webp",
-        smallSrc: "./project-previews/sysml-viewer-720.webp",
-        alt: "SysML Viewer with synchronized model explorer, source editor, and system diagram",
-        width: 1280,
-        height: 720,
+        src: "./project-previews/modeling-lab-2026-10-25.webp",
+        smallSrc: "./project-previews/modeling-lab-2026-10-25-720.webp",
+        alt: "Modeling Lab showing the Apollo mission-system view, model navigation, and Engineering audience controls",
+        width: 962,
+        height: 541,
       },
+    },
+    {
+      title: "RailClear",
+      group: "tool",
+      summary:
+        "Railway safety-distance studies by signal segment and CBTC track section. Compare mixed vehicles, operating conditions, and route variants; inspect governing cases and export an auditable calculation record. A private study prototype; outputs require project-specific engineering qualification.",
+      status: "local-private",
+      availabilityLabel: "Private prototype",
+      featured: true,
+      themes: ["railway safety-distance studies", "mixed-fleet comparison", "calculation records"],
+    },
+    {
+      title: "Leadership Toolbox",
+      group: "tool",
+      summary: "A portable agent skill and source-backed library for preparing conversations, reviewing handoffs, and working through leadership decisions. Methods include practical steps, examples, prerequisites, and limits.",
+      status: "public",
+      availabilityLabel: "Public skill",
+      featured: true,
+      themes: ["technical leadership", "practical methods", "source-backed guidance"],
+      link: { label: "Explore Leadership Toolbox", href: "https://github.com/haitaowu12/leadership-toolbox" },
     },
     {
       title: "SE Learning Quest",
+      group: "learning",
       summary:
         "Asterfall: The Last Relay is a browser roleplaying adventure about a failed warning network. Its 24-quest Classic campaign turns stakeholder needs, interfaces, trade-offs, verification, and change into decisions with consequences.",
       status: "public",
       featured: true,
       themes: ["systems thinking", "story-driven learning", "lifecycle decisions"],
       link: { label: "Play Asterfall", href: "https://haitaowu12.github.io/SE-Learning-Quest/" },
+      preview: {
+        src: "./project-previews/asterfall-2026-10-25.webp",
+        smallSrc: "./project-previews/asterfall-2026-10-25-720.webp",
+        alt: "Asterfall's opening scene with six floating island realms and lantern towers",
+        width: 1083,
+        height: 609,
+      },
     },
     {
       title: "Personal Growth Copilot",
+      group: "learning",
+      teaser: "Reflection, practice, and small experiments in learning.",
       summary:
         "An early-stage tool for reflective dialogue, small behavior-change experiments, and learning through practice. Its development version includes an offline requirements-writing lesson with source-linked explanations, written exercises, and delayed retrieval.",
       status: "prototype",
@@ -374,6 +470,12 @@ export const profile = {
         label: "View project and alpha status",
         href: "https://github.com/haitaowu12/personal-growth-copilot",
       },
+    },
+    {
+      title: "Systems Visuals",
+      summary: "A local toolkit for turning source-grounded system models into linked visual explanations and review readers. Development continues within declared modeling and notation profiles.",
+      status: "local-private",
+      themes: ["systems modeling", "visual explanation", "engineering review"],
     },
     {
       title: "Compliance Assurance Workbench",
@@ -398,6 +500,8 @@ export const profile = {
     },
     {
       title: "Shared Model Under Pressure",
+      group: "learning",
+      teaser: "Work through technical leadership decisions under pressure.",
       summary:
         "A React training game that turns the INCOSE TLI Shared Model into evidence placement, pressure rounds, and debrief transfer.",
       status: "prototype",
@@ -407,6 +511,8 @@ export const profile = {
     },
     {
       title: "FOCAL POINT: Hold the Vision",
+      group: "learning",
+      teaser: "Keep a shared vision while stakeholder viewpoints pull apart.",
       summary:
         "A static browser game for leadership training around vision drift, stakeholder viewpoints, and local multiplayer facilitation.",
       status: "public",
@@ -468,6 +574,6 @@ export const profile = {
   authorBadge: {
     label: "Know the author",
     description:
-      "Built by Tony Wu, systems engineer and developer focused on complex project delivery, rail/transit systems engineering, MBSE, assurance workflows, and learning simulations.",
+      "Built by Tony Wu, systems engineer and builder working across technical leadership, practical engineering tools, responsible AI, and learning experiences.",
   },
 };
