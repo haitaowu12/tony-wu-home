@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>overflow harness</title>
+  </head>
+  <body style="margin: 0; background: #333">
+    <div id="out" style="font: 12px monospace; color: #fff; white-space: pre; padding: 8px"></div>
+    <script>
+      // Desktop iframes show a classic scrollbar (~15px) that a real phone does
+      // not have, so widen the frame to make clientWidth match the device width.
+      const SCROLLBAR = 15;
+      const targets = [320, 375, 414, 768, 1440];
+
+      function measure(doc, vw) {
+        const worst = [];
+        let maxRight = 0;
+        doc.querySelectorAll("body *").forEach((el) => {
+          const r = el.getBoundingClientRect();
+          if (r.width === 0 || r.height === 0) return;
+          if (r.right > maxRight) maxRight = r.right;
+          if (r.right > vw + 1) {
+            const cls = (el.className || "").toString().split(" ")[0];
+            worst.push(el.tagName.toLowerCase() + "." + cls + " R" + Math.round(r.right));
+          }
+        });
+        return { maxRight: Math.round(maxRight), spill: worst.slice(0, 4) };
+      }
+
+      let pending = targets.length;
+      const results = [];
+
+      targets.forEach((w) => {
+        const f = document.createElement("iframe");
+        f.style.cssText =
+          "width:" + (w + SCROLLBAR) + "px;height:900px;border:1px solid #666;display:block;margin:6px";
+        f.src = "/";
+        f.onload = () => {
+          setTimeout(() => {
+            const doc = f.contentDocument;
+            const vw = doc.documentElement.clientWidth;
+            const withClip = measure(doc, vw);
+
+            // Now strip the band-aid and re-measure.
+            const s = doc.createElement("style");
+            s.textContent = "html,body,main{overflow-x:visible !important}";
+            doc.head.appendChild(s);
+            const noClip = measure(doc, vw);
+
+            results.push({ w, vw, withClip, noClip });
+            if (--pending === 0) {
+              window.__results = results.sort((a, b) => a.w - b.w);
+              document.getElementById("out").textContent = JSON.stringify(window.__results, null, 1);
+            }
+          }, 900);
+        };
+        document.body.appendChild(f);
+      });
+    </script>
+  </body>
+</html>
