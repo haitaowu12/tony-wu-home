@@ -107,7 +107,7 @@ test("skip link keeps a visible destination and resumes within main", async ({ p
   await page.screenshot({ path: screenshot, animations: "disabled" });
   await testInfo.attach("skip-destination", { path: screenshot, contentType: "image/png" });
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("link", { name: "See what I’m building" })).toBeFocused();
+  await expect(page.getByRole("link", { name: /See what I’m building/ })).toBeFocused();
 });
 
 test("keyboard hash navigation shows focus on every section", async ({ page }, testInfo) => {
