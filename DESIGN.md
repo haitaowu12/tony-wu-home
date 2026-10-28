@@ -1,5 +1,9 @@
 # Tony Wu Home Design Direction
 
+## Larger tool previews — October 27, 2026
+
+Tony found the RailClear and RAMS Workbench thumbnails too small to understand in place. These two rows now have compact description headers followed by full-row, uncropped screenshots. The public Modeling Lab thumbnail and other project treatments remain as before. On phones, remove the screenshot rows' extra inner padding so images use the available section width. Responsive source selection follows the larger rendered width. Preserve captions, accessible full-size links and prototype qualifications. A regression checks that each screenshot sits below the description and spans at least 85% of the project row across the viewport/motion matrix.
+
 ## Tool screenshots — October 27, 2026
 
 Tony explicitly requested screenshots of RailClear and RAMS Workbench. Their tool rows now include fresh captures of isolated built-in synthetic examples: RailClear's calculated Metro vehicle study and stopping trajectory, and RAMS Workbench's fictional station bow tie with proposed barriers. RailClear used a new browser-storage origin on port 4191; RAMS used a new temporary database on port 5191. No existing studies or project inputs were opened. Full-size WebP assets and 720px variants retain the original interface and visible synthetic/prototype context; no image generation or UI reconstruction was used.

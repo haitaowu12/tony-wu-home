@@ -361,7 +361,7 @@ function App() {
         <div className="project-stack" role="group" aria-label="More selected work">
           {indexedProjects.map((project) => (
             <article
-              className={`project-entry${project.preview ? " has-preview" : ""}`}
+              className={`project-entry${project.preview ? " has-preview" : ""}${project.preview && !project.link ? " has-screenshot" : ""}`}
               data-reveal="project"
               key={project.title}
             >
@@ -406,7 +406,7 @@ function App() {
                     <img
                       src={project.preview.src}
                       srcSet={`${project.preview.smallSrc} 720w, ${project.preview.src} ${project.preview.width}w`}
-                      sizes="(max-width: 900px) calc(100vw - 88px), min(30vw, 440px)"
+                      sizes="(max-width: 620px) calc(100vw - 36px), (max-width: 900px) calc(100vw - 104px), min(calc(100vw - 164px), 1256px)"
                       width={project.preview.width}
                       height={project.preview.height}
                       loading="lazy"
