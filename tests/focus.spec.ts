@@ -153,6 +153,14 @@ test("local tool previews open full-size images without implying app access", as
     await expect.poll(() => link.locator("img").evaluate((image) =>
       (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0,
     )).toBe(true);
+    const layout = await entry.evaluate((element) => {
+      const row = element.getBoundingClientRect();
+      const body = element.querySelector(".project-entry__body")!.getBoundingClientRect();
+      const image = element.querySelector("img")!.getBoundingClientRect();
+      return { rowWidth: row.width, imageWidth: image.width, belowDescription: image.top >= body.bottom };
+    });
+    expect(layout.imageWidth).toBeGreaterThan(layout.rowWidth * 0.85);
+    expect(layout.belowDescription).toBe(true);
     await link.focus();
     await expect(link).toBeFocused();
     await link.press("Enter");
