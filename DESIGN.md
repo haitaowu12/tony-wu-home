@@ -1,5 +1,19 @@
 # Tony Wu Home Design Direction
 
+## Selected editorial layout and neutral palette — October 28, 2026
+
+Tony selected the first displayed Product Design proposal (`proposal-1.png` in the task's `homepage-editorial-20261028` artifact folder), then explicitly rejected the green shade. The revised source visual is `exec-a9ea6877-f5ff-46f3-9075-5152e23eb7f5.png` in the thread's generated-images folder. That image preserves the selected composition while changing the chrome to ivory, neutral charcoal and umber. User selection and subsequent color correction supersede the all-wide preview/jade decisions below.
+
+Implement in the existing React/Vite project with its original images and content source, rather than creating a parallel prototype or regenerating actual interfaces. No additional imagery, icon library or runtime dependency is needed. Generated copy is not evidence: keep Atlas public and bilingual, original research/coauthor status, exact career facts, all projects, private study qualification and synthetic-example captions.
+
+The visitor should scan a curated overview, then choose details. Compact personal opening with the original narrative artwork; Atlas as a bounded text/image feature; RailClear and RAMS as a paired study row; Modeling Lab, SE Tailoring and Leadership Toolbox in a flat secondary index; Asterfall beside a smaller learning-experiment list; a concise career thread beside the published writing feature; optional complete practice/career/research details; restrained contact footer. Every existing section anchor remains. Original Modeling Lab and tailoring screenshots remain available inside their details. Screenshot links open the original images using native browser viewing and Back; there is no invented private-app access or modal UI.
+
+Default visible captures are at most 300px high, engineering studies at most 220px and phone previews at most 190px. Preserve natural proportions without a fixed frame that letterboxes an image. These limits support this selected composition, not a universal website rule. Replace the rejected full-row width assertion with browsing-density, bounds, qualification and full-size navigation checks. Paired About/Writing sections require the navigation tracker to handle shared vertical positions and a clamped last-row anchor without switching to Contact incorrectly.
+
+Palette: ivory `#f4f0e8`, ink `#27231f`, charcoal `#181716`, secondary `#655d54`, umber `#76553b`, sand `#d3b38b` on dark. No green in website tokens or favicon. Preserve application/artwork colors in actual source images. Keep IBM Plex Sans and the existing system-serif role. The selected mock's decorative file icons and circles are omitted in favor of accessible text links and native ordered-list markers.
+
+References inspected October 28: Anushriya's distinct feature/Playground/article hierarchy; Brittany Chiang's scannable project list and persistent navigation; Paco Coursey's concise thematic columns; Lee Robinson's biography disclosure and narrative illustration. Local Huashu warm-editorial, Swiss-monochrome and gallery specimen pixels/HTML informed margin notes, aligned indexes and optional focused imagery. No external reference source code or assets are copied. Historical MotionSites notes do not establish a currently inspected package.
+
 ## Consistent previews and palette — October 27, 2026
 
 Tony requested the same large-preview treatment for World Atlas and the remaining projects, and a more coherent page palette. All six existing captures now follow their descriptions and span the section width, with natural proportions and no zoom/crop. Atlas remains first; SE Tailoring keeps its research story, Modeling Lab uses the same wide row as RailClear/RAMS, and Asterfall follows the pattern in Playground. Align row edges and remove inset thumbnail padding. Keep every original destination, private screenshot link, caption, prototype limit and coauthor credit.
@@ -65,14 +79,13 @@ Reference: [Anushriya Bhardwaj](https://www.anushriya.com/), particularly the sh
 
 ## Tokens
 
-- Ink on charcoal: `#f7f2e8`; secondary: `#b8afa2`
-- Carbon: `#0b0d0d`; closing surface: `#151817`
-- Paper: `#f0eee7`; ink: `#202923`; secondary: `#535d56`
-- Jade on charcoal: `#91baa8`; hover: `#b0cebf`
-- Jade on paper: `#285f4c`
-- Dividers: low-opacity ink appropriate to each surface
-- Focus: jade on its surrounding surface; inset chapter destinations use dark ink on paper
-- Primary type: self-hosted IBM Plex Sans Variable; existing system serif feature headings
+- Ivory: `#f4f0e8`; ink: `#27231f`; secondary: `#655d54`
+- Charcoal: `#181716`; opening text: `#f4f0e8`; secondary: `#c5baac`
+- Umber links/focus on ivory: `#76553b`
+- Sand links/focus on charcoal: `#d3b38b`
+- Dividers: `#d4cbc0` on ivory; `#48413a` on charcoal
+- Primary type: self-hosted IBM Plex Sans Variable; existing system serif for editorial headings
+- Screenshots and narrative artwork retain their original colors
 
 ## QA Baseline
 

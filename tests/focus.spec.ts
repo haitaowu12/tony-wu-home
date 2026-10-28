@@ -140,56 +140,73 @@ test("programmatic focus after pointer use retains a visible indicator", async (
   }
 });
 
-test("project previews fill their row below descriptions and private images open without app access", async ({ page }) => {
-  for (const [rowSelector, bodySelector] of [
-    [".atlas-feature", ".atlas-feature__body"],
-    [".project-spotlight", ".project-spotlight__body"],
-    [".project-entry.has-preview", ".project-entry__body"],
-    [".learning-feature", ".learning-feature__body"],
-  ]) {
-    for (const row of await page.locator(rowSelector).all()) {
-      const layout = await row.evaluate((element, bodySelector) => {
-        const bounds = element.getBoundingClientRect();
-        const body = element.querySelector(bodySelector)!.getBoundingClientRect();
-        const image = element.querySelector("img")!.getBoundingClientRect();
-        const natural = element.querySelector("img")!;
-        return { width: bounds.width, imageWidth: image.width, below: image.top >= body.bottom,
-          ratio: image.width / image.height, naturalRatio: Number(natural.getAttribute("width")) / Number(natural.getAttribute("height")) };
-      }, bodySelector);
-      expect(layout.imageWidth).toBeGreaterThan(layout.width * 0.85);
-      expect(layout.below).toBe(true);
-      expect(layout.ratio).toBeCloseTo(layout.naturalRatio, 1);
+test("bounded project previews support browsing and full-size image navigation", async ({ page }, testInfo) => {
+  // The selected editorial design keeps interface details optional rather
+  // than making every screenshot fill the page. A bound prevents regression
+  // to the former 500–900px-tall default captures.
+  for (const image of await page.locator(".project-preview img").all()) {
+    if (await image.isVisible()) {
+      expect(await image.evaluate((element) => element.getBoundingClientRect().height)).toBeLessThanOrEqual(302);
+      await expect(image).toHaveCSS("object-fit", "contain");
     }
   }
-  for (const title of ["RailClear", "RAMS Workbench"]) {
-    const entry = page.locator(".project-entry").filter({
-      has: page.getByRole("heading", { name: title, exact: true }),
+  if (testInfo.project.use.viewport!.width >= 1100) {
+    const scan = await page.locator("#work").evaluate((work) => {
+      const atlas = work.querySelector(".atlas-feature")!.getBoundingClientRect();
+      const pair = work.querySelector(".study-pair")!.getBoundingClientRect();
+      const rows = [...work.querySelectorAll(".study-entry")].map((entry) => entry.getBoundingClientRect());
+      return { span: rows[0].top - atlas.top, paired: Math.abs(rows[0].top - rows[1].top) < 1, pairWidth: pair.width };
     });
-    const link = entry.getByRole("link", { name: `View full screenshot: ${title}`, exact: true });
-    await expect(entry.getByRole("link")).toHaveCount(1);
+    expect(scan.paired).toBe(true);
+    expect(scan.span).toBeLessThan(600);
+  }
+  for (const title of ["World History Atlas", "RailClear", "RAMS Workbench", "SE Learning Quest"]) {
+    const link = page.getByRole("link", { name: `View full screenshot: ${title}`, exact: true });
     await expect(link).toHaveAttribute("href", /^\.\/project-previews\/.*\.webp$/);
     await link.scrollIntoViewIfNeeded();
-    await expect(link.getByRole("img")).toBeVisible();
     await expect.poll(() => link.locator("img").evaluate((image) =>
       (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0,
     )).toBe(true);
-    const layout = await entry.evaluate((element) => {
-      const row = element.getBoundingClientRect();
-      const body = element.querySelector(".project-entry__body")!.getBoundingClientRect();
-      const image = element.querySelector("img")!.getBoundingClientRect();
-      return { rowWidth: row.width, imageWidth: image.width, belowDescription: image.top >= body.bottom };
-    });
-    expect(layout.imageWidth).toBeGreaterThan(layout.rowWidth * 0.85);
-    expect(layout.belowDescription).toBe(true);
+    if (["RailClear", "RAMS Workbench"].includes(title)) {
+      const entry = page.locator(".study-entry").filter({has: page.getByRole("heading", {name:title, exact:true})});
+      await expect(entry.getByRole("link")).toHaveCount(1);
+      await expect(entry.locator(".project-limit")).toContainText("qualification");
+      await expect(entry.locator("figcaption")).toContainText("Synthetic example");
+    }
     await link.focus();
-    await expect(link).toBeFocused();
+    const beforeImageScroll = await page.evaluate(() => scrollY);
     await link.press("Enter");
     await expect(page).toHaveURL(/\/project-previews\/[^/]+\.webp$/);
     await expect.poll(() => page.locator("img").evaluate((image) =>
       (image as HTMLImageElement).naturalWidth,
     )).toBeGreaterThan(720);
     await page.goBack();
-    await expect(entry).toBeVisible();
+    await expect(link).toBeInViewport();
+    await expect.poll(async () => Math.abs(await page.evaluate(() => scrollY) - beforeImageScroll)).toBeLessThan(4);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+});
+
+test("paired About and Writing navigation retains the chosen chapter", async ({page}) => {
+  for (const id of ["writing", "about", "writing", "work"]) {
+    if (await page.locator(".site-nav__toggle").isVisible()) await page.locator(".site-nav__toggle").click();
+    await page.locator(`.site-nav a[href="#${id}"]`).click();
+    await expectVisibleTargetFocus(page, id);
+    await expect(page.locator(`.site-nav a[href="#${id}"]`)).toHaveAttribute("aria-current", "location");
+  }
+  // The two supporting projects retain real images inside their disclosures.
+  for (const title of ["Modeling Lab", "SE Tailoring Model"]) {
+    const entry = page.locator(".project-index article").filter({has:page.getByRole("heading", {name:title,exact:true})});
+    await entry.locator("summary").click();
+    await expect(entry.getByRole("link", {name:`View full screenshot: ${title}`,exact:true})).toBeVisible();
+    await entry.locator("summary").click();
+  }
+  for (const id of ["practice", "experience"]) {
+    await page.goto(`./#${id}`);
+    const summary = page.locator(`#${id} > summary`);
+    await expect(summary).toBeVisible();
+    await summary.click();
+    await expect(page.locator(`#${id}`)).toHaveAttribute("open", "");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
 });
