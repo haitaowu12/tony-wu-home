@@ -13,16 +13,16 @@
   --carbon: #0b0d0d;
   --charcoal: #151817;
   --panel: #1d201e;
-  --paper: #ede5d6;
+  --paper: #f0eee7;
   --paper-soft: #d8d0c0;
-  --paper-ink: #171916;
-  --paper-secondary: #55564c;
+  --paper-ink: #202923;
+  --paper-secondary: #535d56;
   --line: rgba(247, 242, 232, 0.18);
   --line-dark: rgba(23, 25, 22, 0.18);
-  --signal: #36d29c;
-  --signal-dark: #0c6f54;
-  --amber: #f2aa45;
-  --focus: #f2aa45;
+  --signal: #91baa8;
+  --signal-dark: #285f4c;
+  --signal-hover: #b0cebf;
+  --focus: #91baa8;
   --max: 1320px;
   --nav-height: 72px;
   /* Full-bleed gutter that centres content at --max. Uses 100% (the containing
@@ -57,7 +57,7 @@ a {
 
 a {
   color: inherit;
-  text-decoration-color: rgba(54, 210, 156, 0.72);
+  text-decoration-color: currentColor;
   text-decoration-thickness: 2px;
   text-underline-offset: 0.22em;
 }
@@ -369,7 +369,7 @@ section[id] {
 .button:hover,
 .contact__links a:hover {
   color: #06100c;
-  background: #5be5b6;
+  background: var(--signal-hover);
   transform: translateY(-2px);
 }
 
@@ -467,7 +467,7 @@ section[id] {
 }
 
 .evidence-rail strong {
-  color: var(--amber);
+  color: var(--signal);
   font-size: 2.25rem;
   line-height: 1;
 }
@@ -513,6 +513,33 @@ section[id] {
   line-height: 1.55;
 }
 
+/* Shared reading surface; application captures retain their own colors. */
+.work,
+.playground,
+.about-section,
+.writing {
+  color-scheme: light;
+  --ink: var(--paper-ink);
+  --ink-strong: var(--paper-ink);
+  --muted: var(--paper-secondary);
+  --quiet: var(--paper-secondary);
+  --signal: var(--signal-dark);
+  --focus: var(--signal-dark);
+  --line: var(--line-dark);
+  --charcoal: #e7e6de;
+  --panel: #e7e6de;
+  max-width: none;
+  padding-inline: var(--gutter);
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.playground,
+.about-section,
+.writing {
+  border-top: 1px solid var(--line);
+}
+
 .work {
   max-width: none;
   padding-inline: var(--gutter);
@@ -531,7 +558,7 @@ section[id] {
 
 .work .section-heading > p,
 .work .project-entry p {
-  color: rgba(23, 25, 22, 0.68);
+  color: var(--paper-secondary);
 }
 
 .section-heading--work {
@@ -550,10 +577,10 @@ section[id] {
 
 .project-spotlight {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-  align-items: center;
-  border: 1px solid var(--line-dark);
-  background: var(--paper-ink);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 22px;
+  border: 0;
+  background: transparent;
 }
 
 .project-spotlight__visual {
@@ -563,25 +590,10 @@ section[id] {
   background: #080d10;
 }
 
-.project-spotlight__visual::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border: 1px solid rgba(247, 242, 232, 0.14);
-  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.22);
-}
-
 .project-spotlight__visual img {
   width: 100%;
   height: auto;
   object-fit: contain;
-  transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.project-spotlight:hover .project-spotlight__visual img,
-.project-spotlight:focus-within .project-spotlight__visual img {
-  transform: scale(1.018);
 }
 
 .project-spotlight__body {
@@ -589,7 +601,8 @@ section[id] {
   min-width: 0;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(28px, 3.6vw, 48px);
+  padding: 0;
+  max-width: 850px;
   color: var(--ink);
 }
 
@@ -627,9 +640,9 @@ section[id] {
 
 .atlas-feature {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-  align-items: center;
-  gap: clamp(28px, 4vw, 56px);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 22px;
   margin-bottom: 56px;
   padding-bottom: 56px;
   border-bottom: 1px solid var(--line-dark);
@@ -648,6 +661,7 @@ section[id] {
 }
 
 .atlas-feature__body {
+  max-width: 850px;
   min-width: 0;
 }
 
@@ -662,7 +676,7 @@ section[id] {
 
 .atlas-feature__body > p:not(.section-kicker) {
   margin-top: 20px;
-  color: #55564c;
+  color: var(--paper-secondary);
   line-height: 1.6;
 }
 
@@ -676,7 +690,7 @@ section[id] {
 }
 
 .atlas-feature .inline-details > p {
-  color: #55564c;
+  color: var(--paper-secondary);
 }
 
 .project-story__steps {
@@ -702,7 +716,7 @@ section[id] {
 }
 
 .project-story__steps section > p:last-child {
-  color: #55564c;
+  color: var(--paper-secondary);
   font-size: 0.95rem;
   line-height: 1.6;
 }
@@ -716,10 +730,10 @@ section[id] {
   position: relative;
   display: grid;
   min-height: 0;
-  grid-template-columns: 112px minmax(0, 1fr) minmax(220px, 0.48fr);
+  grid-template-columns: 112px minmax(0, 1fr);
   align-items: stretch;
   gap: clamp(24px, 4vw, 56px);
-  padding: 28px;
+  padding: 28px 0;
   border-top: 1px solid var(--line-dark);
   background: transparent;
 }
@@ -728,12 +742,11 @@ section[id] {
   border-bottom: 1px solid var(--line-dark);
 }
 
-.project-entry.has-screenshot {
-  grid-template-columns: 112px minmax(0, 1fr);
+.project-entry.has-preview {
   row-gap: 22px;
 }
 
-.project-entry.has-screenshot .project-entry__body > p {
+.project-entry .project-entry__body > p {
   max-width: 850px;
 }
 
@@ -781,7 +794,7 @@ section[id] {
 }
 
 .project-entry__body li {
-  color: rgba(23, 25, 22, 0.62);
+  color: var(--paper-secondary);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.055em;
@@ -806,6 +819,7 @@ section[id] {
 }
 
 .project-entry__preview {
+  grid-column: 1 / -1;
   min-width: 0;
   overflow: hidden;
   border: 1px solid var(--line-dark);
@@ -814,16 +828,8 @@ section[id] {
 
 .project-entry__preview img {
   width: 100%;
-  height: 100%;
-  min-height: 150px;
-  object-fit: cover;
-  object-position: top center;
-  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.project-entry:hover .project-entry__preview img,
-.project-entry:focus-within .project-entry__preview img {
-  transform: scale(1.025);
+  height: auto;
+  object-fit: contain;
 }
 
 .project-entry .project-entry__preview--screenshot {
@@ -903,7 +909,7 @@ section[id] {
 
 .private-work p {
   margin-top: 8px;
-  color: rgba(23, 25, 22, 0.68);
+  color: var(--paper-secondary);
   font-size: 0.84rem;
   line-height: 1.45;
 }
@@ -911,7 +917,7 @@ section[id] {
 .private-work__status {
   display: inline-block;
   margin-top: 10px;
-  color: #875011;
+  color: var(--signal-dark);
   font-size: 0.68rem;
   font-weight: 850;
   letter-spacing: 0.05em;
@@ -972,7 +978,7 @@ section[id] {
 }
 
 .practice-entry > span {
-  color: var(--amber);
+  color: var(--signal);
   font-size: 1.65rem;
   font-weight: 900;
   line-height: 1;
@@ -1041,7 +1047,7 @@ section[id] {
 }
 
 .method-steps span {
-  color: var(--amber);
+  color: var(--signal);
   font-size: 0.72rem;
   font-weight: 850;
   letter-spacing: 0.06em;
@@ -1110,7 +1116,7 @@ section[id] {
 
 .writing .section-heading > p,
 .writing p {
-  color: rgba(23, 25, 22, 0.68);
+  color: var(--paper-secondary);
 }
 
 .writing-grid {
@@ -1246,7 +1252,7 @@ section[id] {
   left: 0;
   width: 8px;
   height: 1px;
-  background: var(--amber);
+  background: var(--signal);
 }
 
 .contact {
@@ -1255,14 +1261,14 @@ section[id] {
   gap: clamp(48px, 8vw, 120px);
   align-items: end;
   padding: clamp(84px, 10vw, 150px) var(--gutter);
-  color: #06100c;
-  background: var(--signal);
+  color: var(--ink);
+  background: var(--charcoal);
 }
 
 .contact .section-kicker,
 .contact h2,
 .contact p {
-  color: #06100c;
+  color: var(--ink);
 }
 
 .contact > div:last-child > p {
@@ -1272,9 +1278,9 @@ section[id] {
 }
 
 .contact__links a {
-  border-color: #06100c;
-  color: var(--ink-strong);
-  background: #06100c;
+  border-color: var(--signal);
+  color: #06100c;
+  background: var(--signal);
 }
 
 .contact__links a:hover {
@@ -1405,9 +1411,9 @@ summary::marker {
 
 .learning-feature {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  align-items: center;
-  gap: clamp(28px, 5vw, 64px);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 22px;
 }
 
 .learning-feature__preview {
@@ -1419,6 +1425,10 @@ summary::marker {
 .learning-feature__preview img {
   width: 100%;
   height: auto;
+}
+
+.learning-feature__body {
+  max-width: 850px;
 }
 
 .learning-feature__body h3 {
@@ -1564,12 +1574,12 @@ summary::marker {
 }
 
 .contact {
-  --focus: #06100c;
+  --focus: var(--signal);
 }
 
 .project-spotlight {
-  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
-  --focus: var(--amber);
+  grid-template-columns: minmax(0, 1fr);
+  --focus: var(--signal);
 }
 
 .project-spotlight__visual {
@@ -1578,7 +1588,7 @@ summary::marker {
 }
 
 .project-spotlight__body {
-  padding: clamp(24px, 3vw, 38px);
+  padding: 0;
 }
 
 .project-spotlight__body h3 {
@@ -1595,8 +1605,7 @@ summary::marker {
 
 .project-spotlight__visual:focus-visible {
   --focus: var(--signal-dark);
-  /* The image touches both paper and the dark panel. A paper halo keeps
-     the green focus outline legible along every edge. */
+  /* Separate the focus outline from the application capture. */
   box-shadow: 0 0 0 8px var(--paper);
 }
 
@@ -1982,7 +1991,7 @@ summary::marker {
   }
 
   .project-entry {
-    grid-template-columns: 72px minmax(0, 1fr) minmax(200px, 0.5fr);
+    grid-template-columns: 72px minmax(0, 1fr);
   }
 
   .experience-entry {
@@ -2086,20 +2095,12 @@ summary::marker {
     padding-inline: 18px;
   }
 
-  .project-spotlight__body {
-    padding: 28px 22px 34px;
-  }
 
   .project-entry {
     grid-template-columns: 1fr;
     gap: 20px;
-    padding: 22px 20px;
+    padding: 22px 0;
     transform: none;
-  }
-
-  .project-entry.has-screenshot {
-    grid-template-columns: 1fr;
-    padding-inline: 0;
   }
 
   .project-entry:not(.has-preview) .project-entry__body {
@@ -2114,9 +2115,6 @@ summary::marker {
     flex-direction: row;
   }
 
-  .project-entry__preview {
-    aspect-ratio: 16 / 9;
-  }
 
   .statement {
     gap: 44px;
@@ -2245,9 +2243,10 @@ section[id]:focus {
   outline-offset: -3px;
 }
 
-/* Amber is low-contrast on paper and signal surfaces. */
+/* Inset destination indicators use surface-appropriate contrast. */
 section.work:focus,
 section.writing:focus,
-section.contact:focus {
-  outline-color: var(--carbon);
+section.about-section:focus,
+section.playground:focus {
+  outline-color: var(--paper-ink);
 }

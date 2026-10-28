@@ -282,20 +282,6 @@ function App() {
         </header>
 
         <article className="atlas-feature" id="world-atlas" aria-labelledby="atlas-title">
-          {atlasProject.preview && atlasProject.link && (
-            <a className="atlas-feature__preview" href={atlasProject.link.href} aria-label="Open World History Atlas">
-              <img
-                src={atlasProject.preview.src}
-                srcSet={`${atlasProject.preview.smallSrc} 720w, ${atlasProject.preview.src} ${atlasProject.preview.width}w`}
-                sizes="(max-width: 900px) calc(100vw - 48px), min(58vw, 780px)"
-                width={atlasProject.preview.width}
-                height={atlasProject.preview.height}
-                alt={atlasProject.preview.alt}
-                loading="lazy"
-                decoding="async"
-              />
-            </a>
-          )}
           <div className="atlas-feature__body">
             <p className="section-kicker">{atlasProject.availabilityLabel}</p>
             <h3 id="atlas-title">{atlasProject.title}<span className="feature-name-note" lang="zh">寰宇时序</span></h3>
@@ -308,29 +294,24 @@ function App() {
               <a className="text-link" href={profile.atlasStory.source.href}>{profile.atlasStory.source.label}</a>
             </details>
           </div>
+          {atlasProject.preview && atlasProject.link && (
+            <a className="atlas-feature__preview" href={atlasProject.link.href} aria-label="Open World History Atlas">
+              <img
+                src={atlasProject.preview.src}
+                srcSet={`${atlasProject.preview.smallSrc} 720w, ${atlasProject.preview.src} ${atlasProject.preview.width}w`}
+                sizes="(max-width: 620px) calc(100vw - 36px), min(calc(100vw - 48px), 1320px)"
+                width={atlasProject.preview.width}
+                height={atlasProject.preview.height}
+                alt={atlasProject.preview.alt}
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+          )}
         </article>
 
         <article className="project-story" aria-labelledby="story-title" data-reveal="project">
           <div className="project-spotlight">
-            {spotlightProject.preview && (
-              <a
-                className="project-spotlight__visual"
-                href={spotlightProject.link?.href}
-                tabIndex={-1}
-                aria-hidden="true"
-              >
-                <img
-                  src={spotlightProject.preview.src}
-                  srcSet={`${spotlightProject.preview.smallSrc} 720w, ${spotlightProject.preview.src} ${spotlightProject.preview.width}w`}
-                  sizes="(min-width: 901px) min(55vw, 780px), calc(100vw - 48px)"
-                  width={spotlightProject.preview.width}
-                  height={spotlightProject.preview.height}
-                  loading="lazy"
-                  decoding="async"
-                  alt={spotlightProject.preview.alt}
-                />
-              </a>
-            )}
             <div className="project-spotlight__body">
               <p className="project-spotlight__label">Public research tool</p>
               <h3 id="story-title">{spotlightProject.title}</h3>
@@ -343,6 +324,25 @@ function App() {
                 </a>
               )}
             </div>
+            {spotlightProject.preview && (
+              <a
+                className="project-spotlight__visual"
+                href={spotlightProject.link?.href}
+                tabIndex={-1}
+                aria-hidden="true"
+              >
+                <img
+                  src={spotlightProject.preview.src}
+                  srcSet={`${spotlightProject.preview.smallSrc} 720w, ${spotlightProject.preview.src} ${spotlightProject.preview.width}w`}
+                  sizes="(max-width: 620px) calc(100vw - 36px), min(calc(100vw - 48px), 1320px)"
+                  width={spotlightProject.preview.width}
+                  height={spotlightProject.preview.height}
+                  loading="lazy"
+                  decoding="async"
+                  alt={spotlightProject.preview.alt}
+                />
+              </a>
+            )}
           </div>
           <details className="project-rationale">
             <summary>The tailoring approach</summary>
@@ -361,7 +361,7 @@ function App() {
         <div className="project-stack" role="group" aria-label="More selected work">
           {indexedProjects.map((project) => (
             <article
-              className={`project-entry${project.preview ? " has-preview" : ""}${project.preview && !project.link ? " has-screenshot" : ""}`}
+              className={`project-entry${project.preview ? " has-preview" : ""}`}
               data-reveal="project"
               key={project.title}
             >
@@ -391,7 +391,7 @@ function App() {
                   <img
                     src={project.preview.src}
                     srcSet={`${project.preview.smallSrc} 720w, ${project.preview.src} ${project.preview.width}w`}
-                    sizes="min(90vw, 365px)"
+                    sizes="(max-width: 620px) calc(100vw - 36px), min(calc(100vw - 48px), 1320px)"
                     width={project.preview.width}
                     height={project.preview.height}
                     loading="lazy"
@@ -406,7 +406,7 @@ function App() {
                     <img
                       src={project.preview.src}
                       srcSet={`${project.preview.smallSrc} 720w, ${project.preview.src} ${project.preview.width}w`}
-                      sizes="(max-width: 620px) calc(100vw - 36px), (max-width: 900px) calc(100vw - 104px), min(calc(100vw - 164px), 1256px)"
+                      sizes="(max-width: 620px) calc(100vw - 36px), min(calc(100vw - 48px), 1320px)"
                       width={project.preview.width}
                       height={project.preview.height}
                       loading="lazy"
@@ -445,20 +445,6 @@ function App() {
           <p>Games, reflection, and learning by doing. Small experiments in how people think, decide, and grow.</p>
         </header>
         <article className="learning-feature" aria-labelledby="learning-title">
-          {learningSpotlight.preview && learningSpotlight.link && (
-            <a className="learning-feature__preview" href={learningSpotlight.link.href} aria-label="Explore Asterfall">
-              <img
-                src={learningSpotlight.preview.src}
-                srcSet={`${learningSpotlight.preview.smallSrc} 720w, ${learningSpotlight.preview.src} ${learningSpotlight.preview.width}w`}
-                sizes="(max-width: 900px) calc(100vw - 48px), min(55vw, 740px)"
-                width={learningSpotlight.preview.width}
-                height={learningSpotlight.preview.height}
-                alt={learningSpotlight.preview.alt}
-                loading="lazy"
-                decoding="async"
-              />
-            </a>
-          )}
           <div className="learning-feature__body">
             <p className="section-kicker">{learningSpotlight.title} · Public</p>
             <h3 id="learning-title">Asterfall: The Last Relay</h3>
@@ -467,6 +453,20 @@ function App() {
             {learningSpotlight.link && <a className="text-link" href={learningSpotlight.link.href}>Play Asterfall <span aria-hidden="true">↗</span></a>}
             <p className="learning-feature__limit">{profile.learningStory.limitation}</p>
           </div>
+          {learningSpotlight.preview && learningSpotlight.link && (
+            <a className="learning-feature__preview" href={learningSpotlight.link.href} aria-label="Explore Asterfall">
+              <img
+                src={learningSpotlight.preview.src}
+                srcSet={`${learningSpotlight.preview.smallSrc} 720w, ${learningSpotlight.preview.src} ${learningSpotlight.preview.width}w`}
+                sizes="(max-width: 620px) calc(100vw - 36px), min(calc(100vw - 48px), 1320px)"
+                width={learningSpotlight.preview.width}
+                height={learningSpotlight.preview.height}
+                alt={learningSpotlight.preview.alt}
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+          )}
         </article>
         <div className="learning-experiments" role="group" aria-label="More learning experiments">
           {learningExperiments.map((project) => (
