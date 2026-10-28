@@ -140,7 +140,27 @@ test("programmatic focus after pointer use retains a visible indicator", async (
   }
 });
 
-test("local tool previews open full-size images without implying app access", async ({ page }) => {
+test("project previews fill their row below descriptions and private images open without app access", async ({ page }) => {
+  for (const [rowSelector, bodySelector] of [
+    [".atlas-feature", ".atlas-feature__body"],
+    [".project-spotlight", ".project-spotlight__body"],
+    [".project-entry.has-preview", ".project-entry__body"],
+    [".learning-feature", ".learning-feature__body"],
+  ]) {
+    for (const row of await page.locator(rowSelector).all()) {
+      const layout = await row.evaluate((element, bodySelector) => {
+        const bounds = element.getBoundingClientRect();
+        const body = element.querySelector(bodySelector)!.getBoundingClientRect();
+        const image = element.querySelector("img")!.getBoundingClientRect();
+        const natural = element.querySelector("img")!;
+        return { width: bounds.width, imageWidth: image.width, below: image.top >= body.bottom,
+          ratio: image.width / image.height, naturalRatio: Number(natural.getAttribute("width")) / Number(natural.getAttribute("height")) };
+      }, bodySelector);
+      expect(layout.imageWidth).toBeGreaterThan(layout.width * 0.85);
+      expect(layout.below).toBe(true);
+      expect(layout.ratio).toBeCloseTo(layout.naturalRatio, 1);
+    }
+  }
   for (const title of ["RailClear", "RAMS Workbench"]) {
     const entry = page.locator(".project-entry").filter({
       has: page.getByRole("heading", { name: title, exact: true }),
@@ -172,4 +192,38 @@ test("local tool previews open full-size images without implying app access", as
     await expect(entry).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
+});
+
+// Palette refinements must retain readable text on both reading surfaces.
+test("content chapters share a surface with readable text and links", async ({ page }) => {
+  const colors = await page.evaluate(() => {
+    const luminance = (color: string) => {
+      const [r, g, b] = color.match(/[\d.]+/g)!.slice(0, 3).map((value) => {
+        const c = Number(value) / 255;
+        return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+      });
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    };
+    const contrast = (a: string, b: string) => {
+      const x = luminance(a), y = luminance(b);
+      return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+    };
+    return ["work", "playground", "about", "writing", "contact"].map((id) => {
+      const section = document.getElementById(id)!;
+      const background = getComputedStyle(section).backgroundColor;
+      const targets = [...section.querySelectorAll("p, h2, h3, a, summary")].filter((element) =>
+        element.getBoundingClientRect().height > 0 && element.textContent!.trim().length > 0);
+      return { id, background, minimumContrast: Math.min(...targets.map((element) => {
+        let parent: Element | null = element;
+        let surface = getComputedStyle(parent).backgroundColor;
+        while (parent && surface === "rgba(0, 0, 0, 0)") {
+          parent = parent.parentElement;
+          if (parent) surface = getComputedStyle(parent).backgroundColor;
+        }
+        return contrast(getComputedStyle(element).color, surface);
+      })) };
+    });
+  });
+  expect(new Set(colors.slice(0, 4).map((item) => item.background)).size).toBe(1);
+  for (const item of colors) expect(item.minimumContrast, item.id).toBeGreaterThanOrEqual(4.5);
 });
