@@ -23,6 +23,8 @@ export type SelectedProject = {
     /** Intrinsic pixel size, so the browser can reserve layout space. */
     width: number;
     height: number;
+    /** Explain the synthetic example shown, without implying app access. */
+    caption?: string;
   };
   availabilityLabel?: string;
 };
@@ -428,6 +430,14 @@ export const profile = {
       availabilityLabel: "Private prototype",
       featured: true,
       themes: ["safe-braking models", "railway safety-distance studies", "mixed-fleet comparison"],
+      preview: {
+        src: "./project-previews/railclear-2026-10-27.webp",
+        smallSrc: "./project-previews/railclear-2026-10-27-720.webp",
+        alt: "RailClear’s synthetic Metro vehicle study, showing stopping-distance results and a speed-versus-distance chart",
+        width: 1687,
+        height: 1186,
+        caption: "Synthetic example · braking trajectory and study results.",
+      },
     },
     {
       title: "RAMS Workbench",
@@ -438,6 +448,14 @@ export const profile = {
       availabilityLabel: "Local study prototype",
       featured: true,
       themes: ["hazard analysis", "RAM studies", "evidence traceability"],
+      preview: {
+        src: "./project-previews/rams-workbench-2026-10-27.webp",
+        smallSrc: "./project-previews/rams-workbench-2026-10-27-720.webp",
+        alt: "RAMS Workbench’s fictional station study, showing a bow-tie diagram linking causes, proposed barriers, a hazard, and consequences",
+        width: 1265,
+        height: 712,
+        caption: "Synthetic example · hazard causes, barriers, and consequences.",
+      },
     },
     {
       title: "Leadership Toolbox",

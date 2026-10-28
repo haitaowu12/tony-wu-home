@@ -1,5 +1,11 @@
 # Tony Wu Home Design Direction
 
+## Tool screenshots — October 27, 2026
+
+Tony explicitly requested screenshots of RailClear and RAMS Workbench. Their tool rows now include fresh captures of isolated built-in synthetic examples: RailClear's calculated Metro vehicle study and stopping trajectory, and RAMS Workbench's fictional station bow tie with proposed barriers. RailClear used a new browser-storage origin on port 4191; RAMS used a new temporary database on port 5191. No existing studies or project inputs were opened. Full-size WebP assets and 720px variants retain the original interface and visible synthetic/prototype context; no image generation or UI reconstruction was used.
+
+These private/local tools have figure captions and explicit “View full screenshot” image links, rather than app-access links. Images are uncropped, with natural proportions, intrinsic dimensions, responsive selection and lazy loading. Preserve the existing linked public-project previews, Atlas-first hierarchy and prototype/qualification wording. Raw captures and browser evidence live outside the public source tree in the task's visualization folder.
+
 ## RailClear and RAMS Workbench — October 27, 2026
 
 Tony confirmed that “safe brake model” refers to RailClear. Its Selected Work row now names safe-braking studies explicitly and retains the private prototype status and project-specific qualification requirement. RAMS Workbench is a neighboring tool row: hazard/requirements/evidence links, bow ties, static fault trees and reliability block diagrams, with local single-user prototype and bounded-method status. Both descriptions come from the owner READMEs inspected October 27; no private project inputs, internal captures, repository or download links are added. Current-work copy and page/social metadata include the two tools. Preserve the existing Atlas-first order, personal story hero and compact row layout.
