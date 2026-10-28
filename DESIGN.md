@@ -1,5 +1,9 @@
 # Tony Wu Home Design Direction
 
+## RailClear and RAMS Workbench — October 27, 2026
+
+Tony confirmed that “safe brake model” refers to RailClear. Its Selected Work row now names safe-braking studies explicitly and retains the private prototype status and project-specific qualification requirement. RAMS Workbench is a neighboring tool row: hazard/requirements/evidence links, bow ties, static fault trees and reliability block diagrams, with local single-user prototype and bounded-method status. Both descriptions come from the owner READMEs inspected October 27; no private project inputs, internal captures, repository or download links are added. Current-work copy and page/social metadata include the two tools. Preserve the existing Atlas-first order, personal story hero and compact row layout.
+
 ## Surface
 
 Public author/about page for a full-time systems engineering practitioner, professional society contributor, and operator-builder. Main users: industry peers, conference contacts, collaborators, future advisory fits, and people arriving from project READMEs.
