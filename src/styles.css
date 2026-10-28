@@ -817,6 +817,50 @@ section[id] {
   transform: scale(1.025);
 }
 
+.project-entry .project-entry__preview--screenshot {
+  align-self: start;
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  aspect-ratio: auto;
+  background: transparent;
+}
+
+.project-entry__preview--screenshot > a {
+  display: block;
+  color: var(--signal-dark);
+  font-size: 0.82rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.project-entry .project-entry__preview--screenshot img {
+  display: block;
+  height: auto;
+  min-height: 0;
+  border: 1px solid var(--line-dark);
+  object-fit: contain;
+  transition: none;
+}
+
+.project-entry__preview--screenshot > a > span {
+  display: inline-block;
+  padding: 10px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.project-entry__preview--screenshot figcaption {
+  color: var(--paper-secondary);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.project-entry:hover .project-entry__preview--screenshot img,
+.project-entry:focus-within .project-entry__preview--screenshot img {
+  transform: none;
+}
+
 .private-work {
   margin-top: 32px;
   padding: 20px 0 0;
