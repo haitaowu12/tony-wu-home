@@ -400,6 +400,24 @@ function App() {
                   />
                 </a>
               )}
+              {project.preview && !project.link && (
+                <figure className="project-entry__preview project-entry__preview--screenshot">
+                  <a href={project.preview.src} aria-label={`View full screenshot: ${project.title}`}>
+                    <img
+                      src={project.preview.src}
+                      srcSet={`${project.preview.smallSrc} 720w, ${project.preview.src} ${project.preview.width}w`}
+                      sizes="(max-width: 900px) calc(100vw - 88px), min(30vw, 440px)"
+                      width={project.preview.width}
+                      height={project.preview.height}
+                      loading="lazy"
+                      decoding="async"
+                      alt={project.preview.alt}
+                    />
+                    <span>View full screenshot <span aria-hidden="true">↗</span></span>
+                  </a>
+                  {project.preview.caption && <figcaption>{project.preview.caption}</figcaption>}
+                </figure>
+              )}
             </article>
           ))}
         </div>
