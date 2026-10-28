@@ -405,6 +405,7 @@ export const profile = {
     },
     {
       title: "Modeling Lab",
+      teaser: "A browser-based SysML v2 workspace with Engineering and Stakeholder views.",
       group: "tool",
       summary:
         "Evolved from SysML Viewer, this browser-based SysML v2 workspace offers Engineering and Stakeholder views. Open a model, explore its architecture, review supported changes, and export a reader. The browser profile has explicit language and diagram coverage limits.",
@@ -423,6 +424,7 @@ export const profile = {
     },
     {
       title: "RailClear",
+      teaser: "Compare mixed fleets, failure scenarios, and route variants.",
       group: "tool",
       summary:
         "A safe-braking study workspace for traditional signal segments and CBTC track sections. Compare mixed fleets, failure scenarios, and route variants; inspect governing cases and export reproducible calculation records. Outputs require project-specific engineering qualification.",
@@ -441,6 +443,7 @@ export const profile = {
     },
     {
       title: "RAMS Workbench",
+      teaser: "Link hazards, reliability studies, requirements, and verification evidence.",
       group: "tool",
       summary:
         "A local workbench for reliability, availability, maintainability, and safety studies. Link hazards, requirements, and verification evidence; explore bow ties, static fault trees, and reliability block diagrams. A single-user prototype with bounded analysis methods; engineering qualification remains open.",
@@ -459,6 +462,7 @@ export const profile = {
     },
     {
       title: "Leadership Toolbox",
+      teaser: "Practical methods and a source-backed library for technical leadership.",
       group: "tool",
       summary: "A portable agent skill and source-backed library for preparing conversations, reviewing handoffs, and working through leadership decisions. Methods include practical steps, examples, prerequisites, and limits.",
       status: "public",
@@ -469,6 +473,7 @@ export const profile = {
     },
     {
       title: "SE Learning Quest",
+      teaser: "A systems-thinking adventure about a failed warning network and decisions with consequences.",
       group: "learning",
       summary:
         "Asterfall: The Last Relay is a browser roleplaying adventure about a failed warning network. Its 24-quest Classic campaign turns stakeholder needs, interfaces, trade-offs, verification, and change into decisions with consequences.",
