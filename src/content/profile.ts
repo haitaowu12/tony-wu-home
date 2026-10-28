@@ -148,7 +148,7 @@ export const profile = {
   now: {
     reviewed: "October 2026",
     summary:
-      "My current work spans World History Atlas, the browser-based Modeling Lab, Leadership Toolbox, SE Tailoring, and RailClear, a private prototype for railway safety-distance studies. Learning experiments include Asterfall and Personal Growth Copilot. A published INCOSE paper connects technical leadership with responsible human–AI collaboration.",
+      "I am developing RailClear for safe-braking and railway safety-distance studies, and RAMS Workbench for hazard analysis, RAM studies, and evidence traceability. Both are local study prototypes. My wider work spans World History Atlas, Modeling Lab, Leadership Toolbox, SE Tailoring, and learning experiments including Asterfall and Personal Growth Copilot. A published INCOSE paper connects technical leadership with responsible human–AI collaboration.",
     research:
       "My current writing explores SE tailoring, changing transit concepts of operations, future upgrades, and whole-facility operation. Alongside these papers, I am helping advance development of the proposed INCOSE–APTA Systems Lifecycle Engineering standard for transit.",
   },
@@ -423,11 +423,21 @@ export const profile = {
       title: "RailClear",
       group: "tool",
       summary:
-        "Railway safety-distance studies by signal segment and CBTC track section. Compare mixed vehicles, operating conditions, and route variants; inspect governing cases and export an auditable calculation record. A private study prototype; outputs require project-specific engineering qualification.",
+        "A safe-braking study workspace for traditional signal segments and CBTC track sections. Compare mixed fleets, failure scenarios, and route variants; inspect governing cases and export reproducible calculation records. Outputs require project-specific engineering qualification.",
       status: "local-private",
       availabilityLabel: "Private prototype",
       featured: true,
-      themes: ["railway safety-distance studies", "mixed-fleet comparison", "calculation records"],
+      themes: ["safe-braking models", "railway safety-distance studies", "mixed-fleet comparison"],
+    },
+    {
+      title: "RAMS Workbench",
+      group: "tool",
+      summary:
+        "A local workbench for reliability, availability, maintainability, and safety studies. Link hazards, requirements, and verification evidence; explore bow ties, static fault trees, and reliability block diagrams. A single-user prototype with bounded analysis methods; engineering qualification remains open.",
+      status: "local-private",
+      availabilityLabel: "Local study prototype",
+      featured: true,
+      themes: ["hazard analysis", "RAM studies", "evidence traceability"],
     },
     {
       title: "Leadership Toolbox",
