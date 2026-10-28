@@ -1,5 +1,11 @@
 # Tony Wu Home Design Direction
 
+## Consistent previews and palette — October 27, 2026
+
+Tony requested the same large-preview treatment for World Atlas and the remaining projects, and a more coherent page palette. All six existing captures now follow their descriptions and span the section width, with natural proportions and no zoom/crop. Atlas remains first; SE Tailoring keeps its research story, Modeling Lab uses the same wide row as RailClear/RAMS, and Asterfall follows the pattern in Playground. Align row edges and remove inset thumbnail padding. Keep every original destination, private screenshot link, caption, prototype limit and coauthor credit.
+
+Use charcoal for the opening/navigation and closing contact section, warm paper for all four content chapters, dark ink for prose, and one jade accent with surface-appropriate contrast. Remove the amber decorative roles, neon green contact block and dark inset tailoring panel. Real interface screenshots retain their original application colors; do not recolor evidence. Shared local tokens govern content text, links, dividers and focus, including About/Playground disclosures. No new images, fonts or dependencies. Preview-size and palette/contrast regression checks extend the existing viewport/motion matrix.
+
 ## Larger tool previews — October 27, 2026
 
 Tony found the RailClear and RAMS Workbench thumbnails too small to understand in place. These two rows now have compact description headers followed by full-row, uncropped screenshots. The public Modeling Lab thumbnail and other project treatments remain as before. On phones, remove the screenshot rows' extra inner padding so images use the available section width. Responsive source selection follows the larger rendered width. Preserve captions, accessible full-size links and prototype qualifications. A regression checks that each screenshot sits below the description and spans at least 85% of the project row across the viewport/motion matrix.
@@ -59,18 +65,14 @@ Reference: [Anushriya Bhardwaj](https://www.anushriya.com/), particularly the sh
 
 ## Tokens
 
-- Ink: `#f7f2e8`
-- Carbon: `#0b0d0d`
-- Paper: `#ede5d6`
-- Panel: `#1d201e`
-- Line: `rgba(247, 242, 232, 0.18)`
-- Signal: `#36d29c`
-- Cyan: `#4dc9ff`
-- Violet: `#bda4ff`
-- Amber: `#f2aa45`
-- Red: `#f26d5b`
-- Focus: `#f2aa45`
-- Primary type: self-hosted IBM Plex Sans Variable
+- Ink on charcoal: `#f7f2e8`; secondary: `#b8afa2`
+- Carbon: `#0b0d0d`; closing surface: `#151817`
+- Paper: `#f0eee7`; ink: `#202923`; secondary: `#535d56`
+- Jade on charcoal: `#91baa8`; hover: `#b0cebf`
+- Jade on paper: `#285f4c`
+- Dividers: low-opacity ink appropriate to each surface
+- Focus: jade on its surrounding surface; inset chapter destinations use dark ink on paper
+- Primary type: self-hosted IBM Plex Sans Variable; existing system serif feature headings
 
 ## QA Baseline
 
