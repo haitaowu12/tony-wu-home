@@ -139,3 +139,29 @@ test("programmatic focus after pointer use retains a visible indicator", async (
     await expectVisibleTargetFocus(page, id);
   }
 });
+
+test("local tool previews open full-size images without implying app access", async ({ page }) => {
+  for (const title of ["RailClear", "RAMS Workbench"]) {
+    const entry = page.locator(".project-entry").filter({
+      has: page.getByRole("heading", { name: title, exact: true }),
+    });
+    const link = entry.getByRole("link", { name: `View full screenshot: ${title}`, exact: true });
+    await expect(entry.getByRole("link")).toHaveCount(1);
+    await expect(link).toHaveAttribute("href", /^\.\/project-previews\/.*\.webp$/);
+    await link.scrollIntoViewIfNeeded();
+    await expect(link.getByRole("img")).toBeVisible();
+    await expect.poll(() => link.locator("img").evaluate((image) =>
+      (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0,
+    )).toBe(true);
+    await link.focus();
+    await expect(link).toBeFocused();
+    await link.press("Enter");
+    await expect(page).toHaveURL(/\/project-previews\/[^/]+\.webp$/);
+    await expect.poll(() => page.locator("img").evaluate((image) =>
+      (image as HTMLImageElement).naturalWidth,
+    )).toBeGreaterThan(720);
+    await page.goBack();
+    await expect(entry).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+});
