@@ -38,8 +38,9 @@ async function expectVisibleTargetFocus(page: Page, id: string) {
   await expect(target).toBeFocused();
   // The site's reduced-motion rule gives all properties a 0.01ms transition.
   // Wait for the rendered focus state instead of sampling before its first paint.
-  await expect(target).toHaveCSS("outline-offset", "-3px");
-  const indicator = await target.evaluate((element) => {
+  const heading = target.locator("h1, h2").first();
+  await expect(heading).toHaveCSS("outline-offset", "6px");
+  const indicator = await heading.evaluate((element) => {
     const style = getComputedStyle(element);
     let surface: Element | null = element;
     let background = style.backgroundColor;
@@ -66,7 +67,7 @@ async function expectVisibleTargetFocus(page: Page, id: string) {
   });
   expect(indicator.style).toBe("solid");
   expect(indicator.width).toBeGreaterThanOrEqual(3);
-  expect(indicator.offset).toBeLessThanOrEqual(-indicator.width);
+  expect(indicator.offset).toBeGreaterThanOrEqual(indicator.width);
   expect(indicator.contrast).toBeGreaterThanOrEqual(3);
   // Native smooth scrolling is not a CSS animation. Wait for consecutive
   // stable frames so clearance checks and screenshots use its final position.
@@ -169,18 +170,25 @@ test("bounded project previews support browsing and full-size image navigation",
     )).toBe(true);
     if (["RailClear", "RAMS Workbench"].includes(title)) {
       const entry = page.locator(".study-entry").filter({has: page.getByRole("heading", {name:title, exact:true})});
-      await expect(entry.getByRole("link")).toHaveCount(1);
+      await expect(entry.getByRole("link")).toHaveCount(2);
       await expect(entry.locator(".project-limit")).toContainText("qualification");
       await expect(entry.locator("figcaption")).toContainText("Synthetic example");
     }
     await link.focus();
     const beforeImageScroll = await page.evaluate(() => scrollY);
     await link.press("Enter");
-    await expect(page).toHaveURL(/\/project-previews\/[^/]+\.webp$/);
-    await expect.poll(() => page.locator("img").evaluate((image) =>
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole("button", {name:"Close preview"})).toBeFocused();
+    await expect.poll(() => dialog.locator("img").evaluate((image) =>
       (image as HTMLImageElement).naturalWidth,
     )).toBeGreaterThan(720);
-    await page.goBack();
+    await dialog.getByRole("button", {name:"Actual size"}).click();
+    await expect(dialog.getByRole("button", {name:"Fit to window"})).toHaveAttribute("aria-pressed", "true");
+    await dialog.getByRole("button", {name:"Fit to window"}).click();
+    await page.keyboard.press("Escape");
+    await expect(dialog).not.toBeVisible();
+    await expect(link).toBeFocused();
     await expect(link).toBeInViewport();
     await expect.poll(async () => Math.abs(await page.evaluate(() => scrollY) - beforeImageScroll)).toBeLessThan(4);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -243,4 +251,45 @@ test("content chapters share a surface with readable text and links", async ({ p
   });
   expect(new Set(colors.slice(0, 4).map((item) => item.background)).size).toBe(1);
   for (const item of colors) expect(item.minimumContrast, item.id).toBeGreaterThanOrEqual(4.5);
+});
+
+
+test("preview contains keyboard focus, supports native originals, and reopens", async ({page}) => {
+  const trigger = page.getByRole("link", {name:"View full screenshot: World History Atlas", exact:true});
+  for (let cycle = 0; cycle < 2; cycle++) {
+    await trigger.click();
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toBeVisible();
+    await page.keyboard.press("Shift+Tab");
+    await expect(dialog.getByRole("link", {name:"Open original"})).toBeFocused();
+    await page.keyboard.press("Tab");
+    await expect(dialog.getByRole("button", {name:"Close preview"})).toBeFocused();
+    await dialog.getByRole("button", {name:"Close preview"}).click();
+    await expect(dialog).not.toBeVisible();
+    await expect(trigger).toBeFocused();
+    await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
+  }
+  // The original remains a real destination, including when enhancement is unavailable.
+  await trigger.click();
+  await page.getByRole("dialog").getByRole("link", {name:"Open original"}).click();
+  await expect(page).toHaveURL(/\/project-previews\/[^/]+\.webp$/);
+  await page.goBack();
+  await expect(trigger).toBeInViewport();
+});
+
+test("mobile menu dismisses with Escape, outside press and focus leaving", async ({page}) => {
+  const toggle = page.locator(".site-nav__toggle");
+  if (!await toggle.isVisible()) return;
+  await toggle.click();
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+  await page.keyboard.press("Escape");
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(toggle).toBeFocused();
+  await toggle.click();
+  await page.locator(".hero__visual img").click();
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await toggle.click();
+  await page.locator('.site-nav a[href="#contact"]').focus();
+  await page.keyboard.press("Tab");
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
 });
