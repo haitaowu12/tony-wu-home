@@ -1,5 +1,5 @@
 {
-  "source_commit": "44d469b2875919eac61f30bb21b5cad0c4176dda",
+  "source_commit": "3a2c6faa94bf0a6c95b5f8595bf9a85d84014faa",
   "hosting": "GitHub Pages branch publishing",
   "files": [
     {
@@ -33,9 +33,9 @@
       "sha256": "73e7f7b1c980416ae0c2461268b14c7cfcce0668e683dc43fbb11a82a227b9f2"
     },
     {
-      "path": "assets/index-B4FNsUEX.js",
-      "bytes": 265796,
-      "sha256": "c5d682f42328f6b205be759a42a89fa45d5f3331aefa3ea94f74a270cbb13341"
+      "path": "assets/index-BcWmquAf.js",
+      "bytes": 266639,
+      "sha256": "8ef687ce91e21484c0cc53826050f3f09bcdf5ea2158b5ef2846a4726c9e907b"
     },
     {
       "path": "assets/index-CQfROF-e.css",
@@ -79,8 +79,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 37046,
-      "sha256": "aab8ddca39d76962615ffc577bdfe9dbbc471535ecab1d2a7a07f40b7fdd2f6b"
+      "bytes": 37861,
+      "sha256": "57543e3954256da70770c4922c34dd2a64fe069f18cf91b5469c0c454f987e60"
     },
     {
       "path": "project-previews/asterfall-2026-10-25-720.webp",
@@ -171,6 +171,16 @@
       "path": "project-previews/world-history-atlas-2026-10-25.webp",
       "bytes": 73794,
       "sha256": "edf322eec5794b722f73836a3a36c5f42d95533349efff6b945c3c4638b606f7"
+    },
+    {
+      "path": "project-previews/world-history-atlas-2026-10-29-720.jpg",
+      "bytes": 60613,
+      "sha256": "ed6d15c14f98c964b68b752a2f82e665822145bf7c4ffba3fc572ab5d7c39b61"
+    },
+    {
+      "path": "project-previews/world-history-atlas-2026-10-29.jpg",
+      "bytes": 104406,
+      "sha256": "c1cfa685a3fdf45f8578aefc24fbaaadfb24f6b6b902fb0a00c901e010a53721"
     },
     {
       "path": "robots.txt",
