@@ -150,7 +150,7 @@ export const profile = {
   now: {
     reviewed: "October 2026",
     summary:
-      "I am developing RailClear for safe-braking and railway safety-distance studies, and RAMS Workbench for hazard analysis, RAM studies, and evidence traceability. Both are local study prototypes. My wider work spans World History Atlas, Modeling Lab, Leadership Toolbox, SE Tailoring, and learning experiments including Asterfall and Personal Growth Copilot. A published INCOSE paper connects technical leadership with responsible human–AI collaboration.",
+      "I am developing RailClear for safe-braking and railway safety-distance studies, and RAMS Workbench for hazard analysis, RAM studies, and evidence traceability. RailClear is available in the browser; RAMS Workbench offers a public worked study and a downloadable local app. Both retain explicit engineering qualification limits. My wider work spans World History Atlas, Modeling Lab, Leadership Toolbox, SE Tailoring, and learning experiments including Asterfall and Personal Growth Copilot. A published INCOSE paper connects technical leadership with responsible human–AI collaboration.",
     research:
       "My current writing explores SE tailoring, changing transit concepts of operations, future upgrades, and whole-facility operation. Alongside these papers, I am helping advance development of the proposed INCOSE–APTA Systems Lifecycle Engineering standard for transit.",
   },
@@ -394,7 +394,7 @@ export const profile = {
       status: "public",
       featured: true,
       themes: ["INCOSE TIW 2026", "tailoring", "infrastructure SE"],
-      link: { label: "Open", href: "https://haitaowu12.github.io/SE_Tailoring_Framework" },
+      link: { label: "Open", href: "https://haitaowu12.github.io/SE_Tailoring_Framework/" },
       preview: {
         src: "./project-previews/se-tailoring-2026-10-25.webp",
         smallSrc: "./project-previews/se-tailoring-2026-10-25-720.webp",
@@ -428,8 +428,9 @@ export const profile = {
       group: "tool",
       summary:
         "A safe-braking study workspace for traditional signal segments and CBTC track sections. Compare mixed fleets, failure scenarios, and route variants; inspect governing cases and export reproducible calculation records. Outputs require project-specific engineering qualification.",
-      status: "local-private",
-      availabilityLabel: "Private prototype",
+      status: "prototype",
+      availabilityLabel: "Public browser study tool",
+      link: { label: "Open RailClear", href: "https://haitaowu12.github.io/railclear-pages/" },
       featured: true,
       themes: ["safe-braking models", "railway safety-distance studies", "mixed-fleet comparison"],
       preview: {
@@ -446,9 +447,10 @@ export const profile = {
       teaser: "Link hazards, reliability studies, requirements, and verification evidence.",
       group: "tool",
       summary:
-        "A local workbench for reliability, availability, maintainability, and safety studies. Link hazards, requirements, and verification evidence; explore bow ties, static fault trees, and reliability block diagrams. A single-user prototype with bounded analysis methods; engineering qualification remains open.",
-      status: "local-private",
-      availabilityLabel: "Local study prototype",
+        "A local workbench for reliability, availability, maintainability, and safety studies. Link hazards, requirements, and verification evidence; explore bow ties, static fault trees, and reliability block diagrams. The public example is read only; authoring uses the single-user local app. Analysis methods have explicit limits, and engineering qualification remains open.",
+      status: "prototype",
+      availabilityLabel: "Public study · local authoring app",
+      link: { label: "Explore RAMS Workbench", href: "https://haitaowu12.github.io/rams-workbench-pages/" },
       featured: true,
       themes: ["hazard analysis", "RAM studies", "evidence traceability"],
       preview: {
@@ -469,14 +471,14 @@ export const profile = {
       availabilityLabel: "Public skill",
       featured: true,
       themes: ["technical leadership", "practical methods", "source-backed guidance"],
-      link: { label: "Explore Leadership Toolbox", href: "https://github.com/haitaowu12/leadership-toolbox" },
+      link: { label: "Explore Leadership Toolbox", href: "https://haitaowu12.github.io/leadership-toolbox/" },
     },
     {
       title: "SE Learning Quest",
       teaser: "A systems-thinking adventure about a failed warning network and decisions with consequences.",
       group: "learning",
       summary:
-        "Asterfall: The Last Relay is a browser roleplaying adventure about a failed warning network. Its 24-quest Classic campaign turns stakeholder needs, interfaces, trade-offs, verification, and change into decisions with consequences.",
+        "Asterfall: The Last Relay is a browser roleplaying adventure about a failed warning network. Its 24-quest Classic campaign and seven-chapter illustrated journey turn stakeholder needs, interfaces, trade-offs, verification, change and stewardship into decisions with consequences.",
       status: "public",
       featured: true,
       themes: ["systems thinking", "story-driven learning", "lifecycle decisions"],
@@ -500,8 +502,8 @@ export const profile = {
       availabilityLabel: "Public alpha",
       themes: ["reflection", "source-grounded learning", "user-owned progress"],
       link: {
-        label: "View project and alpha status",
-        href: "https://github.com/haitaowu12/personal-growth-copilot",
+        label: "Try the lesson and explore the skill",
+        href: "https://haitaowu12.github.io/personal-growth-copilot/",
       },
     },
     {

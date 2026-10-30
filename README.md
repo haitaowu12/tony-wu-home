@@ -69,10 +69,11 @@ React snippet:
 
 ## Integration Order
 
-1. Publish this page first.
-2. Add README-only links to public repos.
-3. Add quiet UI footer/topbar links only where they do not interrupt the main workflow.
-4. Defer shared package/component work until reuse proves maintenance value.
+1. Publish the project sites first and verify their current links.
+2. Update and publish this page last so it reflects those releases.
+3. Add README-only links to public repos.
+4. Add quiet UI footer/topbar links only where they do not interrupt the main workflow.
+5. Defer shared package/component work until reuse proves maintenance value.
 
 Detailed snippets: [docs/integration-snippets.md](docs/integration-snippets.md).
 
