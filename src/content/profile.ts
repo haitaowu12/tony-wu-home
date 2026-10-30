@@ -5,6 +5,7 @@ export type Link = {
 
 export type SelectedProject = {
   title: string;
+  chineseTitle?: string;
   summary: string;
   status: "public" | "prototype" | "local-private";
   /** Rendered in Work or Playground. Set explicitly so no
@@ -112,16 +113,16 @@ export const profile = {
   },
   learningStory: {
     title: "What if a systems problem were an adventure?",
-    summary: "In Asterfall: The Last Relay, a warning network has gone silent. Across 24 connected quests, play a keeper in training, cross six island realms, and discover why working parts do not always make a working whole.",
+    summary: "In Asterfall: The Last Relay, a warning network has gone silent. Play Iona Vale, a keeper in training, across six island regions. Choose the 24-quest Classic campaign or a seven-chapter illustrated journey, and discover why working parts do not always make a working whole.",
     invitation: "Read the scene. Choose an action. Explore the consequences.",
     limitation: "A learning experiment; its effectiveness has not been evaluated.",
   },
   atlasStory: {
     title: "A world of histories, side by side.",
-    basis: "I expanded Jiangshan Map into a bilingual world-history atlas, connecting historical entries, biographies, places, and guided reading. Historical views and modern reference geography are labeled separately. The collection is selective and continues to grow.",
+    basis: "I started this atlas while telling my daughter history stories: where did each story happen, and what was happening elsewhere? English and Chinese let us explore the wider world while staying connected to our Chinese heritage. Inspired by DeanChensj and the contributors to Jiangshan Map (江山时序), the atlas includes attributed adaptations of their work and is now independently maintained. Historical views and modern reference geography are labeled separately; coverage remains selective.",
     source: {
-      label: "Project source and lineage",
-      href: "https://github.com/haitaowu12/jiangshan-map/tree/world-history-atlas/world",
+      label: "Project source and credits",
+      href: "https://github.com/haitaowu12/world-history-atlas",
     },
   },
   featuredStory: {
@@ -369,17 +370,18 @@ export const profile = {
   projects: [
     {
       title: "World History Atlas",
+      chineseTitle: "普天之下",
       group: "atlas",
-      summary: "A bilingual atlas for exploring what was happening in different parts of the world at the same time. Move through time, follow lives and reading paths, and inspect the sources behind each entry.",
+      summary: "Put each story back in its world. Explore people, places, and events across regions and time, in English and Chinese. Follow guided readings, compare histories side by side, and keep a personal notebook with bookmarks and notes.",
       status: "public",
       availabilityLabel: "Public · English / 中文",
       featured: true,
       themes: ["history & geography", "connected lives", "English / 中文"],
       link: { label: "Explore World Atlas", href: "https://world-history-atlas-tony.techiesea.chatgpt.site/" },
       preview: {
-        src: "./project-previews/world-history-atlas-2026-10-25.webp",
-        smallSrc: "./project-previews/world-history-atlas-2026-10-25-720.webp",
-        alt: "World History Atlas at 1200 CE, with a world map, concurrent histories, and an interactive time slider",
+        src: "./project-previews/world-history-atlas-2026-10-29.jpg",
+        smallSrc: "./project-previews/world-history-atlas-2026-10-29-720.jpg",
+        alt: "World History Atlas · 普天之下 at 1200 CE, with historical entries, dated map outlines, guided readings, and a time slider",
         width: 1280,
         height: 720,
       },
@@ -406,7 +408,7 @@ export const profile = {
       teaser: "A browser-based SysML v2 workspace with Engineering and Stakeholder views.",
       group: "tool",
       summary:
-        "Evolved from SysML Viewer, this browser-based SysML v2 workspace offers Engineering and Stakeholder views. Open a model, explore its architecture, review supported changes, and export a reader. The browser profile has explicit language and diagram coverage limits.",
+        "Open a SysML v2 model or project folder, explore Engineering and Stakeholder views, and review supported model changes. Download an editable project or a self-contained reader for others to review. Work stays in the browser; language and diagram coverage have explicit limits.",
       status: "prototype",
       featured: true,
       availabilityLabel: "Browser prototype",
@@ -425,7 +427,7 @@ export const profile = {
       teaser: "Compare mixed fleets, failure scenarios, and route variants.",
       group: "tool",
       summary:
-        "A safe-braking study workspace for traditional signal segments and CBTC track sections. Compare mixed fleets, failure scenarios, and route variants; inspect governing cases and export reproducible calculation records. Outputs require project-specific engineering qualification.",
+        "A safe-braking study workspace for signal segments, CBTC track sections, and named engineering sections. Compare mixed fleets, failure scenarios, and route variants; inspect governing cases and export reproducible calculation records. Outputs require project-specific engineering qualification.",
       status: "prototype",
       availabilityLabel: "Public browser study tool",
       link: { label: "Open RailClear", href: "https://haitaowu12.github.io/railclear-pages/" },
@@ -464,7 +466,7 @@ export const profile = {
       title: "Leadership Toolbox",
       teaser: "Practical methods and a source-backed library for technical leadership.",
       group: "tool",
-      summary: "A portable agent skill and source-backed library for preparing conversations, reviewing handoffs, and working through leadership decisions. Methods include practical steps, examples, prerequisites, and limits.",
+      summary: "A portable agent skill and library of 32 methods for preparing conversations, reviewing handoffs, and working through leadership decisions. Explore the situation, challenge assumptions, and choose a method with practical steps, examples, sources, and limits. Leadership effectiveness has not been established.",
       status: "public",
       availabilityLabel: "Public skill",
       featured: true,
@@ -476,7 +478,7 @@ export const profile = {
       teaser: "A systems-thinking adventure about a failed warning network and decisions with consequences.",
       group: "learning",
       summary:
-        "Asterfall: The Last Relay is a browser roleplaying adventure about a failed warning network. Its 24-quest Classic campaign and seven-chapter illustrated journey turn stakeholder needs, interfaces, trade-offs, verification, change and stewardship into decisions with consequences.",
+        "Asterfall: The Last Relay is a browser roleplaying adventure about a failed warning network. Its 24-quest Classic campaign and seven-chapter, 25-scene illustrated journey turn stakeholder needs, interfaces, trade-offs, verification, change and stewardship into decisions with consequences.",
       status: "public",
       featured: true,
       themes: ["systems thinking", "story-driven learning", "lifecycle decisions"],
@@ -494,7 +496,7 @@ export const profile = {
       group: "learning",
       teaser: "Reflection, practice, and small experiments in learning.",
       summary:
-        "An early-stage tool for reflective dialogue, small behavior-change experiments, and learning through practice. Its development version includes an offline requirements-writing lesson with source-linked explanations, written exercises, and delayed retrieval.",
+        "An explicitly invoked agent skill for reflection, small behavior-change experiments, and learning through practice. The development candidate brings together personal growth, relationships, and leadership practice, alongside an offline requirements-writing lesson with source-linked explanations, written exercises, and delayed retrieval. Human review and effectiveness evaluation remain open.",
       status: "prototype",
       featured: true,
       availabilityLabel: "Public alpha",
@@ -536,7 +538,7 @@ export const profile = {
       group: "learning",
       teaser: "Work through technical leadership decisions under pressure.",
       summary:
-        "A React training game that turns the INCOSE TLI Shared Model into evidence placement, pressure rounds, and debrief transfer.",
+        "Place evidence on the INCOSE TLI Shared Model, choose actions through three pressure rounds, and examine the consequences in a debrief. A guided scenario connects technical leadership practice with situations beyond the game.",
       status: "prototype",
       featured: true,
       themes: ["technical leadership", "learning game", "facilitation"],
@@ -547,10 +549,10 @@ export const profile = {
       group: "learning",
       teaser: "Keep a shared vision while stakeholder viewpoints pull apart.",
       summary:
-        "A static browser game for leadership training around vision drift, stakeholder viewpoints, and local multiplayer facilitation.",
+        "Keep a shared vision through five rounds of disruptions and competing stakeholder viewpoints. Play solo or pass the device among up to six players, use a strategic pause when the vision drifts, and compare perspectives in the debrief.",
       status: "public",
       featured: true,
-      themes: ["systems thinking", "workshop game", "static web game"],
+      themes: ["systems thinking", "workshop game", "shared vision"],
       link: { label: "Open", href: "https://haitaowu12.github.io/Focal-Point-Game/" },
     },
   ] satisfies SelectedProject[],
