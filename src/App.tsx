@@ -17,7 +17,12 @@ const navItems = [
 ];
 
 const sectionIds = ["top", "work", "playground", "about", "writing", "contact"];
-const navSection = (id: string) => id === "practice" || id === "experience" ? "about" : id;
+const navSection = (id: string) => {
+  if (["practice", "experience"].includes(id)) return "about";
+  if (["world-atlas", "modeling-lab"].includes(id)) return "work";
+  if (id === "asterfall") return "playground";
+  return id;
+};
 
 const featuredProjects = profile.projects.filter((project) => project.featured);
 const privateProjects = profile.projects.filter((project) => project.status === "local-private" && !project.featured);
@@ -32,6 +37,7 @@ const indexedProjects = [
 const learningProjects = featuredProjects.filter((project) => project.group === "learning");
 const learningSpotlight = learningProjects.find((project) => project.title === "SE Learning Quest")!;
 const learningExperiments = learningProjects.filter((project) => project !== learningSpotlight);
+const nameWords = profile.identity.name.split(" ");
 const publishedNote = profile.fieldNotes[0]!;
 const developingNotes = profile.fieldNotes.slice(1);
 const otherPublications = profile.publications.filter((item) => item.title !== publishedNote.title);
@@ -55,7 +61,7 @@ function ProjectPreview({ project, sizes, className = "" }: {
         <img src={preview.src} srcSet={`${preview.smallSrc} 720w, ${preview.src} ${preview.width}w`}
           sizes={sizes} width={preview.width} height={preview.height}
           loading="lazy" decoding="async" alt={preview.alt} />
-        <span>Enlarge screenshot</span>
+        <span>Enlarge screenshot <span aria-hidden="true">↗</span></span>
       </a>
       {preview.caption && <figcaption>{preview.caption}</figcaption>}
     </figure>
@@ -216,7 +222,7 @@ function App() {
   }, []);
 
   return (
-    <PreviewProvider>
+    <PreviewProvider projects={[atlasProject, ...studyProjects, ...indexedProjects, learningSpotlight]}>
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -263,10 +269,9 @@ function App() {
       <main id="main-content" tabIndex={-1}>
       <section className="hero" id="top" aria-labelledby="hero-title" tabIndex={-1}>
         <div className="hero__content">
-          <p className="eyebrow">Vancouver, Canada</p>
+          <p className="eyebrow"><span>Hi, I’m</span><span>Vancouver, Canada</span></p>
           <h1 id="hero-title" data-hero-item="2">
-            <span className="hero__greeting">Hi, I’m </span>
-            {profile.identity.name}<span className="hero__period">.</span>
+            {nameWords.slice(0, -1).join(" ")} <em>{nameWords.at(-1)}.</em>
           </h1>
           <p className="hero__title" data-hero-item="3">
             {profile.positioning.headline}
@@ -289,7 +294,7 @@ function App() {
             <img
               src="./hero-practice-story.webp"
               srcSet="./hero-practice-story-720.webp 720w, ./hero-practice-story-1080.webp 1080w, ./hero-practice-story.webp 1448w"
-              sizes="(max-width: 700px) calc(100vw - 36px), min(48vw, 580px)"
+              sizes="(max-width: 700px) calc(100vw - 40px), min(50vw, 640px)"
               width="1448"
               height="1086"
               fetchPriority="high"
@@ -297,6 +302,12 @@ function App() {
               alt="Illustration of aerospace and rail sketches, a systems-modeling laptop, leadership notes, and the Asterfall game beside a Vancouver window"
             />
           </div>
+          <figcaption className="desk-links">
+            <span>On the desk</span>
+            <a href="#modeling-lab">Models <span aria-hidden="true">↗</span></a>
+            <a href="#world-atlas">History <span aria-hidden="true">↗</span></a>
+            <a href="#asterfall">Play <span aria-hidden="true">↗</span></a>
+          </figcaption>
         </figure>
       </section>
 
@@ -304,7 +315,7 @@ function App() {
         <header className="section-heading section-heading--work">
           <h2 id="work-title">Selected work</h2>
         </header>
-        <article className="atlas-feature" id="world-atlas" aria-labelledby="atlas-title">
+        <article className="atlas-feature" id="world-atlas" tabIndex={-1} aria-labelledby="atlas-title">
           <div className="atlas-feature__body">
             <h3 id="atlas-title">{atlasProject.title}<span className="feature-name-note" lang="zh">{atlasProject.chineseTitle}</span></h3>
             <p>{atlasProject.summary}</p>
@@ -318,12 +329,13 @@ function App() {
             </details>
           </div>
           <ProjectPreview project={atlasProject} className="atlas-feature__preview"
-            sizes="(max-width: 700px) calc(100vw - 36px), min(50vw, 620px)" />
+            sizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1000px) 52vw, min(60vw, 760px)" />
         </article>
 
         <div className="study-pair" role="group" aria-label="Engineering study tools">
           {studyProjects.map((project) => (
             <article className="project-entry study-entry" key={project.title}>
+              <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(44vw, 570px)" />
               <div className="project-entry__body">
                 <h3>{project.title}</h3>
                 <p className="feature-dek">{project.title === "RailClear" ? "Safe-braking studies" : "Hazards, reliability & evidence"}</p>
@@ -338,14 +350,13 @@ function App() {
                   <p>{project.summary}</p>
                 </details>
               </div>
-              <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 36px), min(44vw, 560px)" />
             </article>
           ))}
         </div>
 
         <div className="project-index" role="group" aria-label="More selected work">
           {indexedProjects.map((project) => (
-            <article key={project.title}>
+            <article key={project.title} id={project.title === "Modeling Lab" ? "modeling-lab" : undefined} tabIndex={project.title === "Modeling Lab" ? -1 : undefined}>
               <header className="project-index__heading"><h3>{project.title}</h3>
               <p className="availability">{project === spotlightProject ? "Research with Cleo Wong" : (project.availabilityLabel ?? statusLabels[project.status])}</p></header>
               <div className="project-index__body"><p>{project === spotlightProject ? "Decide how much systems engineering a project needs. Research evaluation is in progress." : project.teaser}</p>
@@ -386,8 +397,8 @@ function App() {
       <section className="section playground" id="playground" aria-labelledby="playground-title" tabIndex={-1}>
         <header className="section-heading"><h2 id="playground-title">Playground</h2></header>
         <div className="playground-layout">
-          <article className="learning-feature" aria-labelledby="learning-title">
-            <ProjectPreview project={learningSpotlight} sizes="(max-width: 700px) calc(100vw - 36px), min(30vw, 350px)" />
+          <article className="learning-feature" id="asterfall" tabIndex={-1} aria-labelledby="learning-title">
+            <ProjectPreview project={learningSpotlight} sizes="(max-width: 700px) calc(100vw - 40px), min(58vw, 740px)" />
             <div className="learning-feature__body">
               <h3 id="learning-title">Asterfall: The Last Relay</h3>
               <p>{learningSpotlight.teaser}</p>

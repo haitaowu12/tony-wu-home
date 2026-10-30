@@ -33,12 +33,13 @@ async function tabTo(page: Page, selector: string) {
   throw new Error(`Could not reach ${selector} using Tab`);
 }
 
-async function expectVisibleTargetFocus(page: Page, id: string) {
+async function expectVisibleTargetFocus(page: Page, id: string, showIndicator = true) {
   const target = page.locator(`#${id}`);
   await expect(target).toBeFocused();
   // The site's reduced-motion rule gives all properties a 0.01ms transition.
   // Wait for the rendered focus state instead of sampling before its first paint.
-  const heading = target.locator("h1, h2").first();
+  const heading = target.locator("h1, h2, h3").first();
+  if (showIndicator) {
   await expect(heading).toHaveCSS("outline-offset", "6px");
   const indicator = await heading.evaluate((element) => {
     const style = getComputedStyle(element);
@@ -69,6 +70,9 @@ async function expectVisibleTargetFocus(page: Page, id: string) {
   expect(indicator.width).toBeGreaterThanOrEqual(3);
   expect(indicator.offset).toBeGreaterThanOrEqual(indicator.width);
   expect(indicator.contrast).toBeGreaterThanOrEqual(3);
+  } else {
+    await expect(heading).toHaveCSS("outline-style", "none");
+  }
   // Native smooth scrolling is not a CSS animation. Wait for consecutive
   // stable frames so clearance checks and screenshots use its final position.
   await page.evaluate(() => new Promise<void>((resolve) => {
@@ -130,24 +134,20 @@ test("keyboard hash navigation shows focus on every section", async ({ page }, t
   }
 });
 
-test("programmatic focus after pointer use retains a visible indicator", async ({ page }) => {
-  await page.locator("h1").click();
-  for (const id of ["main-content", ...sectionIds]) {
-    await page.locator(`#${id}`).evaluate((element) => {
-      (element as HTMLElement).focus({ preventScroll: true });
-      element.scrollIntoView({ block: "start", behavior: "instant" });
-    });
-    await expectVisibleTargetFocus(page, id);
+test("pointer navigation focuses the destination without keyboard decoration", async ({ page }) => {
+  for (const id of sectionIds) {
+    if (id !== "top" && await page.locator(".site-nav__toggle").isVisible()) await page.locator(".site-nav__toggle").click();
+    await page.locator(`.site-nav a[href="#${id}"]`).click();
+    await expectVisibleTargetFocus(page, id, false);
   }
 });
 
 test("bounded project previews support browsing and full-size image navigation", async ({ page }, testInfo) => {
-  // The selected editorial design keeps interface details optional rather
-  // than making every screenshot fill the page. A bound prevents regression
-  // to the former 500–900px-tall default captures.
+  // Featured interfaces should be readable while remaining bounded;
+  // enlargement exposes the full source without distorting its proportions.
   for (const image of await page.locator(".project-preview img").all()) {
     if (await image.isVisible()) {
-      expect(await image.evaluate((element) => element.getBoundingClientRect().height)).toBeLessThanOrEqual(302);
+      expect(await image.evaluate((element) => element.getBoundingClientRect().height)).toBeLessThanOrEqual(442);
       await expect(image).toHaveCSS("object-fit", "contain");
     }
   }
@@ -199,7 +199,7 @@ test("paired About and Writing navigation retains the chosen chapter", async ({p
   for (const id of ["writing", "about", "writing", "work"]) {
     if (await page.locator(".site-nav__toggle").isVisible()) await page.locator(".site-nav__toggle").click();
     await page.locator(`.site-nav a[href="#${id}"]`).click();
-    await expectVisibleTargetFocus(page, id);
+    await expectVisibleTargetFocus(page, id, false);
     await expect(page.locator(`.site-nav a[href="#${id}"]`)).toHaveAttribute("aria-current", "location");
   }
   // The two supporting projects retain real images inside their disclosures.
@@ -220,7 +220,7 @@ test("paired About and Writing navigation retains the chosen chapter", async ({p
 });
 
 // Palette refinements must retain readable text on both reading surfaces.
-test("content chapters share a surface with readable text and links", async ({ page }) => {
+test("light and dark chapters retain readable text and links", async ({ page }) => {
   const colors = await page.evaluate(() => {
     const luminance = (color: string) => {
       const [r, g, b] = color.match(/[\d.]+/g)!.slice(0, 3).map((value) => {
@@ -249,7 +249,8 @@ test("content chapters share a surface with readable text and links", async ({ p
       })) };
     });
   });
-  expect(new Set(colors.slice(0, 4).map((item) => item.background)).size).toBe(1);
+  expect(new Set(colors.filter((item) => item.id !== "playground").map((item) => item.background)).size).toBe(1);
+  expect(colors.find((item) => item.id === "playground")!.background).not.toBe(colors[0].background);
   for (const item of colors) expect(item.minimumContrast, item.id).toBeGreaterThanOrEqual(4.5);
 });
 
@@ -314,4 +315,40 @@ test("uncached preview reserves its frame while the full image loads", async ({p
   const loaded = await dialog.locator(".image-viewer__surface").boundingBox();
   expect(Math.abs(loaded!.height - frame!.height)).toBeLessThan(2);
   await dialog.getByRole("button", {name:"Close preview"}).click();
+});
+
+
+test("desk links reach their project and preserve navigation context", async ({page}) => {
+  for (const [name, id, chapter] of [["Models", "modeling-lab", "work"], ["History", "world-atlas", "work"], ["Play", "asterfall", "playground"]]) {
+    await page.goto(".");
+    const link = page.locator(".desk-links").getByRole("link", {name,exact:true});
+    await link.focus();
+    await page.keyboard.press("Enter");
+    await expectVisibleTargetFocus(page, id);
+    await expect(page.locator(`.site-nav a[href="#${chapter}"]`)).toHaveAttribute("aria-current", "location");
+  }
+});
+
+test("gallery browses all projects and returns to the original trigger", async ({page}) => {
+  const trigger = page.getByRole("link", {name:"View full screenshot: World History Atlas",exact:true});
+  await trigger.click();
+  const dialog = page.getByRole("dialog");
+  for (const title of ["RailClear", "RAMS Workbench", "Modeling Lab", "SE Tailoring Model", "Asterfall: The Last Relay", "World History Atlas"]) {
+    await dialog.getByRole("button", {name:"Next project",exact:true}).click();
+    await expect(dialog.getByRole("heading")).toHaveText(title);
+    await expect(dialog.getByRole("button", {name:"Next project",exact:true})).toBeFocused();
+    await expect(dialog.getByRole("button", {name:"Actual size"})).toBeEnabled();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+  await page.keyboard.press("ArrowLeft");
+  await expect(dialog.getByRole("heading")).toHaveText("Asterfall: The Last Relay");
+  await page.keyboard.press("ArrowRight");
+  await expect(dialog.getByRole("heading")).toHaveText("World History Atlas");
+  await dialog.getByRole("button", {name:"Actual size"}).click();
+  await page.keyboard.press("ArrowRight");
+  await expect(dialog.getByRole("heading")).toHaveText("World History Atlas");
+  await page.keyboard.press("Escape");
+  await expect(dialog).not.toBeVisible();
+  await expect(trigger).toBeFocused();
+  await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
 });

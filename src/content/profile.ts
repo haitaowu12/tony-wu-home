@@ -113,7 +113,7 @@ export const profile = {
   },
   learningStory: {
     title: "What if a systems problem were an adventure?",
-    summary: "In Asterfall: The Last Relay, a warning network has gone silent. Play Iona Vale, a keeper in training, across six island regions. Choose the 24-quest Classic campaign or a seven-chapter illustrated journey, and discover why working parts do not always make a working whole.",
+    summary: "Play Iona Vale, a keeper in training, across six island regions. Discover why working parts do not always make a working whole.",
     invitation: "Read the scene. Choose an action. Explore the consequences.",
     limitation: "A learning experiment; its effectiveness has not been evaluated.",
   },

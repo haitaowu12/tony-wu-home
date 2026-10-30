@@ -8,7 +8,7 @@
       href="./hero-practice-story.webp"
       as="image"
       imagesrcset="./hero-practice-story-720.webp 720w, ./hero-practice-story-1080.webp 1080w, ./hero-practice-story.webp 1448w"
-      imagesizes="(max-width: 700px) calc(100vw - 36px), min(48vw, 580px)"
+      imagesizes="(max-width: 700px) calc(100vw - 40px), min(50vw, 640px)"
       fetchpriority="high"
     />
     <meta
@@ -71,10 +71,8 @@
     </script>
     <title>Tony Wu | Systems Thinking, Engineering &amp; Leadership</title>
     <script>
-      // The build pre-renders content, so the entrance animation must hide the
-      // hero before first paint rather than after hydration. Running inline in
-      // <head> keeps the reveal flicker-free, and with JavaScript disabled the
-      // class is never added so the page stays fully visible.
+      // The pre-rendered content is visible before enhancement. Motion starts
+      // after first paint and never gates access to the introduction.
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         document.documentElement.classList.add("motion-ready");
         window.requestAnimationFrame(function () {
