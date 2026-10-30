@@ -1,0 +1,191 @@
+{
+  "source_commit": "b8d534e3dda161f68cf80357b1e66b2f85c822db",
+  "hosting": "GitHub Pages branch publishing",
+  "files": [
+    {
+      "path": "assets/ibm-plex-sans-cyrillic-ext-wght-normal-d45eAU9y.woff2",
+      "bytes": 23568,
+      "sha256": "7d0037a170882a49e65a45c38ef195237bb07b1cc791d078379f0ac0d7ae1935"
+    },
+    {
+      "path": "assets/ibm-plex-sans-cyrillic-wght-normal-BAAhND-U.woff2",
+      "bytes": 29512,
+      "sha256": "9409ee21811f0f5272b7e1d828fe8838005b0573481ef906e7e55b63f6610ab0"
+    },
+    {
+      "path": "assets/ibm-plex-sans-greek-wght-normal-CmyJS8uq.woff2",
+      "bytes": 19500,
+      "sha256": "f598dd0700f155e2facfaa8ecfacace397d4c2c153e9ce37ab7ad310e8505bc2"
+    },
+    {
+      "path": "assets/ibm-plex-sans-latin-ext-wght-normal-CIII54If.woff2",
+      "bytes": 30964,
+      "sha256": "d160e20920ae4d6556518d352d3af27a74e9b0de3d8fe17b1c1044fc75aa2f81"
+    },
+    {
+      "path": "assets/ibm-plex-sans-latin-wght-normal-IvpUvPa2.woff2",
+      "bytes": 45712,
+      "sha256": "e2291e842cf5af167122a22881a740c7f2dda7716f1e8cd76680264f4a859470"
+    },
+    {
+      "path": "assets/ibm-plex-sans-vietnamese-wght-normal-Dg1JeJN0.woff2",
+      "bytes": 13160,
+      "sha256": "73e7f7b1c980416ae0c2461268b14c7cfcce0668e683dc43fbb11a82a227b9f2"
+    },
+    {
+      "path": "assets/index-Bxbc6Weq.js",
+      "bytes": 263420,
+      "sha256": "3bdddc2fceec17b6525f98aa3a4f3eafd2a6971dc8ae1755766e534438dd0f93"
+    },
+    {
+      "path": "assets/index-By-H8PFN.css",
+      "bytes": 15349,
+      "sha256": "099c9c986ab45bfe50ff78fd2caee550f3c76b52197b9e752093fa4374602282"
+    },
+    {
+      "path": "favicon.svg",
+      "bytes": 327,
+      "sha256": "2ad1b40c0c3d64f3f3e966df2a73ce0a43b2675db8c08584e7d2884d7005aad2"
+    },
+    {
+      "path": "hero-practice-story-1080.webp",
+      "bytes": 194900,
+      "sha256": "fa2fadd79ad0c5b20fad3671d19c71bf022fb40e1238bfbc8ce72b118dcd0905"
+    },
+    {
+      "path": "hero-practice-story-720.webp",
+      "bytes": 100310,
+      "sha256": "5d7929613c8ec73544608bfb8bca3dab68f3bf80a527ac58562b038d8ae497bc"
+    },
+    {
+      "path": "hero-practice-story.webp",
+      "bytes": 299426,
+      "sha256": "fb77849c37a3ff1631a5e1053e0bb3c2b4e7fea65aca376812d865861d532822"
+    },
+    {
+      "path": "hero-systems-briefing-1080.webp",
+      "bytes": 54440,
+      "sha256": "50716d56c34d501f0f36c73e9099a56de4c6237b49cfbf11cd49b1f0afa1cfa5"
+    },
+    {
+      "path": "hero-systems-briefing-720.webp",
+      "bytes": 28470,
+      "sha256": "3ecbf46025b63cbacfd4a555603ca7e0a4d303ba445a180d5209d08e5d343dde"
+    },
+    {
+      "path": "hero-systems-briefing.webp",
+      "bytes": 162018,
+      "sha256": "a758fcc6900ea1cd5a30d2b1db85a0ae7668e0828b22f864489221aed0f6c704"
+    },
+    {
+      "path": "index.html",
+      "bytes": 37044,
+      "sha256": "eb7127c31b94a278f4cacffc496bea32f2a61086e260837362ef01d41547f0de"
+    },
+    {
+      "path": "project-previews/asterfall-2026-10-25-720.webp",
+      "bytes": 27480,
+      "sha256": "63cbf792b1a80f484b54ee6652f9dae1c11ab5b3267e762d248da9b704ee42fe"
+    },
+    {
+      "path": "project-previews/asterfall-2026-10-25.webp",
+      "bytes": 46358,
+      "sha256": "1a32bf9844e385bce07bd42b8beb6ef9a4c2c38e873e8822a648b727a3ee913a"
+    },
+    {
+      "path": "project-previews/modeling-lab-2026-10-25-720.webp",
+      "bytes": 24336,
+      "sha256": "3d14fde5120ee33e1de74f009b10928f67b77783570a493fd66ef50883d88bd5"
+    },
+    {
+      "path": "project-previews/modeling-lab-2026-10-25.webp",
+      "bytes": 37660,
+      "sha256": "aa6be1e551512dfa4b4efac87da947ed544c3e3d92a21adcc2f3bc5423f74659"
+    },
+    {
+      "path": "project-previews/railclear-2026-10-27-720.webp",
+      "bytes": 19520,
+      "sha256": "886ab80aa774a62fe78a26575522a5ff655996856b085909752a742f486f6441"
+    },
+    {
+      "path": "project-previews/railclear-2026-10-27.webp",
+      "bytes": 65508,
+      "sha256": "a2c1ac8f7508684b69606014880969eb564ee02a4cd66a2e7be2faf6fc059bc8"
+    },
+    {
+      "path": "project-previews/rams-workbench-2026-10-27-720.webp",
+      "bytes": 23098,
+      "sha256": "ad60c5dcf5e0360a71ad6093e92ff6e303234998978aecb122c285f7f8bff99b"
+    },
+    {
+      "path": "project-previews/rams-workbench-2026-10-27.webp",
+      "bytes": 51872,
+      "sha256": "d9f2e87f5682ef01de5016c03e9342aebe87945b90645be6948367b231378975"
+    },
+    {
+      "path": "project-previews/se-learning-quest-720.webp",
+      "bytes": 17766,
+      "sha256": "bfdecf60fd9dac57bb33cd43d2456d122acbdff0ff21735b4c6ce8ffaf4adc8e"
+    },
+    {
+      "path": "project-previews/se-learning-quest.webp",
+      "bytes": 52132,
+      "sha256": "80a39bd5048867f3be5b3c0fcfc2b515e8478675bf707c28aa1486f9549bbcd5"
+    },
+    {
+      "path": "project-previews/se-tailoring-2026-10-25-720.webp",
+      "bytes": 23670,
+      "sha256": "570df2b60a1a6b30501f498a04e03fcaad42dc5c10d466a2cb459317efea7b9c"
+    },
+    {
+      "path": "project-previews/se-tailoring-2026-10-25.webp",
+      "bytes": 40898,
+      "sha256": "cc3bc8a54bb21d18d7f85c9ca98279c9765eecbf241ae5d7742bc49b6689afeb"
+    },
+    {
+      "path": "project-previews/se-tailoring-model-720.webp",
+      "bytes": 15810,
+      "sha256": "e33728867cff8337a62affdde7ebc2624df2a271cae3bd5c7190b9c1d775d566"
+    },
+    {
+      "path": "project-previews/se-tailoring-model.webp",
+      "bytes": 48674,
+      "sha256": "327d27a19c72e1c2d5445c478f9214ab25d56efe5584903d9eb5875248270402"
+    },
+    {
+      "path": "project-previews/sysml-viewer-720.webp",
+      "bytes": 16010,
+      "sha256": "11fce5323b96c9b41291e6585a27bd1496cb761d555c0877a94aab5d5e44663f"
+    },
+    {
+      "path": "project-previews/sysml-viewer.webp",
+      "bytes": 48864,
+      "sha256": "6bbf9c4e88dfcde008e552a67172fa572df09dec08d60cb81a4c343da9d3cdc9"
+    },
+    {
+      "path": "project-previews/world-history-atlas-2026-10-25-720.webp",
+      "bytes": 27804,
+      "sha256": "7b50a737503b1566bfb64799d2411aca2124a2aec3fefe56be64215b85b43e8d"
+    },
+    {
+      "path": "project-previews/world-history-atlas-2026-10-25.webp",
+      "bytes": 73794,
+      "sha256": "edf322eec5794b722f73836a3a36c5f42d95533349efff6b945c3c4638b606f7"
+    },
+    {
+      "path": "robots.txt",
+      "bytes": 87,
+      "sha256": "dd176bfea692708fa7b9e6d31c0c773a2efbf63b336c990a1f2d54f7a66c1f9a"
+    },
+    {
+      "path": "sitemap.xml",
+      "bytes": 251,
+      "sha256": "53faca2ea55c3884115333f46085c33817645bfc6b0112f048d49b1826d99514"
+    },
+    {
+      "path": "systems-map.svg",
+      "bytes": 2881,
+      "sha256": "23c450d9e50cb4afc137bd91d453fd828618b20e44d998b79fc8c56b6457fc88"
+    }
+  ]
+}
