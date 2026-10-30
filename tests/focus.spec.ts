@@ -293,3 +293,25 @@ test("mobile menu dismisses with Escape, outside press and focus leaving", async
   await page.keyboard.press("Tab");
   await expect(toggle).toHaveAttribute("aria-expanded", "false");
 });
+
+
+test("uncached preview reserves its frame while the full image loads", async ({page}) => {
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => { release = resolve; });
+  await page.route("**/project-previews/world-history-atlas-2026-10-25.webp", async (route) => {
+    await gate;
+    await route.continue();
+  });
+  await page.getByRole("link", {name:"View full screenshot: World History Atlas",exact:true}).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.getByRole("status")).toContainText("Loading full-resolution image");
+  await expect(dialog.getByRole("button", {name:"Actual size"})).toBeDisabled();
+  const frame = await dialog.locator(".image-viewer__surface").boundingBox();
+  expect(frame!.height).toBeGreaterThan(100);
+  release();
+  await expect(dialog.getByRole("status")).toHaveCount(0);
+  await expect(dialog.getByRole("button", {name:"Actual size"})).toBeEnabled();
+  const loaded = await dialog.locator(".image-viewer__surface").boundingBox();
+  expect(Math.abs(loaded!.height - frame!.height)).toBeLessThan(2);
+  await dialog.getByRole("button", {name:"Close preview"}).click();
+});
