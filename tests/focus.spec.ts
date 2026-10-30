@@ -163,7 +163,7 @@ test("bounded project previews support browsing and full-size image navigation",
   }
   for (const title of ["World History Atlas", "RailClear", "RAMS Workbench", "SE Learning Quest"]) {
     const link = page.getByRole("link", { name: `View full screenshot: ${title}`, exact: true });
-    await expect(link).toHaveAttribute("href", /^\.\/project-previews\/.*\.webp$/);
+    await expect(link).toHaveAttribute("href", /^\.\/project-previews\/.*\.(?:webp|jpg)$/);
     await link.scrollIntoViewIfNeeded();
     await expect.poll(() => link.locator("img").evaluate((image) =>
       (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0,
@@ -272,7 +272,7 @@ test("preview contains keyboard focus, supports native originals, and reopens", 
   // The original remains a real destination, including when enhancement is unavailable.
   await trigger.click();
   await page.getByRole("dialog").getByRole("link", {name:"Open original"}).click();
-  await expect(page).toHaveURL(/\/project-previews\/[^/]+\.webp$/);
+  await expect(page).toHaveURL(/\/project-previews\/[^/]+\.(?:webp|jpg)$/);
   await page.goBack();
   await expect(trigger).toBeInViewport();
 });
@@ -298,7 +298,7 @@ test("mobile menu dismisses with Escape, outside press and focus leaving", async
 test("uncached preview reserves its frame while the full image loads", async ({page}) => {
   let release!: () => void;
   const gate = new Promise<void>((resolve) => { release = resolve; });
-  await page.route("**/project-previews/world-history-atlas-2026-10-25.webp", async (route) => {
+  await page.route("**/project-previews/world-history-atlas-2026-10-29.jpg", async (route) => {
     await gate;
     await route.continue();
   });
