@@ -149,7 +149,7 @@ export const profile = {
   now: {
     reviewed: "October 2026",
     summary:
-      "I am developing RailClear for safe-braking and railway safety-distance studies, and RAMS Workbench for hazard analysis, RAM studies, and evidence traceability. RailClear is available in the browser; RAMS Workbench offers a public worked study and a downloadable local app. Both retain explicit engineering qualification limits. My wider work spans World History Atlas, Modeling Lab, Leadership Toolbox, SE Tailoring, and learning experiments including Asterfall and Personal Growth Copilot. A published INCOSE paper connects technical leadership with responsible human–AI collaboration.",
+      "I am developing RailClear for safe-braking and railway safety-distance studies, and RAMS Workbench for hazard analysis, RAM studies, and evidence traceability. RailClear and RAMS Workbench are available in the browser; RAMS Workbench also offers a local app. Both retain explicit engineering qualification limits. My wider work spans World History Atlas, Modeling Lab, Leadership Toolbox, SE Tailoring, and learning experiments including Asterfall and Personal Growth Copilot. A published INCOSE paper connects technical leadership with responsible human–AI collaboration.",
     research:
       "My current writing explores SE tailoring, changing transit concepts of operations, future upgrades, and whole-facility operation. Alongside these papers, I am helping advance development of the proposed INCOSE–APTA Systems Lifecycle Engineering standard for transit.",
   },
@@ -447,10 +447,10 @@ export const profile = {
       teaser: "Link hazards, reliability studies, requirements, and verification evidence.",
       group: "tool",
       summary:
-        "A local workbench for reliability, availability, maintainability, and safety studies. Link hazards, requirements, and verification evidence; explore bow ties, static fault trees, and reliability block diagrams. The public example is read only; authoring uses the single-user local app. Analysis methods have explicit limits, and engineering qualification remains open.",
+        "A browser workbench for reliability, availability, maintainability, and safety studies. Create and edit studies, link hazards with requirements and verification evidence, and calculate supported RAM and static fault-tree models. Studies save on your device, with workspace backup and restore; a local app is also available. Analysis methods have explicit limits, and engineering qualification remains open.",
       status: "prototype",
-      availabilityLabel: "Public study · local authoring app",
-      link: { label: "Explore RAMS Workbench", href: "https://haitaowu12.github.io/rams-workbench-pages/" },
+      availabilityLabel: "Public browser workbench",
+      link: { label: "Open RAMS Workbench", href: "https://haitaowu12.github.io/rams-workbench-pages/" },
       featured: true,
       themes: ["hazard analysis", "RAM studies", "evidence traceability"],
       preview: {
