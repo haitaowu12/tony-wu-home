@@ -306,7 +306,7 @@ function App() {
         </header>
         <article className="atlas-feature" id="world-atlas" aria-labelledby="atlas-title">
           <div className="atlas-feature__body">
-            <h3 id="atlas-title">{atlasProject.title}<span className="feature-name-note" lang="zh">寰宇时序</span></h3>
+            <h3 id="atlas-title">{atlasProject.title}<span className="feature-name-note" lang="zh">{atlasProject.chineseTitle}</span></h3>
             <p>{atlasProject.summary}</p>
             <div className="atlas-host-links">{atlasProject.link && <a className="text-link" href={atlasProject.link.href}>{atlasProject.link.label}</a>}</div>
             <p className="availability">{atlasProject.availabilityLabel}</p>
