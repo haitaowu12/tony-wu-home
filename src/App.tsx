@@ -304,7 +304,7 @@ function App() {
             <h3 id="atlas-title">{atlasProject.title}<span className="feature-name-note" lang="zh">寰宇时序</span></h3>
             <p className="feature-dek">{profile.atlasStory.title}</p>
             <p>{atlasProject.summary}</p>
-            {atlasProject.link && <a className="text-link" href={atlasProject.link.href}>{atlasProject.link.label}</a>}
+            <div className="atlas-host-links">{atlasProject.link && <a className="text-link" href={atlasProject.link.href}>{atlasProject.link.label}</a>} <a className="text-link" href="https://haitaowu12.github.io/world-history-atlas/">GitHub Pages mirror</a></div>
             <p className="availability">{atlasProject.availabilityLabel}</p>
             <details className="inline-details">
               <summary>How the atlas grew</summary>
@@ -324,6 +324,7 @@ function App() {
                 <p className="feature-dek">{project.title === "RailClear" ? "Safe-braking studies" : "Hazards, reliability & evidence"}</p>
                 <p>{project.teaser}</p>
                 <p className="availability">{project.availabilityLabel}</p>
+                {project.link && <a className="text-link" href={project.link.href}>{project.link.label}</a>}
                 <p className="project-limit">{project.title === "RailClear"
                   ? "Outputs require project-specific engineering qualification."
                   : "Single-user study prototype; engineering qualification remains open."}</p>
