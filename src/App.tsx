@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PreviewProvider, usePreview } from "./components/ScreenshotViewer";
 import { profile, type SelectedProject } from "./content/profile";
 
 const statusLabels = {
@@ -40,15 +41,21 @@ function ProjectPreview({ project, sizes, className = "" }: {
   sizes: string;
   className?: string;
 }) {
+  const openPreview = usePreview();
   if (!project.preview) return null;
   const preview = project.preview;
   return (
     <figure className={`project-preview ${className}`}>
-      <a href={preview.src} aria-label={`View full screenshot: ${project.title}`}>
+      <a href={preview.src} aria-label={`View full screenshot: ${project.title}`} aria-haspopup="dialog"
+        onClick={(event) => {
+          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || typeof HTMLDialogElement === "undefined") return;
+          event.preventDefault();
+          openPreview({ project, trigger: event.currentTarget });
+        }}>
         <img src={preview.src} srcSet={`${preview.smallSrc} 720w, ${preview.src} ${preview.width}w`}
           sizes={sizes} width={preview.width} height={preview.height}
           loading="lazy" decoding="async" alt={preview.alt} />
-        <span>View interface</span>
+        <span>Enlarge screenshot</span>
       </a>
       {preview.caption && <figcaption>{preview.caption}</figcaption>}
     </figure>
@@ -209,7 +216,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <PreviewProvider>
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -290,25 +297,23 @@ function App() {
               alt="Illustration of aerospace and rail sketches, a systems-modeling laptop, leadership notes, and the Asterfall game beside a Vancouver window"
             />
           </div>
-          <figcaption>Engineering systems. Building tools. Sharing the thinking.</figcaption>
         </figure>
       </section>
 
       <section className="section work" id="work" aria-labelledby="work-title" tabIndex={-1}>
         <header className="section-heading section-heading--work">
           <h2 id="work-title">Selected work</h2>
-          <p>Tools, research prototypes, and experiments in understanding the world.</p>
         </header>
         <article className="atlas-feature" id="world-atlas" aria-labelledby="atlas-title">
           <div className="atlas-feature__body">
             <h3 id="atlas-title">{atlasProject.title}<span className="feature-name-note" lang="zh">寰宇时序</span></h3>
-            <p className="feature-dek">{profile.atlasStory.title}</p>
             <p>{atlasProject.summary}</p>
-            <div className="atlas-host-links">{atlasProject.link && <a className="text-link" href={atlasProject.link.href}>{atlasProject.link.label}</a>} <a className="text-link" href="https://haitaowu12.github.io/world-history-atlas/">GitHub Pages mirror</a></div>
+            <div className="atlas-host-links">{atlasProject.link && <a className="text-link" href={atlasProject.link.href}>{atlasProject.link.label}</a>}</div>
             <p className="availability">{atlasProject.availabilityLabel}</p>
             <details className="inline-details">
               <summary>How the atlas grew</summary>
               <p>{profile.atlasStory.basis}</p>
+              <a className="text-link" href="https://haitaowu12.github.io/world-history-atlas/">GitHub Pages mirror</a>
               <a className="text-link" href={profile.atlasStory.source.href}>{profile.atlasStory.source.label}</a>
             </details>
           </div>
@@ -333,7 +338,7 @@ function App() {
                   <p>{project.summary}</p>
                 </details>
               </div>
-              <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 36px), (max-width: 1000px) 42vw, min(26vw, 320px)" />
+              <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 36px), min(44vw, 560px)" />
             </article>
           ))}
         </div>
@@ -341,22 +346,22 @@ function App() {
         <div className="project-index" role="group" aria-label="More selected work">
           {indexedProjects.map((project) => (
             <article key={project.title}>
-              <h3>{project.title}</h3>
-              <p className="availability">{project === spotlightProject ? "Research with Cleo Wong" : (project.availabilityLabel ?? statusLabels[project.status])}</p>
-              <p>{project === spotlightProject ? "Evaluation of the method remains in progress." : project.teaser}</p>
+              <header className="project-index__heading"><h3>{project.title}</h3>
+              <p className="availability">{project === spotlightProject ? "Research with Cleo Wong" : (project.availabilityLabel ?? statusLabels[project.status])}</p></header>
+              <div className="project-index__body"><p>{project === spotlightProject ? "Decide how much systems engineering a project needs. Research evaluation is in progress." : project.teaser}</p>
               <details className="inline-details">
                 <summary>{project === spotlightProject ? "The tailoring approach" : "About the project"}</summary>
                 <p>{project.summary}</p>
                 {project === spotlightProject && <>
-                  <p>{profile.featuredStory.introduction}</p>
                   <div className="project-story__steps">
                     {profile.featuredStory.steps.map((step) => (
-                      <section key={step.label}><p className="type-label">{step.label}</p><h4>{step.title}</h4><p>{step.text}</p></section>
+                      <section key={step.label}><h4>{step.title}</h4><p>{step.text}</p></section>
                     ))}
                   </div>
                 </>}
                 {project.preview && <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 36px), min(30vw, 380px)" />}
               </details>
+              </div>
               {project.link && <a className="text-link" href={project.link.href}>
                 {project.link.label === "Open" ? "Explore the tailoring tool" : project.link.label}
               </a>}
@@ -384,24 +389,25 @@ function App() {
           <article className="learning-feature" aria-labelledby="learning-title">
             <ProjectPreview project={learningSpotlight} sizes="(max-width: 700px) calc(100vw - 36px), min(30vw, 350px)" />
             <div className="learning-feature__body">
-              <h3 id="learning-title">Learning through play</h3>
-              <p className="feature-dek">Asterfall: The Last Relay</p>
+              <h3 id="learning-title">Asterfall: The Last Relay</h3>
               <p>{learningSpotlight.teaser}</p>
               <p className="project-limit">{profile.learningStory.limitation}</p>
               {learningSpotlight.link && <a className="text-link" href={learningSpotlight.link.href}>Play Asterfall</a>}
               <details className="inline-details"><summary>The learning experiment</summary>
-                <p>{learningSpotlight.summary}</p><p>{profile.learningStory.title}</p><p>{profile.learningStory.summary}</p>
+                <p>{learningSpotlight.summary}</p><p>{profile.learningStory.summary}</p>
               </details>
             </div>
           </article>
           <div className="learning-experiments" role="group" aria-label="More learning experiments">
             {learningExperiments.map((project) => (
               <article key={project.title}>
+                <h3>{project.title}</h3>
+                <p className="availability">{project.availabilityLabel ?? statusLabels[project.status]}</p>
+                <p>{project.teaser}</p>
                 <details className="inline-details">
-                  <summary><h3>{project.title}</h3> <span className="availability">{project.availabilityLabel ?? statusLabels[project.status]}</span></summary>
+                  <summary>About the project</summary>
                   <p>{project.summary}</p>
                 </details>
-                <p>{project.teaser}</p>
                 {project.link && <a className="text-link" href={project.link.href}>{project.link.label === "Open" ? "Try the game" : project.link.label}</a>}
               </article>
             ))}
@@ -438,8 +444,8 @@ function App() {
               </article>
             ))}
           </div>
-          <details className="supporting-details">
-            <summary>Methods, outcomes &amp; principles</summary>
+          <div className="supporting-details">
+            <h4 className="detail-heading">Methods &amp; principles</h4>
             <div className="practice-outcomes">
               {profile.practiceAreas.map((area) => (
                 <section key={area.title}>
@@ -458,7 +464,7 @@ function App() {
                 <li key={principle.title}><h4>{principle.title}</h4><p>{principle.summary}</p></li>
               ))}
             </ul>
-          </details>
+          </div>
         </details>
 
         <details className="career-compact" id="experience" aria-labelledby="experience-title">
@@ -468,8 +474,7 @@ function App() {
               <li key={chapter.title}><span>{chapter.period}</span><p>{chapter.role}</p></li>
             ))}
           </ol>
-          <details className="supporting-details career-evidence">
-            <summary>Career contributions &amp; credentials</summary>
+          <div className="supporting-details career-evidence">
             <div className="career-chapters">
               {profile.experienceChapters.map((chapter) => (
                 <section key={chapter.title}>
@@ -482,7 +487,7 @@ function App() {
             </div>
             <h4>Recognition &amp; credentials</h4>
             <ul>{profile.recognition.map((item) => <li key={item}>{item}</li>)}</ul>
-          </details>
+          </div>
         </details>
       </section>
 
@@ -551,7 +556,7 @@ function App() {
         </div>
       </section>
       </main>
-    </>
+    </PreviewProvider>
   );
 }
 
