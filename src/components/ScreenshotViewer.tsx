@@ -11,6 +11,8 @@ export function PreviewProvider({ children }: { children: ReactNode }) {
   const [selection, setSelection] = useState<Selection | null>(null);
   const [zoomed, setZoomed] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const fullImage = useRef<HTMLImageElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const surface = useRef<HTMLDivElement>(null);
   const restore = useRef<(() => void) | null>(null);
@@ -21,6 +23,7 @@ export function PreviewProvider({ children }: { children: ReactNode }) {
     const overflow = document.body.style.overflow;
     setZoomed(false);
     setFailed(false);
+    setLoaded(Boolean(fullImage.current?.complete && fullImage.current.naturalWidth));
     element.showModal();
     document.body.style.overflow = "hidden";
     const release = () => {
@@ -54,13 +57,16 @@ export function PreviewProvider({ children }: { children: ReactNode }) {
         <button type="button" autoFocus onClick={() => dialog.current?.close()}>Close preview</button>
       </header>
       {preview && <>
-        <div ref={surface} className={`image-viewer__surface${zoomed ? " is-zoomed" : ""}`} tabIndex={0} aria-label="Screenshot; scroll to inspect when enlarged">
+        <div ref={surface} className={`image-viewer__surface${zoomed ? " is-zoomed" : ""}`} tabIndex={0} aria-busy={!loaded && !failed} aria-label="Screenshot; scroll to inspect when enlarged">
           {failed ? <p role="status">The screenshot could not load. <a href={preview.src}>Open the original image</a>.</p> :
-            <img src={preview.src} alt={preview.alt} width={preview.width} height={preview.height} onError={() => setFailed(true)} />}
+            <img ref={fullImage} src={preview.src} alt={preview.alt} width={preview.width} height={preview.height}
+              style={{ aspectRatio: `${preview.width} / ${preview.height}`, width: zoomed ? `${preview.width}px` : `min(100%, ${preview.width}px, calc((100dvh - 240px) * ${preview.width / preview.height}))` }}
+              onLoad={() => setLoaded(true)} onError={() => setFailed(true)} />}
+          {!loaded && !failed && <p className="image-viewer__loading" role="status">Loading full-resolution image…</p>}
         </div>
         <footer className="image-viewer__footer">
           <p id="viewer-caption">{preview.caption ?? "Interface preview"}</p>
-          <button type="button" aria-pressed={zoomed} disabled={failed} onClick={() => {
+          <button type="button" aria-pressed={zoomed} disabled={failed || !loaded} onClick={() => {
             setZoomed((value) => !value);
             surface.current?.scrollTo(0, 0);
           }}>{zoomed ? "Fit to window" : "Actual size"}</button>

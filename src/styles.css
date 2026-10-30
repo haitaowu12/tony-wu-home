@@ -246,7 +246,8 @@ details[open] > summary { color: var(--ink-strong); }
 .image-viewer h2 { font-family: inherit; font-weight: 550; font-size: 1.125rem; }
 .image-viewer button { min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); background: transparent; color: var(--ink); font-size: .875rem; flex-shrink: 0; }
 .image-viewer button:hover { border-color: var(--signal); background: #e7dfd4; }
-.image-viewer__surface { overflow: auto; min-height: 0; padding: 20px; overscroll-behavior: contain; }
+.image-viewer__surface { position: relative; overflow: auto; min-height: 0; padding: 20px; overscroll-behavior: contain; }
+.image-viewer__loading { position: absolute; bottom: 24px; left: 24px; padding: 8px 12px; background: var(--paper); color: var(--muted); font-size: .875rem; }
 .image-viewer__surface:focus-visible { outline: 3px solid var(--focus); outline-offset: -4px; }
 .image-viewer__surface img { width: auto; height: auto; max-height: calc(100dvh - 240px); margin-inline: auto; object-fit: contain; }
 .image-viewer__surface.is-zoomed img { max-width: none; max-height: none; margin: 0; }
