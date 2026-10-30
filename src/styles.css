@@ -25,6 +25,7 @@ img { display: block; max-width: 100%; }
 p,li { line-height: 1.65; }
 p { font-size: 1rem; }
 main[id],section[id],details[id],article[id] { scroll-margin-top: calc(var(--nav-height) + 24px); }
+main[id],section[id].hero,section[id].work,section[id].playground { scroll-margin-top: var(--nav-height); }
 main:focus,section[id]:focus,article[id]:focus { outline: none; }
 main:focus-visible .hero h1,section[id]:focus-visible > .section-heading h2,section[id]:focus-visible > div > h2,.hero:focus-visible h1,article[id]:focus-visible h3 { outline: 3px solid var(--focus); outline-offset: 6px; }
 .section-heading h2,.contact h2 { width: fit-content; }

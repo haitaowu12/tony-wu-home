@@ -95,6 +95,9 @@ async function expectVisibleTargetFocus(page: Page, id: string, showIndicator = 
       rect.left >= 0 && rect.right <= innerWidth;
   })).toBe(true);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  if (id === "playground") {
+    expect(await target.evaluate((element) => Math.abs(element.getBoundingClientRect().top - document.querySelector(".site-nav")!.getBoundingClientRect().bottom))).toBeLessThan(2);
+  }
 }
 
 test.beforeEach(async ({ page }, testInfo) => {

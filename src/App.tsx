@@ -193,7 +193,10 @@ function App() {
         if (cancelled) return;
         measure();
         const target = document.getElementById(hashTarget);
-        if (target) window.scrollTo(0, Math.max(0, target.getBoundingClientRect().top + window.scrollY - navHeight - 16));
+        if (target) {
+          const clearance = parseFloat(getComputedStyle(target).scrollMarginTop) || navHeight;
+          window.scrollTo(0, Math.max(0, target.getBoundingClientRect().top + window.scrollY - clearance));
+        }
         root.classList.remove("hash-jump");
         updateActiveSection();
       };
