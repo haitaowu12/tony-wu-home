@@ -101,3 +101,9 @@ focus after pointer use, focus-ring contrast, sticky-navigation clearance,
 and page overflow at 320, 375, 414, 768, and 1440 pixels with normal and reduced
 motion. Set `CHROMIUM_PATH` to use an existing Chromium installation. Test
 screenshots and failure traces are written under `test-results/`.
+
+## Project previews and interaction checks
+
+Screenshot links open an accessible in-page preview with fitted and actual-size views. Escape or Close returns focus to the originating image; Open original retains native image viewing. Reduced-motion preferences disable the added transitions.
+
+The regression server uses port 4273 and refuses to reuse an existing process. Set `HOMEPAGE_TEST_PORT` when another task owns that port. This prevents tests from silently exercising a different local application.

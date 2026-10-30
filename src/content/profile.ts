@@ -97,7 +97,7 @@ export const profile = {
     location: "Vancouver, Canada",
   },
   positioning: {
-    headline: "Systems thinker. Engineer. Builder.",
+    headline: "Systems engineering & technical leadership",
     subhead:
       "I build tools for understanding complex systems—from engineering decisions to world history and learning through play.",
     thesis:
@@ -127,8 +127,6 @@ export const profile = {
   featuredStory: {
     projectTitle: "SE Tailoring Model",
     title: "How much engineering is enough?",
-    introduction:
-      "A practical framework for deciding how much systems engineering rigor a project needs, and making the reasoning behind that choice visible.",
     steps: [
       {
         label: "The problem",
