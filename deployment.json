@@ -1,5 +1,5 @@
 {
-  "source_commit": "846987908733abafe988369003dab32b113d8606",
+  "source_commit": "7c54b85d56ca0abbc0a804b627b3519e11845977",
   "hosting": "GitHub Pages branch publishing",
   "files": [
     {
@@ -33,14 +33,14 @@
       "sha256": "73e7f7b1c980416ae0c2461268b14c7cfcce0668e683dc43fbb11a82a227b9f2"
     },
     {
-      "path": "assets/index-C1Hywhw1.css",
-      "bytes": 23425,
-      "sha256": "bcea8578d25299ad5c4db8b5efe348a57722373a16fd7a5c4278a7345ef63324"
+      "path": "assets/index-B_Zr8lbv.js",
+      "bytes": 271591,
+      "sha256": "37008b6fd99a8fa997342a1cb875338657d2132f6f1b68ca8ce7295b7f6f0e33"
     },
     {
-      "path": "assets/index-dQDx21vy.js",
-      "bytes": 268190,
-      "sha256": "c5d2a5be4f0b86cf476812cbaaefe97ae9ce25a3595e36e09bc9a6f76d8d8057"
+      "path": "assets/index-CGK8Sjzg.css",
+      "bytes": 21923,
+      "sha256": "0abddd46206d6ebd6aa6b2e21ec4e08bc9adad8317af86103fba2f87146d5dce"
     },
     {
       "path": "favicon.svg",
@@ -79,8 +79,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 38250,
-      "sha256": "94608dd8ab281e25455c62114dcb12c5a92f9392fcae02bf334f950d5fecfc3c"
+      "bytes": 40450,
+      "sha256": "b166b6a5bce594de0aa136bed68c2a6742fe1f6d6d43ef3159c7bed4097d7613"
     },
     {
       "path": "project-previews/asterfall-2026-10-25-720.webp",
