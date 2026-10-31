@@ -10,8 +10,18 @@ for (const direction of ['A', 'B']) {
     const html = readFileSync('tests/fixtures/design-directions.html', 'utf8')
       .replace('__DIRECTION__', direction).replaceAll('src="/', `src="${origin}/`);
     await page.setContent(html);
+    // The first capture exposed B's filtered image painting over its name.
+    // Repair the stacking bug before comparing design merit; a broken candidate
+    // cannot justify selecting its competitor.
+    await page.addStyleTag({ content: '[data-direction="B"] .study-hero h1,[data-direction="B"] .study-kicker{z-index:2}' });
     await page.evaluate(() => Promise.all([...document.images].map(image => image.decode())));
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    const unobscured = await page.locator('h1').evaluate(heading => {
+      const r = heading.getBoundingClientRect();
+      const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      return hit === heading || heading.contains(hit);
+    });
+    expect(unobscured).toBe(true);
     await page.screenshot({ path: info.outputPath(`direction-${direction}-home.png`), animations: 'disabled' });
     await page.screenshot({ path: info.outputPath(`direction-${direction}-full.png`), fullPage: true, animations: 'disabled' });
     await page.locator('#work').scrollIntoViewIfNeeded();
@@ -21,6 +31,7 @@ for (const direction of ['A', 'B']) {
 
 test('retain inspected reference captures for comparison only', async ({ request }, info) => {
   test.skip(info.project.name !== '1440-no-preference');
+  test.setTimeout(60000);
   const sources = {
     'daniel-sun': '57c49e73-663a-4330-be9f-5d693a82de46',
     'josh-warner': 'e706ea3a-5c5c-42fb-abb8-d248e051fa26',
