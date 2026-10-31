@@ -48,3 +48,12 @@ Build, final captured pixels and browser-run results must be recorded against th
 ## Release boundary
 
 The redo is reviewable on PR #38. Source, visual acceptance and live publication are separate. This work does not publish the rejected main or change gh-pages. Do not promote a preference-sensitive redo solely because technical checks pass.
+
+
+## Unslop refinement — October 31, 2026
+
+The approved Unslop trial was applied to the current studio implementation. Captions/actions use 14px, small labels use at least 13px, and tracked capitals and tight small-title tracking are removed. Engineering previews lose their second tinted mat and have 320px desktop frames; tablet and phone bounds remain. The existing portrait-free illustration, three-project introduction, project destinations, study qualifications, gallery, and content remain. Motion uses the existing curve with a 400ms, 8px name entrance. The taller desktop engineering row is the reading trade-off.
+
+Method credit: [Unslop by Damir Sokolovsky](https://github.com/heydamir/unslop), CC BY 4.0. The reusable method remains in the shared development workflow; no skill package or runtime is copied into this site.
+
+Phone action alignment uses explicit text/arrow line heights and 12px horizontal button padding, avoiding fallback-font height differences and a second row at 375px. Existing alignment tests retain their original expectation.
