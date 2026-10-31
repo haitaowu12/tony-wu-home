@@ -100,7 +100,7 @@ h4 { font-size: 1rem; line-height: 1.4; font-weight: 600; }
 .project-preview figcaption { color: var(--muted); font-size: .8125rem; line-height: 1.5; margin-top: 10px; }
 .featured-work .project-preview img,.play-cover img { height: 238px; }
 .play-cover { display: block; text-decoration: none; }
-.play-cover img { width: 100%; object-fit: cover; object-position: center; border: 1px solid var(--line); }
+.play-cover img { width: 100%; object-fit: contain; object-position: center; border: 1px solid var(--line); background: #12332e; }
 summary { display: flex; align-items: baseline; gap: 12px; list-style: none; min-height: 44px; padding: 12px 0; cursor: pointer; line-height: 1.4; font-size: .875rem; color: var(--signal); }
 summary::-webkit-details-marker { display: none; }
 summary::before { content: "+" / ""; flex: 0 0 12px; font: 400 1rem/1.2 "IBM Plex Sans Variable",sans-serif; text-align: center; }
@@ -252,7 +252,7 @@ summary:focus-visible { outline-offset: 2px; }
   .hero h1 { font-size: clamp(4rem,19vw,6rem); }
   .hero__title { font-size: 1.5rem; margin-top: 22px; }
   .hero__copy { font-size: 1rem; line-height: 1.55; margin-top: 14px; }
-  .hero__actions { margin-top: 20px; gap: 12px 18px; }
+  .hero__actions { margin-top: 20px; gap: 12px 8px; }
   .button { font-size: .8125rem; padding-inline: 13px; gap: 12px; }
   .button--quiet { padding-inline: 0; }
   .hero__visual img { aspect-ratio: 1.6; object-position: center 60%; }
