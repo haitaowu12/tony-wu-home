@@ -201,12 +201,12 @@ function App() {
           </div>
           <figcaption className="hero__artifact-copy"><strong>Make the relationships visible.</strong>
             <span>Modeling Lab · Apollo example · Browser prototype</span>
+            <div className="desk-links" aria-label="Explore project themes">
+              <a href="#modeling-lab">Models <span aria-hidden="true">↗</span></a>
+              <a href="#world-atlas">History <span aria-hidden="true">↗</span></a>
+              <a href="#asterfall">Play <span aria-hidden="true">↗</span></a>
+            </div>
           </figcaption>
-          <div className="desk-links" aria-label="Explore project themes">
-            <a href="#modeling-lab">Models <span aria-hidden="true">↗</span></a>
-            <a href="#world-atlas">History <span aria-hidden="true">↗</span></a>
-            <a href="#asterfall">Play <span aria-hidden="true">↗</span></a>
-          </div>
         </figure>
       </section>
 
@@ -314,7 +314,7 @@ function App() {
           <header className="section-heading"><div><p className="section-kicker">{editorial.writing.kicker}</p><h2 id="writing-title">{editorial.writing.title}</h2></div></header>
           <p className="writing-intro">{editorial.writing.summary}</p>
           <article className="published-feature" aria-labelledby="published-title"><div><p className="type-label">{publishedNote.status}</p><h3 id="published-title">{publishedNote.title}</h3></div>
-            <div><p>{publishedNote.summary}</p>{publishedNote.link && <a className="text-link" href={publishedNote.link.href}>{publishedNote.link.label}</a>}<p className="published-feature__citation">{profile.publications[0].status}</p></div>
+            <div><p>{publishedNote.summary}</p>{"link" in publishedNote && publishedNote.link && <a className="text-link" href={publishedNote.link.href}>{publishedNote.link.label}</a>}<p className="published-feature__citation">{profile.publications[0].status}</p></div>
           </article>
           <div className="research-index"><details className="supporting-details"><summary>Research in progress <span>{developingNotes.length} papers &amp; practice threads</span></summary>
             <div className="research-entries">{developingNotes.map((note) => <article key={note.title}><p className="type-label">{note.status}</p><h4>{note.title}</h4><p>{note.summary}</p>{"link" in note && note.link && <a className="text-link" href={note.link.href}>{note.link.label}</a>}</article>)}</div>
