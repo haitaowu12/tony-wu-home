@@ -11,7 +11,6 @@ const test = base.extend<{ browserErrors: void }>({
     expect(errors).toEqual([]);
   }, { auto: true }],
 });
-
 const sectionIds = ["top", "work", "playground", "about", "writing", "contact"];
 
 async function openPage(page: Page) {
@@ -19,12 +18,9 @@ async function openPage(page: Page) {
   await page.evaluate(() => document.fonts.ready);
   if (!await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches)) {
     await expect(page.locator("html")).toHaveClass(/page-ready/);
-    await page.evaluate(() => Promise.all(document.getAnimations().map((animation) =>
-      animation.finished.catch(() => {}),
-    )));
+    await page.evaluate(() => Promise.all(document.getAnimations().map((animation) => animation.finished.catch(() => {}))));
   }
 }
-
 async function tabTo(page: Page, selector: string) {
   for (let attempt = 0; attempt < 80; attempt += 1) {
     await page.keyboard.press("Tab");
@@ -32,78 +28,58 @@ async function tabTo(page: Page, selector: string) {
   }
   throw new Error(`Could not reach ${selector} using Tab`);
 }
-
 async function expectVisibleTargetFocus(page: Page, id: string, showIndicator = true) {
   const target = page.locator(`#${id}`);
   await expect(target).toBeFocused();
-  // The site's reduced-motion rule gives all properties a 0.01ms transition.
-  // Wait for the rendered focus state instead of sampling before its first paint.
   const heading = target.locator("h1, h2, h3").first();
   if (showIndicator) {
-  await expect(heading).toHaveCSS("outline-offset", "6px");
-  const indicator = await heading.evaluate((element) => {
-    const style = getComputedStyle(element);
-    let surface: Element | null = element;
-    let background = style.backgroundColor;
-    while (surface && background === "rgba(0, 0, 0, 0)") {
-      surface = surface.parentElement;
-      if (surface) background = getComputedStyle(surface).backgroundColor;
-    }
-    const luminance = (color: string) => {
-      const [r, g, b] = color.match(/[\d.]+/g)!.slice(0, 3).map((value) => {
-        const channel = Number(value) / 255;
-        return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
-      });
-      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-    };
-    const focusLuminance = luminance(style.outlineColor);
-    const surfaceLuminance = luminance(background);
-    return {
-      style: style.outlineStyle,
-      width: parseFloat(style.outlineWidth),
-      offset: parseFloat(style.outlineOffset),
-      contrast: (Math.max(focusLuminance, surfaceLuminance) + 0.05) /
-        (Math.min(focusLuminance, surfaceLuminance) + 0.05),
-    };
-  });
-  expect(indicator.style).toBe("solid");
-  expect(indicator.width).toBeGreaterThanOrEqual(3);
-  expect(indicator.offset).toBeGreaterThanOrEqual(indicator.width);
-  expect(indicator.contrast).toBeGreaterThanOrEqual(3);
-  } else {
-    await expect(heading).toHaveCSS("outline-style", "none");
-  }
-  // Native smooth scrolling is not a CSS animation. Wait for consecutive
-  // stable frames so clearance checks and screenshots use its final position.
+    await expect(heading).toHaveCSS("outline-offset", "6px");
+    const indicator = await heading.evaluate((element) => {
+      const style = getComputedStyle(element);
+      let surface: Element | null = element;
+      let background = style.backgroundColor;
+      while (surface && background === "rgba(0, 0, 0, 0)") {
+        surface = surface.parentElement;
+        if (surface) background = getComputedStyle(surface).backgroundColor;
+      }
+      const luminance = (color: string) => {
+        const [r, g, b] = color.match(/[\d.]+/g)!.slice(0, 3).map((value) => {
+          const channel = Number(value) / 255;
+          return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+        });
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      };
+      const focusLuminance = luminance(style.outlineColor), surfaceLuminance = luminance(background);
+      return { style: style.outlineStyle, width: parseFloat(style.outlineWidth), offset: parseFloat(style.outlineOffset),
+        contrast: (Math.max(focusLuminance, surfaceLuminance) + 0.05) / (Math.min(focusLuminance, surfaceLuminance) + 0.05) };
+    });
+    expect(indicator.style).toBe("solid");
+    expect(indicator.width).toBeGreaterThanOrEqual(3);
+    expect(indicator.offset).toBeGreaterThanOrEqual(indicator.width);
+    expect(indicator.contrast).toBeGreaterThanOrEqual(3);
+  } else await expect(heading).toHaveCSS("outline-style", "none");
+  // Wait for native smooth scrolling, not just CSS animations.
   await page.evaluate(() => new Promise<void>((resolve) => {
-    let previousY = scrollY;
-    let stableFrames = 0;
+    let previousY = scrollY, stableFrames = 0;
     const check = () => {
       stableFrames = scrollY === previousY ? stableFrames + 1 : 0;
       previousY = scrollY;
-      if (stableFrames >= 4) resolve();
-      else requestAnimationFrame(check);
+      if (stableFrames >= 4) resolve(); else requestAnimationFrame(check);
     };
     requestAnimationFrame(check);
   }));
-  // The top indicator is below the sticky navigation and its inset sides fit
-  // the viewport, including at the end of the page where scroll is clamped.
   await expect.poll(() => target.evaluate((element) => {
     const rect = element.getBoundingClientRect();
     const navBottom = document.querySelector(".site-nav")!.getBoundingClientRect().bottom;
-    return rect.top >= navBottom - 1 && rect.top < innerHeight &&
-      rect.left >= 0 && rect.right <= innerWidth;
+    return rect.top >= navBottom - 1 && rect.top < innerHeight && rect.left >= 0 && rect.right <= innerWidth;
   })).toBe(true);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  if (id === "playground") {
-    expect(await target.evaluate((element) => Math.abs(element.getBoundingClientRect().top - document.querySelector(".site-nav")!.getBoundingClientRect().bottom))).toBeLessThan(2);
-  }
+  if (id === "playground") expect(await target.evaluate((element) => Math.abs(element.getBoundingClientRect().top - document.querySelector(".site-nav")!.getBoundingClientRect().bottom))).toBeLessThan(2);
 }
 
 test.beforeEach(async ({ page }, testInfo) => {
   await openPage(page);
-  expect(await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches))
-    .toBe(testInfo.project.name.endsWith("-reduce"));
+  expect(await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches)).toBe(testInfo.project.name.endsWith("-reduce"));
 });
 
 test("skip link keeps a visible destination and resumes within main", async ({ page }, testInfo) => {
@@ -146,8 +122,6 @@ test("pointer navigation focuses the destination without keyboard decoration", a
 });
 
 test("bounded project previews support browsing and full-size image navigation", async ({ page }, testInfo) => {
-  // Featured interfaces should be readable while remaining bounded;
-  // enlargement exposes the full source without distorting its proportions.
   for (const image of await page.locator(".project-preview img").all()) {
     if (await image.isVisible()) {
       expect(await image.evaluate((element) => element.getBoundingClientRect().height)).toBeLessThanOrEqual(442);
@@ -155,24 +129,25 @@ test("bounded project previews support browsing and full-size image navigation",
     }
   }
   if (testInfo.project.use.viewport!.width >= 1100) {
+    // The selected redo has a three-interest introduction before the study pair.
+    // Check alignment and separation, not the superseded single-Atlas height.
     const scan = await page.locator("#work").evaluate((work) => {
-      const atlas = work.querySelector(".atlas-feature")!.getBoundingClientRect();
-      const pair = work.querySelector(".study-pair")!.getBoundingClientRect();
-      const rows = [...work.querySelectorAll(".study-entry")].map((entry) => entry.getBoundingClientRect());
-      return { span: rows[0].top - atlas.top, paired: Math.abs(rows[0].top - rows[1].top) < 1, pairWidth: pair.width };
+      const features = work.querySelector(".featured-work")!.getBoundingClientRect();
+      const cards = [...work.querySelectorAll(".featured-work > article")].map(entry => entry.getBoundingClientRect());
+      const rows = [...work.querySelectorAll(".study-entry")].map(entry => entry.getBoundingClientRect());
+      return { aligned: cards.every(card => Math.abs(card.top - cards[0].top) < 1), paired: Math.abs(rows[0].top - rows[1].top) < 1, separated: rows[0].top >= features.bottom };
     });
+    expect(scan.aligned).toBe(true);
     expect(scan.paired).toBe(true);
-    expect(scan.span).toBeLessThan(600);
+    expect(scan.separated).toBe(true);
   }
   for (const title of ["World History Atlas", "RailClear", "RAMS Workbench", "SE Learning Quest"]) {
     const link = page.getByRole("link", { name: `View full screenshot: ${title}`, exact: true });
     await expect(link).toHaveAttribute("href", /^\.\/project-previews\/.*\.(?:webp|jpg)$/);
     await link.scrollIntoViewIfNeeded();
-    await expect.poll(() => link.locator("img").evaluate((image) =>
-      (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0,
-    )).toBe(true);
+    await expect.poll(() => link.locator("img").evaluate((image) => (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0)).toBe(true);
     if (["RailClear", "RAMS Workbench"].includes(title)) {
-      const entry = page.locator(".study-entry").filter({has: page.getByRole("heading", {name:title, exact:true})});
+      const entry = page.locator(".study-entry").filter({ has: page.getByRole("heading", { name: title, exact: true }) });
       await expect(entry.getByRole("link")).toHaveCount(2);
       await expect(entry.locator(".project-limit")).toContainText("qualification");
       await expect(entry.locator("figcaption")).toContainText("Synthetic example");
@@ -182,13 +157,11 @@ test("bounded project previews support browsing and full-size image navigation",
     await link.press("Enter");
     const dialog = page.getByRole("dialog");
     await expect(dialog).toBeVisible();
-    await expect(dialog.getByRole("button", {name:"Close preview"})).toBeFocused();
-    await expect.poll(() => dialog.locator("img").evaluate((image) =>
-      (image as HTMLImageElement).naturalWidth,
-    )).toBeGreaterThan(720);
-    await dialog.getByRole("button", {name:"Actual size"}).click();
-    await expect(dialog.getByRole("button", {name:"Fit to window"})).toHaveAttribute("aria-pressed", "true");
-    await dialog.getByRole("button", {name:"Fit to window"}).click();
+    await expect(dialog.getByRole("button", { name: "Close preview" })).toBeFocused();
+    await expect.poll(() => dialog.locator("img").evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(720);
+    await dialog.getByRole("button", { name: "Actual size" }).click();
+    await expect(dialog.getByRole("button", { name: "Fit to window" })).toHaveAttribute("aria-pressed", "true");
+    await dialog.getByRole("button", { name: "Fit to window" }).click();
     await page.keyboard.press("Escape");
     await expect(dialog).not.toBeVisible();
     await expect(link).toBeFocused();
@@ -198,18 +171,19 @@ test("bounded project previews support browsing and full-size image navigation",
   }
 });
 
-test("paired About and Writing navigation retains the chosen chapter", async ({page}) => {
+test("paired About and Writing navigation retains the chosen chapter", async ({ page }) => {
   for (const id of ["writing", "about", "writing", "work"]) {
     if (await page.locator(".site-nav__toggle").isVisible()) await page.locator(".site-nav__toggle").click();
     await page.locator(`.site-nav a[href="#${id}"]`).click();
     await expectVisibleTargetFocus(page, id, false);
     await expect(page.locator(`.site-nav a[href="#${id}"]`)).toHaveAttribute("aria-current", "location");
   }
-  // The two supporting projects retain real images inside their disclosures.
+  // Modeling Lab is now a featured project; its image is visible before disclosure.
+  // Tailoring retains its detailed preview inside disclosure. Both remain real links.
   for (const title of ["Modeling Lab", "SE Tailoring Model"]) {
-    const entry = page.locator(".project-index article").filter({has:page.getByRole("heading", {name:title,exact:true})});
+    const entry = page.locator("#work article").filter({ has: page.getByRole("heading", { name: title, exact: true }) });
     await entry.locator("summary").click();
-    await expect(entry.getByRole("link", {name:`View full screenshot: ${title}`,exact:true})).toBeVisible();
+    await expect(entry.getByRole("link", { name: `View full screenshot: ${title}`, exact: true })).toBeVisible();
     await entry.locator("summary").click();
   }
   for (const id of ["practice", "experience"]) {
@@ -222,136 +196,124 @@ test("paired About and Writing navigation retains the chosen chapter", async ({p
   }
 });
 
-// Palette refinements must retain readable text on both reading surfaces.
 test("light and dark chapters retain readable text and links", async ({ page }) => {
   const colors = await page.evaluate(() => {
     const luminance = (color: string) => {
-      const [r, g, b] = color.match(/[\d.]+/g)!.slice(0, 3).map((value) => {
+      const [r,g,b] = color.match(/[\d.]+/g)!.slice(0,3).map(value => {
         const c = Number(value) / 255;
         return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
       });
-      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      return .2126*r + .7152*g + .0722*b;
     };
-    const contrast = (a: string, b: string) => {
-      const x = luminance(a), y = luminance(b);
-      return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+    const contrast = (a: string,b: string) => {
+      const x=luminance(a),y=luminance(b);
+      return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);
     };
-    return ["work", "playground", "about", "writing", "contact"].map((id) => {
-      const section = document.getElementById(id)!;
-      const background = getComputedStyle(section).backgroundColor;
-      const targets = [...section.querySelectorAll("p, h2, h3, a, summary")].filter((element) =>
-        element.getBoundingClientRect().height > 0 && element.textContent!.trim().length > 0);
-      return { id, background, minimumContrast: Math.min(...targets.map((element) => {
-        let parent: Element | null = element;
-        let surface = getComputedStyle(parent).backgroundColor;
-        while (parent && surface === "rgba(0, 0, 0, 0)") {
-          parent = parent.parentElement;
-          if (parent) surface = getComputedStyle(parent).backgroundColor;
-        }
-        return contrast(getComputedStyle(element).color, surface);
-      })) };
+    return ["work","playground","about","writing","contact"].map(id => {
+      const section=document.getElementById(id)!;
+      const background=getComputedStyle(section).backgroundColor;
+      const targets=[...section.querySelectorAll("p, h2, h3, a, summary")].filter(element => element.getBoundingClientRect().height>0 && element.textContent!.trim().length>0);
+      return {id,background,minimumContrast:Math.min(...targets.map(element => {
+        let parent:Element|null=element;
+        let surface=getComputedStyle(parent).backgroundColor;
+        while(parent && surface==="rgba(0, 0, 0, 0)") { parent=parent.parentElement; if(parent) surface=getComputedStyle(parent).backgroundColor; }
+        return contrast(getComputedStyle(element).color,surface);
+      }))};
     });
   });
-  expect(new Set(colors.filter((item) => item.id !== "playground").map((item) => item.background)).size).toBe(1);
-  expect(colors.find((item) => item.id === "playground")!.background).not.toBe(colors[0].background);
-  for (const item of colors) expect(item.minimumContrast, item.id).toBeGreaterThanOrEqual(4.5);
+  expect(new Set(colors.filter(item=>item.id!=="playground").map(item=>item.background)).size).toBe(1);
+  expect(colors.find(item=>item.id==="playground")!.background).not.toBe(colors[0].background);
+  for(const item of colors) expect(item.minimumContrast,item.id).toBeGreaterThanOrEqual(4.5);
 });
 
-
-test("preview contains keyboard focus, supports native originals, and reopens", async ({page}) => {
-  const trigger = page.getByRole("link", {name:"View full screenshot: World History Atlas", exact:true});
-  for (let cycle = 0; cycle < 2; cycle++) {
+test("preview contains keyboard focus, supports native originals, and reopens", async ({ page }) => {
+  const trigger=page.getByRole("link",{name:"View full screenshot: World History Atlas",exact:true});
+  for(let cycle=0;cycle<2;cycle++) {
     await trigger.click();
-    const dialog = page.getByRole("dialog");
+    const dialog=page.getByRole("dialog");
     await expect(dialog).toBeVisible();
     await page.keyboard.press("Shift+Tab");
-    await expect(dialog.getByRole("link", {name:"Open original"})).toBeFocused();
+    await expect(dialog.getByRole("link",{name:"Open original"})).toBeFocused();
     await page.keyboard.press("Tab");
-    await expect(dialog.getByRole("button", {name:"Close preview"})).toBeFocused();
-    await dialog.getByRole("button", {name:"Close preview"}).click();
+    await expect(dialog.getByRole("button",{name:"Close preview"})).toBeFocused();
+    await dialog.getByRole("button",{name:"Close preview"}).click();
     await expect(dialog).not.toBeVisible();
     await expect(trigger).toBeFocused();
-    await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
+    await expect(page.locator("body")).not.toHaveCSS("overflow","hidden");
   }
-  // The original remains a real destination, including when enhancement is unavailable.
   await trigger.click();
-  await page.getByRole("dialog").getByRole("link", {name:"Open original"}).click();
+  await page.getByRole("dialog").getByRole("link",{name:"Open original"}).click();
   await expect(page).toHaveURL(/\/project-previews\/[^/]+\.(?:webp|jpg)$/);
   await page.goBack();
   await expect(trigger).toBeInViewport();
 });
 
-test("mobile menu dismisses with Escape, outside press and focus leaving", async ({page}) => {
-  const toggle = page.locator(".site-nav__toggle");
-  if (!await toggle.isVisible()) return;
+test("mobile menu dismisses with Escape, outside press and focus leaving", async ({ page }) => {
+  const toggle=page.locator(".site-nav__toggle");
+  if(!await toggle.isVisible()) return;
   await toggle.click();
-  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+  await expect(toggle).toHaveAttribute("aria-expanded","true");
   await page.keyboard.press("Escape");
-  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(toggle).toHaveAttribute("aria-expanded","false");
   await expect(toggle).toBeFocused();
   await toggle.click();
   await page.locator(".hero__visual img").click();
-  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(toggle).toHaveAttribute("aria-expanded","false");
   await toggle.click();
   await page.locator('.site-nav a[href="#contact"]').focus();
   await page.keyboard.press("Tab");
-  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(toggle).toHaveAttribute("aria-expanded","false");
 });
 
-
-test("uncached preview reserves its frame while the full image loads", async ({page}) => {
-  let release!: () => void;
-  const gate = new Promise<void>((resolve) => { release = resolve; });
-  await page.route("**/project-previews/world-history-atlas-2026-10-29.jpg", async (route) => {
-    await gate;
-    await route.continue();
-  });
-  await page.getByRole("link", {name:"View full screenshot: World History Atlas",exact:true}).click();
-  const dialog = page.getByRole("dialog");
+test("uncached preview reserves its frame while the full image loads", async ({ page }) => {
+  let release!:()=>void;
+  const gate=new Promise<void>(resolve=>{release=resolve;});
+  await page.route("**/project-previews/world-history-atlas-2026-10-29.jpg",async route=>{await gate;await route.continue();});
+  await page.getByRole("link",{name:"View full screenshot: World History Atlas",exact:true}).click();
+  const dialog=page.getByRole("dialog");
   await expect(dialog.getByRole("status")).toContainText("Loading full-resolution image");
-  await expect(dialog.getByRole("button", {name:"Actual size"})).toBeDisabled();
-  const frame = await dialog.locator(".image-viewer__surface").boundingBox();
+  await expect(dialog.getByRole("button",{name:"Actual size"})).toBeDisabled();
+  const frame=await dialog.locator(".image-viewer__surface").boundingBox();
   expect(frame!.height).toBeGreaterThan(100);
   release();
   await expect(dialog.getByRole("status")).toHaveCount(0);
-  await expect(dialog.getByRole("button", {name:"Actual size"})).toBeEnabled();
-  const loaded = await dialog.locator(".image-viewer__surface").boundingBox();
-  expect(Math.abs(loaded!.height - frame!.height)).toBeLessThan(2);
-  await dialog.getByRole("button", {name:"Close preview"}).click();
+  await expect(dialog.getByRole("button",{name:"Actual size"})).toBeEnabled();
+  const loaded=await dialog.locator(".image-viewer__surface").boundingBox();
+  expect(Math.abs(loaded!.height-frame!.height)).toBeLessThan(2);
+  await dialog.getByRole("button",{name:"Close preview"}).click();
 });
 
-
-test("desk links reach their project and preserve navigation context", async ({page}) => {
-  for (const [name, id, chapter] of [["Models", "modeling-lab", "work"], ["History", "world-atlas", "work"], ["Play", "asterfall", "playground"]]) {
+test("desk links reach their project and preserve navigation context", async ({ page }) => {
+  for(const [name,id,chapter] of [["Models","modeling-lab","work"],["History","world-atlas","work"],["Play","asterfall","playground"]]) {
     await page.goto(".");
-    const link = page.locator(".desk-links").getByRole("link", {name,exact:true});
+    const link=page.locator(".desk-links").getByRole("link",{name,exact:true});
     await link.focus();
     await page.keyboard.press("Enter");
-    await expectVisibleTargetFocus(page, id);
-    await expect(page.locator(`.site-nav a[href="#${chapter}"]`)).toHaveAttribute("aria-current", "location");
+    await expectVisibleTargetFocus(page,id);
+    await expect(page.locator(`.site-nav a[href="#${chapter}"]`)).toHaveAttribute("aria-current","location");
   }
 });
 
-test("gallery browses all projects and returns to the original trigger", async ({page}) => {
-  const trigger = page.getByRole("link", {name:"View full screenshot: World History Atlas",exact:true});
+test("gallery browses all projects and returns to the original trigger", async ({ page }) => {
+  const trigger=page.getByRole("link",{name:"View full screenshot: World History Atlas",exact:true});
   await trigger.click();
-  const dialog = page.getByRole("dialog");
-  for (const title of ["RailClear", "RAMS Workbench", "Modeling Lab", "SE Tailoring Model", "Asterfall: The Last Relay", "World History Atlas"]) {
-    await dialog.getByRole("button", {name:"Next project",exact:true}).click();
+  const dialog=page.getByRole("dialog");
+  for(const title of ["RailClear","RAMS Workbench","Modeling Lab","SE Tailoring Model","Asterfall: The Last Relay","World History Atlas"]) {
+    await dialog.getByRole("button",{name:"Next project",exact:true}).click();
     await expect(dialog.getByRole("heading")).toHaveText(title);
-    await expect(dialog.getByRole("button", {name:"Next project",exact:true})).toBeFocused();
-    await expect(dialog.getByRole("button", {name:"Actual size"})).toBeEnabled();
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await expect(dialog.getByRole("button",{name:"Next project",exact:true})).toBeFocused();
+    await expect(dialog.getByRole("button",{name:"Actual size"})).toBeEnabled();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   }
   await page.keyboard.press("ArrowLeft");
   await expect(dialog.getByRole("heading")).toHaveText("Asterfall: The Last Relay");
   await page.keyboard.press("ArrowRight");
   await expect(dialog.getByRole("heading")).toHaveText("World History Atlas");
-  await dialog.getByRole("button", {name:"Actual size"}).click();
+  await dialog.getByRole("button",{name:"Actual size"}).click();
   await page.keyboard.press("ArrowRight");
   await expect(dialog.getByRole("heading")).toHaveText("World History Atlas");
   await page.keyboard.press("Escape");
   await expect(dialog).not.toBeVisible();
   await expect(trigger).toBeFocused();
-  await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
+  await expect(page.locator("body")).not.toHaveCSS("overflow","hidden");
 });
