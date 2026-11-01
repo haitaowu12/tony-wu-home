@@ -1,5 +1,5 @@
 {
-  "source_commit": "f3499037a2ae13b5139ea93d094ca056cbde3bca",
+  "source_commit": "d729bc4fdbb907b889510a73ad8d174fb00c1acc",
   "hosting": "GitHub Pages branch publishing",
   "files": [
     {
@@ -38,9 +38,9 @@
       "sha256": "ecea9d7a4d1fde525cc609843787b5f587708319cbdf5d56c3b1ed23bf16d9bf"
     },
     {
-      "path": "assets/index-qDmSMyHW.js",
-      "bytes": 275154,
-      "sha256": "a302e44a1873dbef54651386690fd5f5abf6fed58eedbb94b9a497dcde88c84c"
+      "path": "assets/index-I85xqoOo.js",
+      "bytes": 275176,
+      "sha256": "b7dab4e4340ca028ffbef13e9ca0b5fa99e91e6c8b39c1d746b457cb4a9a3ec9"
     },
     {
       "path": "favicon.svg",
@@ -79,8 +79,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 44150,
-      "sha256": "3cb2452713e7715a516aafe62bf3db41b74ea9707cc070ffd8bb0293810e6709"
+      "bytes": 44194,
+      "sha256": "33fc74562b6bd866106922c6664d52ef78a05979e8d15f0f9518cf460902d4cd"
     },
     {
       "path": "project-previews/asterfall-2026-10-25-720.webp",
@@ -201,6 +201,16 @@
       "path": "project-previews/world-history-atlas-2026-10-29.jpg",
       "bytes": 104406,
       "sha256": "c1cfa685a3fdf45f8578aefc24fbaaadfb24f6b6b902fb0a00c901e010a53721"
+    },
+    {
+      "path": "project-previews/world-history-atlas-vermilion-2026-11-01-720.webp",
+      "bytes": 34644,
+      "sha256": "d94a264521fe94ea593a017168efb2dd6000ddb5801e8eeb946edeceaa55c462"
+    },
+    {
+      "path": "project-previews/world-history-atlas-vermilion-2026-11-01.webp",
+      "bytes": 112470,
+      "sha256": "9d68be7c45bb477dc1aea36f9da32c9e3c7d3ac6ca74c12aa27c196be275d45e"
     },
     {
       "path": "robots.txt",
