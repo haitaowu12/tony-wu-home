@@ -1,5 +1,5 @@
 {
-  "source_commit": "7c54b85d56ca0abbc0a804b627b3519e11845977",
+  "source_commit": "3fd5532c3688dacc237f46d734485248b323b239",
   "hosting": "GitHub Pages branch publishing",
   "files": [
     {
@@ -33,14 +33,14 @@
       "sha256": "73e7f7b1c980416ae0c2461268b14c7cfcce0668e683dc43fbb11a82a227b9f2"
     },
     {
-      "path": "assets/index-B_Zr8lbv.js",
-      "bytes": 271591,
-      "sha256": "37008b6fd99a8fa997342a1cb875338657d2132f6f1b68ca8ce7295b7f6f0e33"
+      "path": "assets/index-BwhSL1kO.js",
+      "bytes": 275093,
+      "sha256": "dcc078ba5f004c1a1b5bbed8473c70e303fe5eb60b70137214489c248b724207"
     },
     {
-      "path": "assets/index-CGK8Sjzg.css",
-      "bytes": 21923,
-      "sha256": "0abddd46206d6ebd6aa6b2e21ec4e08bc9adad8317af86103fba2f87146d5dce"
+      "path": "assets/index-DcqSHZZo.css",
+      "bytes": 22072,
+      "sha256": "ecea9d7a4d1fde525cc609843787b5f587708319cbdf5d56c3b1ed23bf16d9bf"
     },
     {
       "path": "favicon.svg",
@@ -79,8 +79,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 40450,
-      "sha256": "b166b6a5bce594de0aa136bed68c2a6742fe1f6d6d43ef3159c7bed4097d7613"
+      "bytes": 44037,
+      "sha256": "34e4bfe762dc22fe4c976f0e9f2ec78b257d84261a1289e22e17ddf8a8f0e9ad"
     },
     {
       "path": "project-previews/asterfall-2026-10-25-720.webp",
@@ -91,6 +91,16 @@
       "path": "project-previews/asterfall-2026-10-25.webp",
       "bytes": 46358,
       "sha256": "1a32bf9844e385bce07bd42b8beb6ef9a4c2c38e873e8822a648b727a3ee913a"
+    },
+    {
+      "path": "project-previews/engine-anatomy-2026-11-01-720.webp",
+      "bytes": 33536,
+      "sha256": "e14e51635e58f87938733def4f7b81eaa0e75eef12d2aa53a5911cd327a3e4b4"
+    },
+    {
+      "path": "project-previews/engine-anatomy-2026-11-01.webp",
+      "bytes": 102128,
+      "sha256": "32c624de29e1ee5eb083e172e0e77732f67f72201fdae8e4afcd5a1453bba506"
     },
     {
       "path": "project-previews/modeling-lab-2026-10-25-720.webp",
@@ -111,6 +121,16 @@
       "path": "project-previews/railclear-2026-10-27.webp",
       "bytes": 65508,
       "sha256": "a2c1ac8f7508684b69606014880969eb564ee02a4cd66a2e7be2faf6fc059bc8"
+    },
+    {
+      "path": "project-previews/railway-anatomy-2026-11-01-720.webp",
+      "bytes": 23128,
+      "sha256": "a617b0ff8b65f24668204c6df26bdc91da62932ecb6057847f6db0e6b4de5ad5"
+    },
+    {
+      "path": "project-previews/railway-anatomy-2026-11-01.webp",
+      "bytes": 79622,
+      "sha256": "abe447aeb8b907cec6504d4bf32e6f6c9f8deb2009f88602d31d50e2fcb4def0"
     },
     {
       "path": "project-previews/rams-workbench-2026-10-27-720.webp",
