@@ -1,5 +1,5 @@
 {
-  "source_commit": "3fd5532c3688dacc237f46d734485248b323b239",
+  "source_commit": "73134eb27b6b03bdcefbe0a274af8937ad35d357",
   "hosting": "GitHub Pages branch publishing",
   "files": [
     {
@@ -33,9 +33,9 @@
       "sha256": "73e7f7b1c980416ae0c2461268b14c7cfcce0668e683dc43fbb11a82a227b9f2"
     },
     {
-      "path": "assets/index-BwhSL1kO.js",
-      "bytes": 275093,
-      "sha256": "dcc078ba5f004c1a1b5bbed8473c70e303fe5eb60b70137214489c248b724207"
+      "path": "assets/index-DX4YxHdY.js",
+      "bytes": 275116,
+      "sha256": "3f9b69ad4e67b162b64971726b98fe82addc35e751eabbf51e0f720128f791bb"
     },
     {
       "path": "assets/index-DcqSHZZo.css",
@@ -79,8 +79,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 44037,
-      "sha256": "34e4bfe762dc22fe4c976f0e9f2ec78b257d84261a1289e22e17ddf8a8f0e9ad"
+      "bytes": 44082,
+      "sha256": "c9d7dd246e39ce29f6f9bbe9cad629e30d68fecaed04ceff731fc28423f1309b"
     },
     {
       "path": "project-previews/asterfall-2026-10-25-720.webp",
@@ -123,14 +123,14 @@
       "sha256": "a2c1ac8f7508684b69606014880969eb564ee02a4cd66a2e7be2faf6fc059bc8"
     },
     {
-      "path": "project-previews/railway-anatomy-2026-11-01-720.webp",
-      "bytes": 23128,
-      "sha256": "a617b0ff8b65f24668204c6df26bdc91da62932ecb6057847f6db0e6b4de5ad5"
+      "path": "project-previews/railway-anatomy-open-atlas-2026-11-01-720.webp",
+      "bytes": 24308,
+      "sha256": "b7b3c5c9cd3d749aeec6ea049b3ffdcc2a74f90541aa47da5f678a7b41d47f60"
     },
     {
-      "path": "project-previews/railway-anatomy-2026-11-01.webp",
-      "bytes": 79622,
-      "sha256": "abe447aeb8b907cec6504d4bf32e6f6c9f8deb2009f88602d31d50e2fcb4def0"
+      "path": "project-previews/railway-anatomy-open-atlas-2026-11-01.webp",
+      "bytes": 65370,
+      "sha256": "984273d48185ce232ca1533b369a480d386edebc967353dd7d8496cb3c90d14c"
     },
     {
       "path": "project-previews/rams-workbench-2026-10-27-720.webp",
