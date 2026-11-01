@@ -298,7 +298,7 @@ test("gallery browses all projects and returns to the original trigger", async (
   const trigger=page.getByRole("link",{name:"View full screenshot: World History Atlas",exact:true});
   await trigger.click();
   const dialog=page.getByRole("dialog");
-  for(const title of ["RailClear","RAMS Workbench","Modeling Lab","SE Tailoring Model","Asterfall: The Last Relay","World History Atlas"]) {
+  for(const title of ["Railway Anatomy","Engine Anatomy","RailClear","RAMS Workbench","Modeling Lab","SE Tailoring Model","Asterfall: The Last Relay","World History Atlas"]) {
     await dialog.getByRole("button",{name:"Next project",exact:true}).click();
     await expect(dialog.getByRole("heading")).toHaveText(title);
     await expect(dialog.getByRole("button",{name:"Next project",exact:true})).toBeFocused();
