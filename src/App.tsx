@@ -139,13 +139,9 @@ function App() {
       const jumpToHashTarget = () => {
         hashFrame = 0;
         if (cancelled) return;
-        // A slow font load must not undo a newer section choice.
-        if (window.location.hash.slice(1) !== hashTarget) {
-          root.classList.remove("hash-jump");
-          return;
-        }
+        // Font metrics can move sections; align the visitor's latest choice.
         measure();
-        const target = document.getElementById(hashTarget);
+        const target = document.getElementById(window.location.hash.slice(1));
         if (target) {
           const clearance = parseFloat(getComputedStyle(target).scrollMarginTop) || navHeight;
           window.scrollTo(0, Math.max(0, target.getBoundingClientRect().top + window.scrollY - clearance));

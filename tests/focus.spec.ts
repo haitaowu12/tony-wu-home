@@ -71,8 +71,9 @@ async function expectVisibleTargetFocus(page: Page, id: string, showIndicator = 
   await expect.poll(() => target.evaluate((element) => {
     const rect = element.getBoundingClientRect();
     const navBottom = document.querySelector(".site-nav")!.getBoundingClientRect().bottom;
-    return rect.top >= navBottom - 1 && rect.top < innerHeight && rect.left >= 0 && rect.right <= innerWidth;
-  })).toBe(true);
+    const visible = rect.top >= navBottom - 1 && rect.top < innerHeight && rect.left >= 0 && rect.right <= innerWidth;
+    return visible ? "visible" : JSON.stringify({ top: rect.top, left: rect.left, right: rect.right, navBottom, viewport: innerWidth });
+  })).toBe("visible");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   if (id === "playground") expect(await target.evaluate((element) => Math.abs(element.getBoundingClientRect().top - document.querySelector(".site-nav")!.getBoundingClientRect().bottom))).toBeLessThan(2);
 }
