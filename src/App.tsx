@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { PreviewProvider, usePreview } from "./components/ScreenshotViewer";
 import { profile, type SelectedProject } from "./content/profile";
 
@@ -13,7 +13,7 @@ const navItems = [
 const sectionIds = ["top", "work", "playground", "about", "writing", "contact"];
 const navSection = (id: string) => {
   if (["practice", "experience"].includes(id)) return "about";
-  if (["world-atlas", "modeling-lab", "railway-anatomy", "engine-anatomy", "anatomy"].includes(id)) return "work";
+  if (["world-atlas", "modeling-lab", "railway-anatomy", "engine-anatomy", "anatomy", "engineering-studies", "collections", "rams-workbench", "railclear"].includes(id)) return "work";
   if (id === "asterfall") return "playground";
   return id;
 };
@@ -23,7 +23,7 @@ const privateProjects = projects.filter((project) => project.status === "local-p
 const spotlightProject = featuredProjects.find((project) => project.title === profile.featuredStory.projectTitle)!;
 const atlasProject = featuredProjects.find((project) => project.group === "atlas")!;
 const modelingProject = featuredProjects.find((project) => project.title === "Modeling Lab")!;
-const studyProjects = featuredProjects.filter((project) => project.title === "RailClear" || project.title === "RAMS Workbench");
+const studyProjects = featuredProjects.filter((project) => project.title === "RailClear" || project.title === "RAMS Workbench").sort((a) => a.title === "RAMS Workbench" ? -1 : 1);
 const anatomyProjects = featuredProjects.filter((project) => project.group === "anatomy");
 const indexedProjects = [spotlightProject, featuredProjects.find((project) => project.title === "Leadership Toolbox")!];
 const learningProjects = featuredProjects.filter((project) => project.group === "learning");
@@ -55,6 +55,18 @@ function ProjectPreview({ project, sizes, className = "" }: { project: SelectedP
 function App() {
   const [activeSection, setActiveSection] = useState("top");
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const navigateToSection = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const id = event.currentTarget.hash.slice(1);
+    const target = document.getElementById(id);
+    if (!target) return;
+    event.preventDefault();
+    if (window.location.hash !== `#${id}`) window.history.pushState(null, "", `#${id}`);
+    setActiveSection(navSection(id));
+    target.focus({ preventScroll: true });
+    target.scrollIntoView({ block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+  };
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -139,8 +151,9 @@ function App() {
       const jumpToHashTarget = () => {
         hashFrame = 0;
         if (cancelled) return;
+        // Font metrics can move sections; align the visitor's latest choice.
         measure();
-        const target = document.getElementById(hashTarget);
+        const target = document.getElementById(window.location.hash.slice(1));
         if (target) {
           const clearance = parseFloat(getComputedStyle(target).scrollMarginTop) || navHeight;
           window.scrollTo(0, Math.max(0, target.getBoundingClientRect().top + window.scrollY - clearance));
@@ -165,7 +178,7 @@ function App() {
     };
   }, []);
 
-  return <PreviewProvider projects={[atlasProject, ...anatomyProjects, ...studyProjects, modelingProject, ...indexedProjects, learningSpotlight]}>
+  return <PreviewProvider projects={[...studyProjects, atlasProject, modelingProject, ...anatomyProjects, ...indexedProjects, learningSpotlight]}>
     <a className="skip-link" href="#main-content">Skip to content</a>
     <nav className="site-nav" aria-label="Page sections">
       <a className="site-nav__brand" href="#top" aria-current={activeSection === "top" ? "location" : undefined} onClick={() => setMenuOpen(false)}>Tony Wu</a>
@@ -212,12 +225,31 @@ function App() {
           <div><p className="section-kicker">Selected projects</p><h2 id="work-title">A few things I’ve made.</h2></div>
           <p>Practical tools, connected histories, and games that turn questions into experiences.</p>
         </header>
+        <nav className="project-paths" aria-label="Explore projects by interest"><a onClick={navigateToSection} href="#engineering-studies">Engineering studies <span aria-hidden="true">↓</span></a><a onClick={navigateToSection} href="#anatomy">Inside the system <span aria-hidden="true">↓</span></a><a onClick={navigateToSection} href="#collections">Maps, models &amp; stories <span aria-hidden="true">↓</span></a><a onClick={navigateToSection} href="#playground">Learning through play <span aria-hidden="true">↓</span></a></nav>
+        <section className="engineering-work" id="engineering-studies" tabIndex={-1} aria-labelledby="engineering-title">
+        <header className="work-subheading"><h3 id="engineering-title">Engineering studies</h3><p>From an assumption to evidence you can review.</p></header>
+        <div className="study-pair" role="group" aria-label="Engineering study tools">
+          {studyProjects.map((project) => <article className={`project-entry study-entry${project.title === "RAMS Workbench" ? " study-entry--lead" : " study-entry--compact"}`} id={project.title === "RAMS Workbench" ? "rams-workbench" : "railclear"} key={project.title}>
+            <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(60vw, 800px)" />
+            <div className="project-entry__body">{project.title === "RAMS Workbench" && <p className="release-note">Latest release · November 2026</p>}<h3>{project.title}</h3>
+              <p className="feature-dek">{project.title === "RailClear" ? "Safe-braking studies" : "Hazards, reliability & evidence"}</p>
+              <p>{project.teaser}</p><p className="availability">{project.availabilityLabel}</p>
+              <div className="project-actions">{project.link && <a className={project.title === "RAMS Workbench" ? "project-open" : "text-link"} href={project.link.href}>{project.link.label}{project.title === "RAMS Workbench" && <span aria-hidden="true">↗</span>}</a>}{project.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
+              <p className="project-limit">{project.title === "RailClear" ? "Outputs require project-specific engineering qualification." : "Single-user study prototype; engineering qualification remains open."}</p>
+              <details className="inline-details"><summary>Study scope &amp; limits</summary><p>{project.summary}</p></details>
+            </div>
+          </article>)}
+        </div>
+        </section>
+
+        <section className="collections-work" id="collections" tabIndex={-1} aria-labelledby="collections-title">
+        <header className="work-subheading"><h3 id="collections-title">Maps, models &amp; stories</h3><p>Different ways into a complex world.</p></header>
         <div className="featured-work" role="group" aria-label="History, engineering and learning projects">
           <article className="atlas-feature" id="world-atlas" tabIndex={-1} aria-labelledby="atlas-title">
             <ProjectPreview project={atlasProject} sizes="(max-width: 700px) calc(100vw - 40px), min(42vw, 520px)" />
             <div className="atlas-feature__body"><p className="type-label">History &amp; geography</p>
               <h3 id="atlas-title">{atlasProject.title}<span className="feature-name-note" lang="zh">{atlasProject.chineseTitle}</span></h3>
-              <p>Explore people, places, and events across time—in English and Chinese.</p>
+              <p>Read a history beside its map. Compare regions on a shared timeline—in English and Chinese.</p>
               <p className="availability">{atlasProject.availabilityLabel} · Selected coverage</p>
               {atlasProject.link && <a className="text-link" href={atlasProject.link.href}>{atlasProject.link.label}</a>}
               <details className="inline-details"><summary>How the atlas grew</summary><p>{atlasProject.summary}</p><p>{profile.atlasStory.basis}</p>
@@ -253,6 +285,8 @@ function App() {
           </article>
         </div>
 
+        </section>
+
         <section className="anatomy-work" id="anatomy" aria-labelledby="anatomy-title" tabIndex={-1}>
           <header className="work-subheading"><h3 id="anatomy-title">Inside the system</h3><p>Two interactive atlases, from the whole to the parts.</p></header>
           <div className="study-pair anatomy-pair">
@@ -267,23 +301,10 @@ function App() {
           </div>
         </section>
 
-        <header className="work-subheading"><h3>Engineering studies</h3><p>Tools for examining assumptions, calculations, and evidence.</p></header>
-        <div className="study-pair" role="group" aria-label="Engineering study tools">
-          {studyProjects.map((project) => <article className="project-entry study-entry" key={project.title}>
-            <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(44vw, 600px)" />
-            <div className="project-entry__body"><h3>{project.title}</h3>
-              <p className="feature-dek">{project.title === "RailClear" ? "Safe-braking studies" : "Hazards, reliability & evidence"}</p>
-              <p>{project.teaser}</p><p className="availability">{project.availabilityLabel}</p>
-              {project.link && <a className="text-link" href={project.link.href}>{project.link.label}</a>}
-              <p className="project-limit">{project.title === "RailClear" ? "Outputs require project-specific engineering qualification." : "Single-user study prototype; engineering qualification remains open."}</p>
-              <details className="inline-details"><summary>Study scope &amp; limits</summary><p>{project.summary}</p></details>
-            </div>
-          </article>)}
-        </div>
         <div className="project-index" role="group" aria-label="More selected work">
           {indexedProjects.map((project) => <article key={project.title}>
             <header className="project-index__heading"><h3>{project.title}</h3><p className="availability">{project === spotlightProject ? "Research with Cleo Wong" : (project.availabilityLabel ?? statusLabels[project.status])}</p></header>
-            <div className="project-index__body"><p>{project === spotlightProject ? "How much systems engineering does a project need? Inspect the drivers, process dependencies, and reasoning behind the recommended rigor. Research evaluation is in progress." : project.teaser}</p>
+            <div className="project-index__body"><p>{project === spotlightProject ? "Assess project drivers, inspect process recommendations, record decisions and prepare a report. Developed with Cleo Wong; research evaluation is in progress." : project.teaser}</p>
               <details className="inline-details"><summary>{project === spotlightProject ? "The tailoring approach" : "About the project"}</summary><p>{project.summary}</p>
                 {project === spotlightProject && <div className="project-story__steps">{profile.featuredStory.steps.map((step) => <section key={step.label}><h4>{step.title}</h4><p>{step.text}</p></section>)}</div>}
                 {project.preview && <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(45vw, 560px)" />}

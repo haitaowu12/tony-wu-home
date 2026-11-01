@@ -28,6 +28,7 @@ export type SelectedProject = {
     caption?: string;
   };
   availabilityLabel?: string;
+  resources?: Link[];
 };
 
 export type Publication = {
@@ -149,7 +150,7 @@ export const profile = {
   now: {
     reviewed: "November 2026",
     summary:
-      "I am developing RailClear for safe-braking and railway safety-distance studies, and RAMS Workbench for hazard analysis, RAM studies, and evidence traceability. RailClear and RAMS Workbench are available in the browser; RAMS Workbench also offers a local app. Both retain explicit engineering qualification limits. My wider work spans Railway Anatomy, Engine Anatomy, World History Atlas, Modeling Lab, Leadership Toolbox, SE Tailoring, and learning experiments including Asterfall and Personal Growth Copilot. A published INCOSE paper connects technical leadership with responsible human–AI collaboration.",
+      "RAMS Workbench 0.4.0 brings hazard review, retained analyses, baselines and a narrated user guide into one study workflow. RailClear supports safe-braking and railway safety-distance studies. RailClear and RAMS Workbench are available in the browser; RAMS Workbench also offers a local app. Both retain explicit engineering qualification limits. Railway Anatomy 8 connects detailed assemblies with six study workspaces; Engine Anatomy 3 brings component inspection, walkthroughs and experiments together. World History Atlas now pairs map-based reading with a regional timeline. My wider work includes Modeling Lab, Leadership Toolbox, SE Tailoring, Asterfall and Personal Growth Copilot. A published INCOSE paper connects technical leadership with responsible human–AI collaboration.",
     research:
       "My current writing explores SE tailoring, changing transit concepts of operations, future upgrades, and whole-facility operation. Alongside these papers, I am helping advance development of the proposed INCOSE–APTA Systems Lifecycle Engineering standard for transit.",
   },
@@ -389,38 +390,38 @@ export const profile = {
     {
       title: "Railway Anatomy",
       group: "anatomy",
-      teaser: "Explore a railway from its network to the equipment, people, and interfaces that make it work.",
-      summary: "Start with a connected railway, enter a station, train, depot, or control centre, and inspect the systems inside. Original 3D schematics, equipment comparisons, guided tours, and public reading references connect physical parts with their roles and interfaces. The models explain generic arrangements; they do not specify an installed railway or operating procedure.",
+      teaser: "Go inside a railway. Inspect its assemblies, then explore the forces, energy and information that connect them.",
+      summary: "Explore six connected study workspaces across vehicles, energy, track, stations, control and maintenance. Search named physical parts, inspect assemblies, trace functional paths and try bounded mechanical and evidence studies. Guided tours and public references connect each part with its role. Original schematic geometry and synthetic calculations explain generic arrangements; they are not manufacturer CAD, calibrated predictions or operating procedures.",
       status: "public",
       featured: true,
-      availabilityLabel: "Public · Interactive learning atlas",
+      availabilityLabel: "Public · v8.0 · Six connected studies",
       themes: ["railway systems", "3D exploration", "guided learning"],
       link: { label: "Explore Railway Anatomy", href: "https://haitaowu12.github.io/railway-anatomy/" },
       preview: {
-        src: "./project-previews/railway-anatomy-open-atlas-2026-11-01.webp",
-        smallSrc: "./project-previews/railway-anatomy-open-atlas-2026-11-01-720.webp",
-        alt: "Railway Anatomy showing a connected railway, stations, depot and control centre, with equipment navigation and train-movement connections",
-        width: 1425,
-        height: 1013,
-        caption: "An original schematic railway · explore places, equipment, and connections.",
+        src: "./project-previews/railway-anatomy-8-2026-11-01.webp",
+        smallSrc: "./project-previews/railway-anatomy-8-2026-11-01-720.webp",
+        alt: "Railway Anatomy 8 showing its vehicle study, original train model and connected assembly navigation",
+        width: 951,
+        height: 535,
+        caption: "Original teaching geometry · connected assemblies and studies.",
       },
     },
     {
       title: "Engine Anatomy",
       group: "anatomy",
-      teaser: "Trace what turns what, then change a load or demand and follow the engine’s response.",
-      summary: "Explore turboshaft–helicopter, turboprop–propeller aircraft, and turbofan–jet aircraft pairs. Follow shafts, gas paths, sensors, actuators, and control signals through original models, then run a guided cause-and-effect experiment. Geometry and numerical values are synthetic teaching assumptions, not calibrated engine maps, manufacturer control laws, or flight performance.",
+      teaser: "Inspect the mechanisms. Follow shafts and service circuits, or change a load and watch the response.",
+      summary: "Explore turboshaft–helicopter, turboprop–propeller and turbofan–jet pairs through coordinated Component, Walkthrough and Experiment activities. Inspect compressor, combustor, turbine, bearing and output-drive assemblies; trace fuel, oil and starting circuits; compare architectures and try control-response experiments. Original geometry and synthetic running plants are teaching models, not manufacturer dimensions, maintenance sequences, calibrated engine maps or flight performance.",
       status: "public",
       featured: true,
-      availabilityLabel: "Public · Three engine–airframe studies",
+      availabilityLabel: "Public · v3.0 · Three engine–airframe studies",
       themes: ["engine architecture", "control response", "interactive models"],
       link: { label: "Explore Engine Anatomy", href: "https://haitaowu12.github.io/engine-anatomy/" },
       preview: {
-        src: "./project-previews/engine-anatomy-midnight-brass-2026-11-01.webp",
-        smallSrc: "./project-previews/engine-anatomy-midnight-brass-2026-11-01-720.webp",
-        alt: "Engine Anatomy’s charcoal-and-champagne workspace with assembly navigation, a guided trial and the original turboshaft–helicopter model",
-        width: 1425,
-        height: 1013,
+        src: "./project-previews/engine-anatomy-3-2026-11-01.webp",
+        smallSrc: "./project-previews/engine-anatomy-3-2026-11-01-720.webp",
+        alt: "Engine Anatomy 3 showing the original turboshaft mechanism, selected power shaft, synthetic readings and reversible inspection controls",
+        width: 1071,
+        height: 762,
         caption: "Synthetic teaching model · engine, drivetrain, and control response.",
       },
     },
@@ -428,17 +429,17 @@ export const profile = {
       title: "SE Tailoring Model",
       group: "tool",
       summary:
-        "A practical framework for right-sizing systems engineering rigor to project drivers, process interdependencies, culture, and delivery risk.",
+        "A research framework, developed with Cleo Wong, for right-sizing systems engineering rigor to project drivers, process interdependencies, culture and delivery risk. Work through an assessment, inspect process recommendations, record decisions and prepare a report. The updated assessment and report keep completion state, review actions and method boundaries visible; evaluation remains in progress.",
       status: "public",
       featured: true,
       themes: ["INCOSE TIW 2026", "tailoring", "infrastructure SE"],
       link: { label: "Open", href: "https://haitaowu12.github.io/SE_Tailoring_Framework/" },
       preview: {
-        src: "./project-previews/se-tailoring-2026-10-25.webp",
-        smallSrc: "./project-previews/se-tailoring-2026-10-25-720.webp",
+        src: "./project-previews/se-tailoring-2026-11-01.webp",
+        smallSrc: "./project-previews/se-tailoring-2026-11-01-720.webp",
         alt: "Current SE Tailoring Model home screen with project questions, process recommendations, and assessment guidance",
-        width: 1075,
-        height: 717,
+        width: 955,
+        height: 537,
       },
     },
     {
@@ -482,22 +483,26 @@ export const profile = {
     },
     {
       title: "RAMS Workbench",
-      teaser: "Link hazards, reliability studies, requirements, and verification evidence.",
+      teaser: "Build a study from its first hazard to a reviewable baseline.",
       group: "tool",
       summary:
-        "A browser workbench for reliability, availability, maintainability, and safety studies. Create and edit studies, link hazards with requirements and verification evidence, and calculate supported RAM and static fault-tree models. Studies save on your device, with workspace backup and restore; a local app is also available. Analysis methods have explicit limits, and engineering qualification remains open.",
+        "A single-user workbench for reliability, availability, maintainability, and safety studies. Define a system, examine hazards through HAZOP, FMEA/FMECA and bow ties, calculate supported RAM and static fault-tree models, and connect requirements with verification and actions. Retain analyses, compare baselines and export a study reader. Studies save on your device, with backup, restore and revision-conflict recovery; a local app is also available. Analysis methods have explicit limits, and engineering qualification remains open.",
       status: "prototype",
-      availabilityLabel: "Public browser workbench",
+      availabilityLabel: "Browser & local app · v0.4.0",
+      resources: [
+        { label: "Read the user guide", href: "https://haitaowu12.github.io/rams-workbench-pages/guide/" },
+        { label: "Watch the walkthrough · 7:38", href: "https://haitaowu12.github.io/rams-workbench-pages/guide/#walkthrough" },
+      ],
       link: { label: "Open RAMS Workbench", href: "https://haitaowu12.github.io/rams-workbench-pages/" },
       featured: true,
       themes: ["hazard analysis", "RAM studies", "evidence traceability"],
       preview: {
-        src: "./project-previews/rams-workbench-2026-10-27.webp",
-        smallSrc: "./project-previews/rams-workbench-2026-10-27-720.webp",
-        alt: "RAMS Workbench’s fictional station study, showing a bow-tie diagram linking causes, proposed barriers, a hazard, and consequences",
+        src: "./project-previews/rams-workbench-040-2026-11-01.webp",
+        smallSrc: "./project-previews/rams-workbench-040-2026-11-01-720.webp",
+        alt: "RAMS Workbench 0.4.0 showing the fictional station study workspace, hazard-review queue and retained analyses",
         width: 1265,
         height: 712,
-        caption: "Synthetic example · hazard causes, barriers, and consequences.",
+        caption: "Synthetic example · hazard review and retained analyses.",
       },
     },
     {
