@@ -46,7 +46,7 @@ function ProjectPreview({ project, sizes, className = "" }: { project: SelectedP
       }}>
       <img src={preview.src} srcSet={`${preview.smallSrc} 720w, ${preview.src} ${preview.width}w`}
         sizes={sizes} width={preview.width} height={preview.height} loading="lazy" decoding="async" alt={preview.alt} />
-      <span>Enlarge screenshot <span aria-hidden="true">↗</span></span>
+      <span>Enlarge screenshot</span>
     </a>
     {preview.caption && <figcaption>{preview.caption}</figcaption>}
   </figure>;
@@ -200,8 +200,8 @@ function App() {
           <p className="hero__title">Engineering, leadership<br />&amp; a curious mind.</p>
           <p className="hero__copy">From aircraft engines to rail networks, my work is about how things fit together. Here are the tools, stories, and learning experiments I’m making along the way.</p>
           <div className="hero__actions" role="group" aria-label="Primary links">
-            <a className="button" href="#work">See what I’m building <span aria-hidden="true">↘</span></a>
-            <a className="button button--quiet" href="#about">A little about me <span aria-hidden="true">↗</span></a>
+            <a className="button" href="#work">See what I’m building</a>
+            <a className="button button--quiet" href="#about">A little about me</a>
           </div>
         </div>
         <figure className="hero__stage">
@@ -213,9 +213,9 @@ function App() {
               alt="Illustrated workspace with aerospace and rail sketches, a modeling laptop, leadership notes, a history map, and the Asterfall game beside a Vancouver window" />
           </div>
           <figcaption className="desk-links"><span>Explore the desk</span>
-            <a href="#modeling-lab">Models <span aria-hidden="true">↗</span></a>
-            <a href="#world-atlas">History <span aria-hidden="true">↗</span></a>
-            <a href="#asterfall">Play <span aria-hidden="true">↗</span></a>
+            <a href="#modeling-lab">Models</a>
+            <a href="#world-atlas">History</a>
+            <a href="#asterfall">Play</a>
           </figcaption>
         </figure>
       </section>
@@ -225,7 +225,7 @@ function App() {
           <div><p className="section-kicker">Selected projects</p><h2 id="work-title">A few things I’ve made.</h2></div>
           <p>Practical tools, connected histories, and games that turn questions into experiences.</p>
         </header>
-        <nav className="project-paths" aria-label="Explore projects by interest"><a onClick={navigateToSection} href="#engineering-studies">Engineering studies <span aria-hidden="true">↓</span></a><a onClick={navigateToSection} href="#anatomy">Inside the system <span aria-hidden="true">↓</span></a><a onClick={navigateToSection} href="#collections">Maps, models &amp; stories <span aria-hidden="true">↓</span></a><a onClick={navigateToSection} href="#playground">Learning through play <span aria-hidden="true">↓</span></a></nav>
+        <nav className="project-paths" aria-label="Explore projects by interest"><a onClick={navigateToSection} href="#engineering-studies">Engineering studies</a><a onClick={navigateToSection} href="#anatomy">Inside the system</a><a onClick={navigateToSection} href="#collections">Maps, models &amp; stories</a><a onClick={navigateToSection} href="#playground">Learning through play</a></nav>
         <section className="engineering-work" id="engineering-studies" tabIndex={-1} aria-labelledby="engineering-title">
         <header className="work-subheading"><h3 id="engineering-title">Engineering studies</h3><p>From an assumption to evidence you can review.</p></header>
         <div className="study-pair" role="group" aria-label="Engineering study tools">
@@ -234,7 +234,7 @@ function App() {
             <div className="project-entry__body">{project.title === "RAMS Workbench" && <p className="release-note">Latest release · November 2026</p>}<h3>{project.title}</h3>
               <p className="feature-dek">{project.title === "RailClear" ? "Safe-braking studies" : "Hazards, reliability & evidence"}</p>
               <p>{project.teaser}</p><p className="availability">{project.availabilityLabel}</p>
-              <div className="project-actions">{project.link && <a className={project.title === "RAMS Workbench" ? "project-open" : "text-link"} href={project.link.href}>{project.link.label}{project.title === "RAMS Workbench" && <span aria-hidden="true">↗</span>}</a>}{project.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
+              <div className="project-actions">{project.link && <a className={project.title === "RAMS Workbench" ? "project-open" : "text-link"} href={project.link.href}>{project.link.label}</a>}{project.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
               <p className="project-limit">{project.title === "RailClear" ? "Outputs require project-specific engineering qualification." : "Single-user study prototype; engineering qualification remains open."}</p>
               <details className="inline-details"><summary>Study scope &amp; limits</summary><p>{project.summary}</p></details>
             </div>
@@ -275,7 +275,7 @@ function App() {
                 sizes="(max-width: 700px) calc(100vw - 40px), min(29vw, 370px)"
                 width={learningSpotlight.preview!.width} height={learningSpotlight.preview!.height}
                 loading="lazy" decoding="async" alt="Asterfall's illustrated island world and opening invitation" />
-              <span>Explore the story <span aria-hidden="true">↘</span></span>
+              <span>Explore the story</span>
             </a>
             <div className="featured-project__body"><p className="type-label">Learning &amp; play</p><h3 id="play-preview-title">Asterfall</h3>
               <p>A failed warning network. Six island regions. Decisions that reveal how a system works.</p>
@@ -381,7 +381,7 @@ function App() {
       <section className="contact" id="contact" aria-labelledby="contact-title" tabIndex={-1}>
         <div><p className="section-kicker">Get in touch</p><h2 id="contact-title">Let’s compare notes.</h2></div>
         <div><p>I welcome conversations about systems engineering, technical leadership, responsible AI, research, and learning. Start with a question, a project, or something you’re exploring.</p>
-          <div className="contact__links">{profile.links.map((link) => <a key={link.href} href={link.href}>Connect on {link.label} <span aria-hidden="true">↗</span></a>)}<a href="https://github.com/haitaowu12">Explore my GitHub <span aria-hidden="true">↗</span></a></div>
+          <div className="contact__links">{profile.links.map((link) => <a key={link.href} href={link.href}>Connect on {link.label}</a>)}<a href="https://github.com/haitaowu12">Explore my GitHub</a></div>
         </div>
       </section>
     </main>
