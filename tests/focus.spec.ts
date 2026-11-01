@@ -332,3 +332,24 @@ test("gallery browses all projects and returns to the original trigger", async (
   await expect(trigger).toBeFocused();
   await expect(page.locator("body")).not.toHaveCSS("overflow","hidden");
 });
+
+test("a section choice survives delayed initial font loading", async ({ browser }, info) => {
+  const context = await browser.newContext({ viewport: info.project.use.viewport, reducedMotion: info.project.name.endsWith('-reduce') ? 'reduce' : 'no-preference' });
+  const page = await context.newPage();
+  let release!: () => void;
+  const gate = new Promise<void>(resolve => { release = resolve; });
+  await page.route('**/*.woff2', async route => { await gate; await route.continue(); });
+  try {
+    await page.goto('.#work', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('.site-nav a[href="#work"]')).toHaveAttribute('aria-current', 'location');
+    await page.locator('.project-paths a[href="#anatomy"]').focus();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#anatomy')).toBeFocused();
+    release();
+    await page.evaluate(() => document.fonts.ready);
+    await expectVisibleTargetFocus(page, 'anatomy');
+  } finally {
+    release();
+    await context.close();
+  }
+});

@@ -139,6 +139,11 @@ function App() {
       const jumpToHashTarget = () => {
         hashFrame = 0;
         if (cancelled) return;
+        // A slow font load must not undo a newer section choice.
+        if (window.location.hash.slice(1) !== hashTarget) {
+          root.classList.remove("hash-jump");
+          return;
+        }
         measure();
         const target = document.getElementById(hashTarget);
         if (target) {
