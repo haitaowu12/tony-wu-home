@@ -1,5 +1,5 @@
 {
-  "source_commit": "d729bc4fdbb907b889510a73ad8d174fb00c1acc",
+  "source_commit": "95df589d98070d34173a5c86844ee2e75452a7e1",
   "hosting": "GitHub Pages branch publishing",
   "files": [
     {
@@ -33,14 +33,14 @@
       "sha256": "73e7f7b1c980416ae0c2461268b14c7cfcce0668e683dc43fbb11a82a227b9f2"
     },
     {
-      "path": "assets/index-DcqSHZZo.css",
-      "bytes": 22072,
-      "sha256": "ecea9d7a4d1fde525cc609843787b5f587708319cbdf5d56c3b1ed23bf16d9bf"
+      "path": "assets/index-B7Ektc6L.css",
+      "bytes": 24567,
+      "sha256": "76c7b88854106f666d3009c852025a2a8ec9a89dea47f1e474bae08c93d176bf"
     },
     {
-      "path": "assets/index-I85xqoOo.js",
-      "bytes": 275176,
-      "sha256": "b7dab4e4340ca028ffbef13e9ca0b5fa99e91e6c8b39c1d746b457cb4a9a3ec9"
+      "path": "assets/index-BQvrU_f2.js",
+      "bytes": 278282,
+      "sha256": "95a4fe1aabc6b8a93fc7d6718c4403ff724e02b909614316e5e83aae30b035c4"
     },
     {
       "path": "favicon.svg",
@@ -79,8 +79,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 44194,
-      "sha256": "33fc74562b6bd866106922c6664d52ef78a05979e8d15f0f9518cf460902d4cd"
+      "bytes": 46115,
+      "sha256": "9ba809613600f056bdea35c0b4fabb3edc7876d5d9a90f40e75a48620d15ab3e"
     },
     {
       "path": "project-previews/asterfall-2026-10-25-720.webp",
@@ -93,14 +93,14 @@
       "sha256": "1a32bf9844e385bce07bd42b8beb6ef9a4c2c38e873e8822a648b727a3ee913a"
     },
     {
-      "path": "project-previews/engine-anatomy-midnight-brass-2026-11-01-720.webp",
-      "bytes": 28758,
-      "sha256": "58f89fbf1ffd3f5e9326938b988acdec80323f161cf21ea560f9f000a90ee583"
+      "path": "project-previews/engine-anatomy-3-2026-11-01-720.webp",
+      "bytes": 36064,
+      "sha256": "529f185c012b25ffb08d2b8773fb75675a2d491f2cf5ca2a61783210dd0a69a6"
     },
     {
-      "path": "project-previews/engine-anatomy-midnight-brass-2026-11-01.webp",
-      "bytes": 78094,
-      "sha256": "7db513ad6f1bc15c65001d783a4df00b018461763f3476055560ff8b0dbfc4f3"
+      "path": "project-previews/engine-anatomy-3-2026-11-01.webp",
+      "bytes": 72406,
+      "sha256": "718522328b59915eb3c6b62a0846991c7039c28764214f6151628339a5c054a6"
     },
     {
       "path": "project-previews/modeling-lab-2026-10-25-720.webp",
@@ -123,24 +123,24 @@
       "sha256": "a2c1ac8f7508684b69606014880969eb564ee02a4cd66a2e7be2faf6fc059bc8"
     },
     {
-      "path": "project-previews/railway-anatomy-open-atlas-2026-11-01-720.webp",
-      "bytes": 24308,
-      "sha256": "b7b3c5c9cd3d749aeec6ea049b3ffdcc2a74f90541aa47da5f678a7b41d47f60"
+      "path": "project-previews/railway-anatomy-8-2026-11-01-720.webp",
+      "bytes": 22440,
+      "sha256": "9425462c31b9320147102907e6eff7ecf9c91ad42a23d38a98d7be2fe1e70812"
     },
     {
-      "path": "project-previews/railway-anatomy-open-atlas-2026-11-01.webp",
-      "bytes": 65370,
-      "sha256": "984273d48185ce232ca1533b369a480d386edebc967353dd7d8496cb3c90d14c"
+      "path": "project-previews/railway-anatomy-8-2026-11-01.webp",
+      "bytes": 37362,
+      "sha256": "89de3f29b0a8f941d7bfd8379588ccab7d4b74a194ea35c6a893488cde88123b"
     },
     {
-      "path": "project-previews/rams-workbench-2026-10-27-720.webp",
-      "bytes": 23098,
-      "sha256": "ad60c5dcf5e0360a71ad6093e92ff6e303234998978aecb122c285f7f8bff99b"
+      "path": "project-previews/rams-workbench-040-2026-11-01-720.webp",
+      "bytes": 25390,
+      "sha256": "37b0a24d0e7f8bf07459e6185f6cea2e5f178976ce2d0f6e119022a77407c73d"
     },
     {
-      "path": "project-previews/rams-workbench-2026-10-27.webp",
-      "bytes": 51872,
-      "sha256": "d9f2e87f5682ef01de5016c03e9342aebe87945b90645be6948367b231378975"
+      "path": "project-previews/rams-workbench-040-2026-11-01.webp",
+      "bytes": 60162,
+      "sha256": "9a379e5df5b9c38736fc236331d92b2d0b14ad0bf0914d636da73e1451d3c5e6"
     },
     {
       "path": "project-previews/se-learning-quest-720.webp",
@@ -153,14 +153,14 @@
       "sha256": "80a39bd5048867f3be5b3c0fcfc2b515e8478675bf707c28aa1486f9549bbcd5"
     },
     {
-      "path": "project-previews/se-tailoring-2026-10-25-720.webp",
-      "bytes": 23670,
-      "sha256": "570df2b60a1a6b30501f498a04e03fcaad42dc5c10d466a2cb459317efea7b9c"
+      "path": "project-previews/se-tailoring-2026-11-01-720.webp",
+      "bytes": 29144,
+      "sha256": "90571799118883f3c51b5dfa5922ba30b6de2d06f64f4ae87f4023f819e9ac62"
     },
     {
-      "path": "project-previews/se-tailoring-2026-10-25.webp",
-      "bytes": 40898,
-      "sha256": "cc3bc8a54bb21d18d7f85c9ca98279c9765eecbf241ae5d7742bc49b6689afeb"
+      "path": "project-previews/se-tailoring-2026-11-01.webp",
+      "bytes": 50398,
+      "sha256": "1b7a9c8e130a4c5363c3977a5c6cfc30b8199dd6dd7740e8e441e382dc8afc3c"
     },
     {
       "path": "project-previews/se-tailoring-model-720.webp",
