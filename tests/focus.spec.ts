@@ -268,7 +268,7 @@ test("mobile menu dismisses with Escape, outside press and focus leaving", async
 test("uncached preview reserves its frame while the full image loads", async ({ page }) => {
   let release!:()=>void;
   const gate=new Promise<void>(resolve=>{release=resolve;});
-  await page.route("**/project-previews/world-history-atlas-2026-10-29.jpg",async route=>{await gate;await route.continue();});
+  await page.route("**/project-previews/world-history-atlas-vermilion-2026-11-01.webp",async route=>{await gate;await route.continue();});
   await page.getByRole("link",{name:"View full screenshot: World History Atlas",exact:true}).click();
   const dialog=page.getByRole("dialog");
   await expect(dialog.getByRole("status")).toContainText("Loading full-resolution image");

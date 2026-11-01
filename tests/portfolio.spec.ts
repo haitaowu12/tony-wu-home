@@ -75,7 +75,7 @@ test('the personal page and project explanations remain usable without JavaScrip
     await page.locator('#world-atlas summary').click();
     await expect(page.locator('#world-atlas')).toContainText('Jiangshan');
     await expect(page.getByRole('link', { name: 'Project source and credits', exact: true })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'View full screenshot: World History Atlas', exact: true })).toHaveAttribute('href', './project-previews/world-history-atlas-2026-10-29.jpg');
+    await expect(page.getByRole('link', { name: 'View full screenshot: World History Atlas', exact: true })).toHaveAttribute('href', './project-previews/world-history-atlas-vermilion-2026-11-01.webp');
     await page.locator('#experience > summary').click();
     await expect(page.locator('#experience')).toContainText('Professional Engineer');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

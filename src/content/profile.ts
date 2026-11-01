@@ -379,11 +379,11 @@ export const profile = {
       themes: ["history & geography", "connected lives", "English / 中文"],
       link: { label: "Explore World Atlas", href: "https://world-history-atlas-tony.techiesea.chatgpt.site/" },
       preview: {
-        src: "./project-previews/world-history-atlas-2026-10-29.jpg",
-        smallSrc: "./project-previews/world-history-atlas-2026-10-29-720.jpg",
-        alt: "World History Atlas · 普天之下 at 1200 CE, with historical entries, dated map outlines, guided readings, and a time slider",
-        width: 1280,
-        height: 720,
+        src: "./project-previews/world-history-atlas-vermilion-2026-11-01.webp",
+        smallSrc: "./project-previews/world-history-atlas-vermilion-2026-11-01-720.webp",
+        alt: "World History Atlas · 普天之下 at 1200 CE, with a world map, compact regional timeline and selected Southern Song reading",
+        width: 1425,
+        height: 1013,
       },
     },
     {
