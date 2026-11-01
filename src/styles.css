@@ -61,14 +61,12 @@ main:focus-visible .hero h1,section[id]:focus-visible > .section-heading h2,sect
 .hero__copy { margin-top: 18px; font-size: 1.0625rem; max-width: 43ch; color: var(--muted); }
 .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 26px; margin-top: 28px; }
 .button { display: inline-flex; min-height: 48px; align-items: center; justify-content: space-between; gap: 20px; padding: 12px 18px; background: var(--signal); color: var(--carbon); font-size: .875rem; line-height: 1.5; text-decoration: none; }
-.button > span { font-size: 1.25rem; line-height: 1; }
 .button--quiet { padding-inline: 0; color: var(--ink); background: transparent; text-decoration: underline; }
 .hero__visual { overflow: hidden; }
 .hero__visual img { width: 100%; height: auto; aspect-ratio: 1.2; object-fit: cover; object-position: 54% center; }
 .desk-links { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-bottom: 1px solid var(--line); padding: 6px 0; }
 .desk-links > span { color: var(--muted); font-size: .8125rem; }
 .desk-links a { display: inline-flex; align-items: center; min-height: 44px; gap: 10px; color: var(--ink); font-size: .875rem; text-decoration: none; }
-.desk-links a span { color: var(--signal); }
 
 /* Work: a varied introduction, then deeper engineering studies. */
 .section { padding: 64px var(--gutter); background: var(--paper); }
@@ -81,7 +79,6 @@ h4 { font-size: 1rem; line-height: 1.4; font-weight: 600; }
 .availability,.project-limit { font-size: .875rem; line-height: 1.5; color: var(--muted); }
 .feature-dek { color: var(--signal); font-size: .9375rem; line-height: 1.5; }
 .text-link { display: inline-flex; min-height: 44px; align-items: center; gap: 14px; font-size: .9375rem; font-weight: 550; text-decoration: none; }
-.text-link::after { content: "↗" / ""; display: inline-block; font-size: 1.2rem; font-weight: 400; }
 .text-link:hover { text-decoration: underline; }
 .featured-work { display: grid; grid-template-columns: 1.35fr 1fr 1fr; gap: 32px; align-items: start; margin-bottom: 48px; }
 .featured-work > article { min-width: 0; }
@@ -95,7 +92,6 @@ h4 { font-size: 1rem; line-height: 1.4; font-weight: 600; }
 .project-preview > a { position: relative; display: block; max-width: 100%; text-decoration: none; }
 .project-preview img { width: 100%; height: auto; max-height: 440px; object-fit: contain; border: 1px solid var(--line); background: #e9e3d9; }
 .project-preview > a > span,.play-cover > span { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; font-size: .875rem; color: var(--muted); border-bottom: 1px solid var(--line); }
-.project-preview > a > span > span,.play-cover > span > span { color: var(--signal); font-size: 1.2rem; }
 .project-preview a:hover > span,.play-cover:hover > span { color: var(--ink); }
 .project-preview figcaption { color: var(--muted); font-size: .875rem; line-height: 1.5; margin-top: 12px; }
 .featured-work .project-preview img,.play-cover img { height: 238px; }
@@ -115,7 +111,6 @@ summary:focus-visible { outline-offset: 2px; }
 .project-paths { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 24px; margin-bottom: 48px; border-block: 1px solid var(--line); }
 .project-paths a { display: flex; justify-content: space-between; gap: 12px; padding-block: 17px; color: var(--ink); text-decoration: none; font-size: .9375rem; }
 .project-paths a:hover { color: var(--signal); }
-.project-paths span { color: var(--signal); }
 .engineering-work > .work-subheading { border-top: 0; padding-top: 0; }
 .engineering-work .study-pair { grid-template-columns: 1fr; gap: 40px; margin-bottom: 56px; }
 .engineering-work .study-entry { display: grid; grid-template-columns: minmax(0,1.65fr) minmax(0,1fr); gap: 40px; align-items: center; }
@@ -231,7 +226,7 @@ summary:focus-visible { outline-offset: 2px; }
 .image-viewer__footer p { flex: 1; color: var(--muted); font-size: .8125rem; }
 .image-viewer__footer a { font-size: .875rem; }
 .image-viewer__navigation { display: flex; gap: 8px; flex-shrink: 0; }
-.image-viewer__navigation button { font-size: 1.25rem; width: 44px; padding: 4px; }
+.image-viewer__navigation button { font-size: .875rem; min-width: 44px; padding: 8px 12px; }
 
 @media (max-width: 1100px) {
   :root { --gutter: 32px; }
@@ -330,10 +325,8 @@ summary:focus-visible { outline-offset: 2px; }
   .image-viewer__footer a { font-size: .8125rem; margin-left: auto; }
 }
 @media (prefers-reduced-motion: no-preference) {
+  .site-nav__links a::after,summary::before { transition: transform 240ms var(--ease); }
   a,button,summary { transition: color 180ms var(--ease),background-color 180ms var(--ease),border-color 180ms var(--ease); }
-  .site-nav__links a::after,summary::before,.text-link::after,.desk-links a span,.button > span { transition: transform 240ms var(--ease); }
-  .text-link:hover::after,.desk-links a:hover span { transform: translate(3px,-3px); }
-  .button:hover > span { transform: translate(2px,2px); }
   .project-preview img,.play-cover img { transition: border-color 200ms var(--ease); }
   .project-preview a:hover img,.play-cover:hover img { border-color: var(--signal); }
   .page-ready .hero h1 { animation: name-arrive 400ms var(--ease) both; }

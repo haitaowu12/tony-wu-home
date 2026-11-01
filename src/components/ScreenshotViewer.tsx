@@ -86,8 +86,8 @@ export function PreviewProvider({ children, projects }: { children: ReactNode; p
         </div>
         <footer className="image-viewer__footer">
           <div className="image-viewer__navigation" role="group" aria-label="Browse project screenshots">
-            <button type="button" onClick={() => move(-1)} aria-label="Previous project">←</button>
-            <button type="button" onClick={() => move(1)} aria-label="Next project">→</button>
+            <button type="button" onClick={() => move(-1)} aria-label="Previous project">Previous</button>
+            <button type="button" onClick={() => move(1)} aria-label="Next project">Next</button>
           </div>
           <p id="viewer-caption">{preview.caption ?? "Interface preview"}</p>
           <button type="button" aria-pressed={zoomed} disabled={failed || !loaded} onClick={() => {
