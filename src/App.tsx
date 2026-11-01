@@ -13,7 +13,7 @@ const navItems = [
 const sectionIds = ["top", "work", "playground", "about", "writing", "contact"];
 const navSection = (id: string) => {
   if (["practice", "experience"].includes(id)) return "about";
-  if (["world-atlas", "modeling-lab"].includes(id)) return "work";
+  if (["world-atlas", "modeling-lab", "railway-anatomy", "engine-anatomy", "anatomy"].includes(id)) return "work";
   if (id === "asterfall") return "playground";
   return id;
 };
@@ -24,6 +24,7 @@ const spotlightProject = featuredProjects.find((project) => project.title === pr
 const atlasProject = featuredProjects.find((project) => project.group === "atlas")!;
 const modelingProject = featuredProjects.find((project) => project.title === "Modeling Lab")!;
 const studyProjects = featuredProjects.filter((project) => project.title === "RailClear" || project.title === "RAMS Workbench");
+const anatomyProjects = featuredProjects.filter((project) => project.group === "anatomy");
 const indexedProjects = [spotlightProject, featuredProjects.find((project) => project.title === "Leadership Toolbox")!];
 const learningProjects = featuredProjects.filter((project) => project.group === "learning");
 const learningSpotlight = learningProjects.find((project) => project.title === "SE Learning Quest")!;
@@ -164,7 +165,7 @@ function App() {
     };
   }, []);
 
-  return <PreviewProvider projects={[atlasProject, ...studyProjects, modelingProject, ...indexedProjects, learningSpotlight]}>
+  return <PreviewProvider projects={[atlasProject, ...anatomyProjects, ...studyProjects, modelingProject, ...indexedProjects, learningSpotlight]}>
     <a className="skip-link" href="#main-content">Skip to content</a>
     <nav className="site-nav" aria-label="Page sections">
       <a className="site-nav__brand" href="#top" aria-current={activeSection === "top" ? "location" : undefined} onClick={() => setMenuOpen(false)}>Tony Wu</a>
@@ -251,6 +252,20 @@ function App() {
             </div>
           </article>
         </div>
+
+        <section className="anatomy-work" id="anatomy" aria-labelledby="anatomy-title" tabIndex={-1}>
+          <header className="work-subheading"><h3 id="anatomy-title">Inside the system</h3><p>Two interactive atlases, from the whole to the parts.</p></header>
+          <div className="study-pair anatomy-pair">
+            {anatomyProjects.map((project) => <article className="project-entry study-entry" id={project.title === "Railway Anatomy" ? "railway-anatomy" : "engine-anatomy"} key={project.title}>
+              <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(44vw, 600px)" />
+              <div className="project-entry__body"><h3>{project.title}</h3><p>{project.teaser}</p>
+                <p className="availability">{project.availabilityLabel}</p>
+                {project.link && <a className="text-link" href={project.link.href}>{project.link.label}</a>}
+                <details className="inline-details"><summary>What you can explore</summary><p>{project.summary}</p></details>
+              </div>
+            </article>)}
+          </div>
+        </section>
 
         <header className="work-subheading"><h3>Engineering studies</h3><p>Tools for examining assumptions, calculations, and evidence.</p></header>
         <div className="study-pair" role="group" aria-label="Engineering study tools">

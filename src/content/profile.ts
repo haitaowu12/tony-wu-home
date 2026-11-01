@@ -11,7 +11,7 @@ export type SelectedProject = {
   /** Rendered in Work or Playground. Set explicitly so no
    *  positional slice can silently drop a project. */
   featured?: boolean;
-  group?: "tool" | "learning" | "atlas";
+  group?: "tool" | "learning" | "atlas" | "anatomy";
   teaser?: string;
   themes: string[];
   link?: Link;
@@ -147,9 +147,9 @@ export const profile = {
     ],
   },
   now: {
-    reviewed: "October 2026",
+    reviewed: "November 2026",
     summary:
-      "I am developing RailClear for safe-braking and railway safety-distance studies, and RAMS Workbench for hazard analysis, RAM studies, and evidence traceability. RailClear and RAMS Workbench are available in the browser; RAMS Workbench also offers a local app. Both retain explicit engineering qualification limits. My wider work spans World History Atlas, Modeling Lab, Leadership Toolbox, SE Tailoring, and learning experiments including Asterfall and Personal Growth Copilot. A published INCOSE paper connects technical leadership with responsible human–AI collaboration.",
+      "I am developing RailClear for safe-braking and railway safety-distance studies, and RAMS Workbench for hazard analysis, RAM studies, and evidence traceability. RailClear and RAMS Workbench are available in the browser; RAMS Workbench also offers a local app. Both retain explicit engineering qualification limits. My wider work spans Railway Anatomy, Engine Anatomy, World History Atlas, Modeling Lab, Leadership Toolbox, SE Tailoring, and learning experiments including Asterfall and Personal Growth Copilot. A published INCOSE paper connects technical leadership with responsible human–AI collaboration.",
     research:
       "My current writing explores SE tailoring, changing transit concepts of operations, future upgrades, and whole-facility operation. Alongside these papers, I am helping advance development of the proposed INCOSE–APTA Systems Lifecycle Engineering standard for transit.",
   },
@@ -384,6 +384,44 @@ export const profile = {
         alt: "World History Atlas · 普天之下 at 1200 CE, with historical entries, dated map outlines, guided readings, and a time slider",
         width: 1280,
         height: 720,
+      },
+    },
+    {
+      title: "Railway Anatomy",
+      group: "anatomy",
+      teaser: "Explore a railway from its network to the equipment, people, and interfaces that make it work.",
+      summary: "Start with a connected railway, enter a station, train, depot, or control centre, and inspect the systems inside. Original 3D schematics, equipment comparisons, guided tours, and public reading references connect physical parts with their roles and interfaces. The models explain generic arrangements; they do not specify an installed railway or operating procedure.",
+      status: "public",
+      featured: true,
+      availabilityLabel: "Public · Interactive learning atlas",
+      themes: ["railway systems", "3D exploration", "guided learning"],
+      link: { label: "Explore Railway Anatomy", href: "https://haitaowu12.github.io/railway-anatomy/" },
+      preview: {
+        src: "./project-previews/railway-anatomy-2026-11-01.webp",
+        smallSrc: "./project-previews/railway-anatomy-2026-11-01-720.webp",
+        alt: "Railway Anatomy showing a connected railway, stations, depot and control centre, with equipment navigation and train-movement connections",
+        width: 1425,
+        height: 990,
+        caption: "An original schematic railway · explore places, equipment, and connections.",
+      },
+    },
+    {
+      title: "Engine Anatomy",
+      group: "anatomy",
+      teaser: "Trace what turns what, then change a load or demand and follow the engine’s response.",
+      summary: "Explore turboshaft–helicopter, turboprop–propeller aircraft, and turbofan–jet aircraft pairs. Follow shafts, gas paths, sensors, actuators, and control signals through original models, then run a guided cause-and-effect experiment. Geometry and numerical values are synthetic teaching assumptions, not calibrated engine maps, manufacturer control laws, or flight performance.",
+      status: "public",
+      featured: true,
+      availabilityLabel: "Public · Three engine–airframe studies",
+      themes: ["engine architecture", "control response", "interactive models"],
+      link: { label: "Explore Engine Anatomy", href: "https://haitaowu12.github.io/engine-anatomy/" },
+      preview: {
+        src: "./project-previews/engine-anatomy-2026-11-01.webp",
+        smallSrc: "./project-previews/engine-anatomy-2026-11-01-720.webp",
+        alt: "Engine Anatomy’s turboshaft model with independent shafts, rotor drivetrain, component explanations and guided experiment controls",
+        width: 1425,
+        height: 990,
+        caption: "Synthetic teaching model · engine, drivetrain, and control response.",
       },
     },
     {

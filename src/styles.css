@@ -316,3 +316,6 @@ summary:focus-visible { outline-offset: 2px; }
   html { scroll-behavior: auto; }
   *,*::before,*::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
+
+.anatomy-work { scroll-margin-top: calc(var(--nav-height) + 24px); }
+.anatomy-pair .project-preview img { height: auto; max-height: none; object-position: center; }

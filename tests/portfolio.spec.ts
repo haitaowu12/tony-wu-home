@@ -33,6 +33,13 @@ test('personal identity, breadth, public links and scope notes survive the redo'
     await expect(entry.locator('.project-limit')).toContainText('qualification');
     await expect(entry.locator('figcaption')).toContainText('Synthetic example');
   }
+  for (const [name, slug] of [['Railway Anatomy', 'railway-anatomy'], ['Engine Anatomy', 'engine-anatomy']]) {
+    const entry = page.locator(`#${slug}`);
+    await expect(entry.getByRole('link', { name: `Explore ${name}`, exact: true })).toHaveAttribute('href', `https://haitaowu12.github.io/${slug}/`);
+    const image = entry.locator('img');
+    await image.scrollIntoViewIfNeeded();
+    await expect.poll(() => image.evaluate(element => (element as HTMLImageElement).complete && (element as HTMLImageElement).naturalWidth > 0)).toBe(true);
+  }
   await expect(page.locator('.about-identity')).toContainText('P.Eng (ON, BC), MIRSE, PMP, CSEP');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   if (['375-no-preference', '1440-no-preference'].includes(info.project.name)) {
