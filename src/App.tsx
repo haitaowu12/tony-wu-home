@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { PreviewProvider, usePreview } from "./components/ScreenshotViewer";
 import { profile, type SelectedProject } from "./content/profile";
 
@@ -55,6 +55,18 @@ function ProjectPreview({ project, sizes, className = "" }: { project: SelectedP
 function App() {
   const [activeSection, setActiveSection] = useState("top");
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const navigateToSection = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const id = event.currentTarget.hash.slice(1);
+    const target = document.getElementById(id);
+    if (!target) return;
+    event.preventDefault();
+    if (window.location.hash !== `#${id}`) window.history.pushState(null, "", `#${id}`);
+    setActiveSection(navSection(id));
+    target.focus({ preventScroll: true });
+    target.scrollIntoView({ block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+  };
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -213,7 +225,7 @@ function App() {
           <div><p className="section-kicker">Selected projects</p><h2 id="work-title">A few things I’ve made.</h2></div>
           <p>Practical tools, connected histories, and games that turn questions into experiences.</p>
         </header>
-        <nav className="project-paths" aria-label="Explore projects by interest"><a href="#engineering-studies">Engineering studies <span aria-hidden="true">↓</span></a><a href="#anatomy">Inside the system <span aria-hidden="true">↓</span></a><a href="#collections">Maps, models &amp; stories <span aria-hidden="true">↓</span></a><a href="#playground">Learning through play <span aria-hidden="true">↓</span></a></nav>
+        <nav className="project-paths" aria-label="Explore projects by interest"><a onClick={navigateToSection} href="#engineering-studies">Engineering studies <span aria-hidden="true">↓</span></a><a onClick={navigateToSection} href="#anatomy">Inside the system <span aria-hidden="true">↓</span></a><a onClick={navigateToSection} href="#collections">Maps, models &amp; stories <span aria-hidden="true">↓</span></a><a onClick={navigateToSection} href="#playground">Learning through play <span aria-hidden="true">↓</span></a></nav>
         <section className="engineering-work" id="engineering-studies" tabIndex={-1} aria-labelledby="engineering-title">
         <header className="work-subheading"><h3 id="engineering-title">Engineering studies</h3><p>From an assumption to evidence you can review.</p></header>
         <div className="study-pair" role="group" aria-label="Engineering study tools">
