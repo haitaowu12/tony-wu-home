@@ -1,5 +1,5 @@
 {
-  "source_commit": "73134eb27b6b03bdcefbe0a274af8937ad35d357",
+  "source_commit": "f3499037a2ae13b5139ea93d094ca056cbde3bca",
   "hosting": "GitHub Pages branch publishing",
   "files": [
     {
@@ -33,14 +33,14 @@
       "sha256": "73e7f7b1c980416ae0c2461268b14c7cfcce0668e683dc43fbb11a82a227b9f2"
     },
     {
-      "path": "assets/index-DX4YxHdY.js",
-      "bytes": 275116,
-      "sha256": "3f9b69ad4e67b162b64971726b98fe82addc35e751eabbf51e0f720128f791bb"
-    },
-    {
       "path": "assets/index-DcqSHZZo.css",
       "bytes": 22072,
       "sha256": "ecea9d7a4d1fde525cc609843787b5f587708319cbdf5d56c3b1ed23bf16d9bf"
+    },
+    {
+      "path": "assets/index-qDmSMyHW.js",
+      "bytes": 275154,
+      "sha256": "a302e44a1873dbef54651386690fd5f5abf6fed58eedbb94b9a497dcde88c84c"
     },
     {
       "path": "favicon.svg",
@@ -79,8 +79,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 44082,
-      "sha256": "c9d7dd246e39ce29f6f9bbe9cad629e30d68fecaed04ceff731fc28423f1309b"
+      "bytes": 44150,
+      "sha256": "3cb2452713e7715a516aafe62bf3db41b74ea9707cc070ffd8bb0293810e6709"
     },
     {
       "path": "project-previews/asterfall-2026-10-25-720.webp",
@@ -93,14 +93,14 @@
       "sha256": "1a32bf9844e385bce07bd42b8beb6ef9a4c2c38e873e8822a648b727a3ee913a"
     },
     {
-      "path": "project-previews/engine-anatomy-2026-11-01-720.webp",
-      "bytes": 33536,
-      "sha256": "e14e51635e58f87938733def4f7b81eaa0e75eef12d2aa53a5911cd327a3e4b4"
+      "path": "project-previews/engine-anatomy-midnight-brass-2026-11-01-720.webp",
+      "bytes": 28758,
+      "sha256": "58f89fbf1ffd3f5e9326938b988acdec80323f161cf21ea560f9f000a90ee583"
     },
     {
-      "path": "project-previews/engine-anatomy-2026-11-01.webp",
-      "bytes": 102128,
-      "sha256": "32c624de29e1ee5eb083e172e0e77732f67f72201fdae8e4afcd5a1453bba506"
+      "path": "project-previews/engine-anatomy-midnight-brass-2026-11-01.webp",
+      "bytes": 78094,
+      "sha256": "7db513ad6f1bc15c65001d783a4df00b018461763f3476055560ff8b0dbfc4f3"
     },
     {
       "path": "project-previews/modeling-lab-2026-10-25-720.webp",
