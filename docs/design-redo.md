@@ -4,7 +4,7 @@
 
 Audience: people arriving from Tony's projects, professional/community work and writing. Introduce Tony as a person with systems-engineering practice AND independent interests. Help visitors find a project to explore, learn about his background, or connect. This is not a new consultancy or single-product landing page.
 
-Baseline to beat: `846987908733abafe988369003dab32b113d8606`. Rejected redesign: `affe497e55bf4fb6be89c6a85e7864cd9de0b1cd` / PR #37. The shared main frontend workflow used for the redo is Second Brain revision `98440d88bef426a4b2ff5151c937758678da5b26`, merged through #173. Generic skills stay outside this repository.
+Baseline to beat: `846987908733abafe988369003dab32b113d8606`. Rejected redesign: `affe497e55bf4fb6be89c6a85e7864cd9de0b1cd` / PR #37.
 
 Preserve: dominant Tony Wu identity, warm dark opening, illustrated multi-interest workspace, history/learning breadth, project image enlargement, prototype/qualification labels, author/source credits, existing public facts and destinations. Change: slow project scanning, small supporting text, generic new slogans and the engineering-only first impression of #37. Avoid: microscopic whole-application screenshot as hero, unannounced employer changes, private family/client/financial details, or test counts presented as design success.
 
