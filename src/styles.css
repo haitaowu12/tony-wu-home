@@ -29,6 +29,8 @@ a,button,summary { -webkit-tap-highlight-color: transparent; }
 img { display: block; max-width: 100%; }
 main[id],section[id],details[id],article[id] { scroll-margin-top: calc(var(--nav-height) + 24px); }
 main[id],section[id].hero,section[id].work,section[id].playground { scroll-margin-top: var(--nav-height); }
+/* Keep fractional phone-layout offsets clear of the sticky header. */
+section[id].playground { scroll-margin-top: calc(var(--nav-height) + 1px); }
 main:focus,section[id]:focus,article[id]:focus { outline: none; }
 main:focus-visible .hero h1,section[id]:focus-visible > .section-heading h2,section[id]:focus-visible > div > h2,.hero:focus-visible h1,article[id]:focus-visible h3,section[id]:focus-visible > .work-subheading h3 { outline: 3px solid var(--focus); outline-offset: 6px; }
 .section-heading h2,.work-subheading h3,.contact h2 { width: fit-content; }
