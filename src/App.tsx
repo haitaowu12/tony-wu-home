@@ -25,7 +25,7 @@ const atlasProject = featuredProjects.find((project) => project.group === "atlas
 const modelingProject = featuredProjects.find((project) => project.title === "Modeling Lab")!;
 const studyProjects = featuredProjects.filter((project) => project.title === "RailClear" || project.title === "RAMS Workbench").sort((a) => a.title === "RAMS Workbench" ? -1 : 1);
 const anatomyProjects = featuredProjects.filter((project) => project.group === "anatomy");
-const indexedProjects = [spotlightProject, featuredProjects.find((project) => project.title === "Leadership Toolbox")!];
+const indexedProjects = [modelingProject, spotlightProject, featuredProjects.find((project) => project.title === "Leadership Toolbox")!];
 const learningProjects = featuredProjects.filter((project) => project.group === "learning");
 const learningSpotlight = learningProjects.find((project) => project.title === "SE Learning Quest")!;
 const learningExperiments = learningProjects.filter((project) => project !== learningSpotlight);
@@ -45,7 +45,9 @@ function ProjectPreview({ project, sizes, className = "" }: { project: SelectedP
         openPreview({ project, trigger: event.currentTarget });
       }}>
       <img src={preview.src} srcSet={`${preview.smallSrc} 720w, ${preview.src} ${preview.width}w`}
-        sizes={sizes} width={preview.width} height={preview.height} loading="lazy" decoding="async" alt={preview.alt} />
+        sizes={sizes} width={preview.width} height={preview.height}
+        style={{ aspectRatio: `${preview.width} / ${preview.height}`, maxWidth: `min(100%, calc(var(--preview-height) * ${preview.width / preview.height}))` }}
+        loading="lazy" decoding="async" alt={preview.alt} />
       <span>Enlarge screenshot</span>
     </a>
     {preview.caption && <figcaption>{preview.caption}</figcaption>}
@@ -178,10 +180,10 @@ function App() {
     };
   }, []);
 
-  return <PreviewProvider projects={[...studyProjects, ...anatomyProjects, atlasProject, modelingProject, ...indexedProjects, learningSpotlight]}>
+  return <PreviewProvider projects={[...studyProjects, ...anatomyProjects, atlasProject, ...indexedProjects, learningSpotlight]}>
     <a className="skip-link" href="#main-content">Skip to content</a>
     <nav className="site-nav" aria-label="Page sections">
-      <a className="site-nav__brand" href="#top" aria-current={activeSection === "top" ? "location" : undefined} onClick={() => setMenuOpen(false)}>Tony Wu</a>
+      <a className="site-nav__brand" href="#top" aria-current={activeSection === "top" ? "location" : undefined} onClick={(event) => { navigateToSection(event); setMenuOpen(false); }}>Tony Wu</a>
       <button className="site-nav__toggle" type="button" aria-label={menuOpen ? "Close page menu" : "Open page menu"}
         aria-controls="site-nav-links" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
         <span aria-hidden="true">{menuOpen ? "Close" : "Menu"}</span>
@@ -189,7 +191,7 @@ function App() {
       <div className={`site-nav__links${menuOpen ? " is-open" : ""}`} id="site-nav-links">
         {navItems.map((item) => <a key={item.id} href={`#${item.id}`} aria-current={activeSection === item.id ? "location" : undefined}
           className={activeSection === item.id ? "is-active" : undefined}
-          onClick={() => { setActiveSection(item.id); setMenuOpen(false); }}>{item.label}</a>)}
+          onClick={(event) => { navigateToSection(event); setMenuOpen(false); }}>{item.label}</a>)}
       </div>
     </nav>
     <main id="main-content" tabIndex={-1}>
@@ -197,7 +199,7 @@ function App() {
         <div className="hero__content">
           <p className="eyebrow">Systems engineer <span aria-hidden="true">·</span> {profile.identity.location}</p>
           <h1 id="hero-title">Tony <em>Wu.</em></h1>
-          <p className="hero__title">Engineering, leadership<br />&amp; a curious mind.</p>
+          <p className="hero__title">Engineering, leadership<br /><em>&amp; a curious mind.</em></p>
           <p className="hero__copy">From aircraft engines to rail networks, my work is about how things fit together. Here are the tools, stories, and learning experiments I’m making along the way.</p>
           <div className="hero__actions" role="group" aria-label="Primary links">
             <a className="button" href="#work">See what I’m building</a>
@@ -208,7 +210,7 @@ function App() {
           <div className="hero__visual">
             <img src="./hero-practice-story.webp"
               srcSet="./hero-practice-story-720.webp 720w, ./hero-practice-story-1080.webp 1080w, ./hero-practice-story.webp 1448w"
-              sizes="(max-width: 700px) calc(100vw - 40px), min(50vw, 640px)"
+              sizes="(max-width: 700px) calc(100vw - 40px), min(53vw, 680px)"
               width="1448" height="1086" fetchPriority="high" decoding="async"
               alt="Illustrated workspace with aerospace and rail sketches, a modeling laptop, leadership notes, a history map, and the Asterfall game beside a Vancouver window" />
           </div>
@@ -230,10 +232,12 @@ function App() {
         <header className="work-subheading"><h3 id="engineering-title">Engineering studies</h3><p>From an assumption to evidence you can review.</p></header>
         <div className="study-pair" role="group" aria-label="Engineering study tools">
           {studyProjects.map((project) => <article className={`project-entry study-entry${project.title === "RAMS Workbench" ? " study-entry--lead" : " study-entry--compact"}`} id={project.title === "RAMS Workbench" ? "rams-workbench" : "railclear"} key={project.title}>
-            <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(60vw, 800px)" />
-            <div className="project-entry__body">{project.title === "RAMS Workbench" && <p className="release-note">Latest release · November 2026</p>}<h3>{project.title}</h3>
+            <header className="project-entry__heading">{project.title === "RAMS Workbench" && <p className="release-note">Latest release · November 2026</p>}<h3>{project.title}</h3>
               <p className="feature-dek">{project.title === "RailClear" ? "Safe-braking studies" : "Hazards, reliability & evidence"}</p>
-              <p>{project.teaser}</p><p className="availability">{project.availabilityLabel}</p>
+              <p>{project.teaser}</p>
+            </header>
+            <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(48vw, 620px)" />
+            <div className="project-entry__body"><p className="availability">{project.availabilityLabel}</p>
               <div className="project-actions">{project.link && <a className={project.title === "RAMS Workbench" ? "project-open" : "text-link"} href={project.link.href}>{project.link.label}</a>}{project.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
               <p className="project-limit">{project.title === "RailClear" ? "Outputs require project-specific engineering qualification." : "Single-user study prototype; engineering qualification remains open."}</p>
               <details className="inline-details"><summary>Study scope &amp; limits</summary><p>{project.summary}</p></details>
@@ -246,8 +250,9 @@ function App() {
           <header className="work-subheading"><h3 id="anatomy-title">Inside the system</h3><p>Illustrated studies of railway systems, engines and working mechanisms.</p></header>
           <div className="study-pair anatomy-pair">
             {anatomyProjects.map((project) => <article className="project-entry study-entry" id={project.title === "Railway Anatomy" ? "railway-anatomy" : "engine-anatomy"} key={project.title}>
+              <header className="project-entry__heading"><h3>{project.title}</h3><p>{project.teaser}</p></header>
               <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(44vw, 600px)" />
-              <div className="project-entry__body"><h3>{project.title}</h3><p>{project.teaser}</p>
+              <div className="project-entry__body">
                 <p className="availability">{project.availabilityLabel}</p>
                 <div className="project-actions">{project.link && <a className="text-link" href={project.link.href}>{project.link.label}</a>}{project.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
                 <details className="inline-details"><summary>About this project</summary>{project.origin?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}<p>{project.summary}</p></details>
@@ -258,12 +263,14 @@ function App() {
 
         <section className="collections-work" id="collections" tabIndex={-1} aria-labelledby="collections-title">
         <header className="work-subheading"><h3 id="collections-title">Maps, models &amp; stories</h3><p>Different ways into a complex world.</p></header>
-        <div className="featured-work" role="group" aria-label="History, engineering and learning projects">
+        <div className="featured-work">
           <article className="atlas-feature" id="world-atlas" tabIndex={-1} aria-labelledby="atlas-title">
-            <ProjectPreview project={atlasProject} sizes="(max-width: 700px) calc(100vw - 40px), min(42vw, 520px)" />
-            <div className="atlas-feature__body"><p className="type-label">History &amp; geography</p>
+            <header className="atlas-feature__heading"><p className="type-label">History &amp; geography</p>
               <h3 id="atlas-title">{atlasProject.title}<span className="feature-name-note" lang="zh">{atlasProject.chineseTitle}</span></h3>
               <p>Read a history beside its map. Compare regions on a shared timeline—in English and Chinese.</p>
+            </header>
+            <ProjectPreview project={atlasProject} sizes="(max-width: 700px) calc(100vw - 40px), min(51vw, 660px)" />
+            <div className="atlas-feature__body">
               <p className="availability">{atlasProject.availabilityLabel} · Selected coverage</p>
               {atlasProject.link && <a className="text-link" href={atlasProject.link.href}>{atlasProject.link.label}</a>}
               <details className="inline-details"><summary>How the atlas grew</summary><p>{atlasProject.summary}</p><p>{profile.atlasStory.basis}</p>
@@ -272,40 +279,15 @@ function App() {
               </details>
             </div>
           </article>
-          <article className="featured-project" id="modeling-lab" tabIndex={-1} aria-labelledby="modeling-title">
-            <ProjectPreview project={modelingProject} sizes="(max-width: 700px) calc(100vw - 40px), min(29vw, 370px)" />
-            <div className="featured-project__body"><p className="type-label">Models &amp; engineering</p>
-              <h3 id="modeling-title">Modeling Lab</h3>
-              <p>Open a SysML v2 model. Explore its structure, review changes, and share a reader.</p>
-              <p className="availability">Browser prototype · Bounded language and diagram coverage</p>
-              {modelingProject.link && <a className="text-link" href={modelingProject.link.href}>{modelingProject.link.label}</a>}
-              <details className="inline-details"><summary>About the project</summary><p>{modelingProject.summary}</p></details>
-            </div>
-          </article>
-          <article className="featured-project featured-project--play" aria-labelledby="play-preview-title">
-            <a className="play-cover" href="#asterfall" aria-label="Explore Asterfall in the Playground">
-              <img src={learningSpotlight.preview!.src}
-                srcSet={`${learningSpotlight.preview!.smallSrc} 720w, ${learningSpotlight.preview!.src} ${learningSpotlight.preview!.width}w`}
-                sizes="(max-width: 700px) calc(100vw - 40px), min(29vw, 370px)"
-                width={learningSpotlight.preview!.width} height={learningSpotlight.preview!.height}
-                loading="lazy" decoding="async" alt="Asterfall's illustrated island world and opening invitation" />
-              <span>Explore the story</span>
-            </a>
-            <div className="featured-project__body"><p className="type-label">Learning &amp; play</p><h3 id="play-preview-title">Asterfall</h3>
-              <p>A failed warning network. Six island regions. Decisions that reveal how a system works.</p>
-              <p className="availability">Learning experiment · Effectiveness not evaluated</p>
-              {learningSpotlight.link && <a className="text-link" href={learningSpotlight.link.href}>Play Asterfall</a>}
-            </div>
-          </article>
         </div>
 
         </section>
 
         <div className="project-index" role="group" aria-label="More selected work">
-          {indexedProjects.map((project) => <article key={project.title}>
-            <header className="project-index__heading"><h3>{project.title}</h3><p className="availability">{project === spotlightProject ? "Research with Cleo Wong" : (project.availabilityLabel ?? statusLabels[project.status])}</p></header>
-            <div className="project-index__body"><p>{project === spotlightProject ? "Assess project drivers, inspect process recommendations, record decisions and prepare a report. Developed with Cleo Wong; research evaluation is in progress." : project.teaser}</p>
-              <details className="inline-details"><summary>{project === spotlightProject ? "The tailoring approach" : "About the project"}</summary><p>{project.summary}</p>
+          {indexedProjects.map((project) => <article key={project.title} id={project === modelingProject ? "modeling-lab" : undefined} tabIndex={project === modelingProject ? -1 : undefined}>
+            <header className="project-index__heading"><h3>{project.title}</h3><p className="availability">{project === modelingProject ? "Browser prototype · Bounded language and diagram coverage" : project === spotlightProject ? "Research with Cleo Wong" : (project.availabilityLabel ?? statusLabels[project.status])}</p></header>
+            <div className="project-index__body"><p>{project === modelingProject ? "Open a SysML v2 model. Explore its structure, review changes, and share a reader." : project === spotlightProject ? "Assess project drivers, inspect process recommendations, record decisions and prepare a report. Developed with Cleo Wong; research evaluation is in progress." : project.teaser}</p>
+              <details className="inline-details"><summary>{project === spotlightProject ? "The tailoring approach" : project.preview ? "Interface & project details" : "About the project"}</summary><p>{project.summary}</p>
                 {project === spotlightProject && <div className="project-story__steps">{profile.featuredStory.steps.map((step) => <section key={step.label}><h4>{step.title}</h4><p>{step.text}</p></section>)}</div>}
                 {project.preview && <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(45vw, 560px)" />}
               </details>
@@ -322,9 +304,9 @@ function App() {
         <header className="section-heading"><div><p className="section-kicker">Playground</p><h2 id="playground-title">Learning through play.</h2></div><p>Stories, exercises, and workshop games for exploring systems, leadership, and how people work together.</p></header>
         <div className="playground-layout">
           <article className="learning-feature" id="asterfall" tabIndex={-1} aria-labelledby="learning-title">
+            <header className="learning-feature__heading"><h3 id="learning-title">Asterfall: The Last Relay</h3><p>{learningSpotlight.teaser}</p></header>
             <ProjectPreview project={learningSpotlight} sizes="(max-width: 700px) calc(100vw - 40px), min(58vw, 740px)" />
-            <div className="learning-feature__body"><h3 id="learning-title">Asterfall: The Last Relay</h3>
-              <p>{learningSpotlight.teaser}</p><p className="project-limit">{profile.learningStory.limitation}</p>
+            <div className="learning-feature__body"><p className="project-limit">{profile.learningStory.limitation}</p>
               {learningSpotlight.link && <a className="text-link" href={learningSpotlight.link.href}>Play Asterfall</a>}
               <details className="inline-details"><summary>The learning experiment</summary><p>{learningSpotlight.summary}</p><p>{profile.learningStory.summary}</p></details>
             </div>
