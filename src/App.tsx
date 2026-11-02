@@ -250,7 +250,7 @@ function App() {
               <div className="project-entry__body"><h3>{project.title}</h3><p>{project.teaser}</p>
                 <p className="availability">{project.availabilityLabel}</p>
                 <div className="project-actions">{project.link && <a className="text-link" href={project.link.href}>{project.link.label}</a>}{project.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
-                <details className="inline-details"><summary>What you can explore</summary><p>{project.summary}</p></details>
+                <details className="inline-details"><summary>About this project</summary>{project.origin?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}<p>{project.summary}</p></details>
               </div>
             </article>)}
           </div>

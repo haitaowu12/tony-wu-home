@@ -7,6 +7,7 @@ export type SelectedProject = {
   title: string;
   chineseTitle?: string;
   summary: string;
+  origin?: string[];
   status: "public" | "prototype" | "local-private";
   /** Rendered in Work or Playground. Set explicitly so no
    *  positional slice can silently drop a project. */
@@ -389,12 +390,13 @@ export const profile = {
     },
     {
       title: "Railway Anatomy",
+      origin: ["I work in the railway industry, and I often see graduates arrive with strong engineering fundamentals but little exposure to how a railway works as a whole. Much of that picture has to be built on the job: how vehicles, track, power, signalling, communications, stations and the people around them fit together.", "I built Railway Anatomy to make that picture easier to explore. You can start with a familiar place or piece of equipment, look inside it, and follow the relationships into other systems. I hope it gives young professionals a useful starting point, and helps experienced practitioners see beyond their own discipline, compare explanations and share what they know."],
       group: "anatomy",
       teaser: "Go inside a railway. Inspect its assemblies, then explore the forces, energy and information that connect them.",
       summary: "Explore vehicles, energy, track, stations, networks, control-room equipment and maintenance through six connected study workspaces. Inspect named parts, open assemblies and compare mechanisms. Explore control responsibilities in Interfaces and human work in People & processes. Guided tours and public references connect each part with its role. Illustrated geometry and synthetic calculations explain generic arrangements; they are not manufacturer CAD, calibrated predictions or operating procedures.",
       status: "public",
       featured: true,
-      availabilityLabel: "Public · v10.0 · Illustrated railway studies",
+      availabilityLabel: "Public · v10.0.1 · Illustrated railway studies",
       themes: ["railway systems", "illustrated assemblies", "guided learning"],
       link: { label: "Explore Railway Anatomy", href: "https://haitaowu12.github.io/railway-anatomy/" },
       preview: {
@@ -408,21 +410,22 @@ export const profile = {
     },
     {
       title: "Engine Anatomy",
+      origin: ["I started my engineering career at Pratt & Whitney Canada, working on controls for turboshaft, turboprop and turbofan engine programmes. Much of my work was in full authority digital engine control (FADEC): control logic, analysis and verification. It took me a long time to understand how those logic gates connected with the engine’s mechanical parts, and how the engine fitted into the aircraft around it.", "Engine Anatomy grew out of wanting to make those connections visible. I can follow a shaft, sensor or fuel command through an interactive model, see how it fits into the wider system, and share some of what I worked on with my daughter.", "The LEGO Technic H175 has a personal place here. The real helicopter uses an engine from one of the programmes I worked on. My daughter and I assembled the LEGO model together and still play with it. Exploring its motor, gears and rotor-pitch mechanism is another way for us to learn together."],
       group: "anatomy",
       teaser: "Inspect the mechanisms. Follow shafts and service circuits, or change a load and watch the response.",
       summary: "Explore turboshaft–helicopter, turboprop–propeller and turbofan–jet pairs through coordinated Component, Walkthrough and Experiment activities. Inspect compressor, combustor, turbine, bearing and output-drive assemblies; trace fuel, oil and starting circuits; compare architectures and try control-response experiments. A separate LEGO Technic H175 study explores an electric motor, drive selectors, rotor pitch, landing gear and winch. Illustrated geometry and synthetic running plants are teaching models, not manufacturer dimensions, maintenance sequences, calibrated engine maps or flight performance.",
       status: "public",
       featured: true,
-      availabilityLabel: "Public · v5.0 · Engines & H175 mechanisms",
+      availabilityLabel: "Public · v5.0.1 · Engines & H175 mechanisms",
       themes: ["engine architecture", "control response", "interactive models"],
       link: { label: "Explore Engine Anatomy", href: "https://haitaowu12.github.io/engine-anatomy/" },
       resources: [{ label: "Explore H175 mechanisms", href: "https://haitaowu12.github.io/engine-anatomy/h175.html" }],
       preview: {
-        src: "./project-previews/engine-anatomy-5-illustrated-2026-11-01.webp",
-        smallSrc: "./project-previews/engine-anatomy-5-illustrated-2026-11-01-720.webp",
-        alt: "Engine Anatomy illustrated turboshaft cutaway showing its power shaft, engine layers and synthetic running readings",
-        width: 975,
-        height: 650,
+        src: "./project-previews/engine-anatomy-5-0-1-2026-11-01.webp",
+        smallSrc: "./project-previews/engine-anatomy-5-0-1-2026-11-01-720.webp",
+        alt: "Engine Anatomy illustrated turboshaft cutaway with its power shaft, engine layers and inspection controls",
+        width: 967,
+        height: 620,
         caption: "Illustrated engine cutaway · synthetic running model.",
       },
     },
