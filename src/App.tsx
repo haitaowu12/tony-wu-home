@@ -181,7 +181,7 @@ function App() {
   return <PreviewProvider projects={[...studyProjects, ...anatomyProjects, atlasProject, ...indexedProjects, learningSpotlight]}>
     <a className="skip-link" href="#main-content">Skip to content</a>
     <nav className="site-nav" aria-label="Page sections">
-      <a className="site-nav__brand" href="#top" aria-current={activeSection === "top" ? "location" : undefined} onClick={() => setMenuOpen(false)}>Tony Wu</a>
+      <a className="site-nav__brand" href="#top" aria-current={activeSection === "top" ? "location" : undefined} onClick={(event) => { navigateToSection(event); setMenuOpen(false); }}>Tony Wu</a>
       <button className="site-nav__toggle" type="button" aria-label={menuOpen ? "Close page menu" : "Open page menu"}
         aria-controls="site-nav-links" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
         <span aria-hidden="true">{menuOpen ? "Close" : "Menu"}</span>
@@ -189,7 +189,7 @@ function App() {
       <div className={`site-nav__links${menuOpen ? " is-open" : ""}`} id="site-nav-links">
         {navItems.map((item) => <a key={item.id} href={`#${item.id}`} aria-current={activeSection === item.id ? "location" : undefined}
           className={activeSection === item.id ? "is-active" : undefined}
-          onClick={() => { setActiveSection(item.id); setMenuOpen(false); }}>{item.label}</a>)}
+          onClick={(event) => { navigateToSection(event); setMenuOpen(false); }}>{item.label}</a>)}
       </div>
     </nav>
     <main id="main-content" tabIndex={-1}>
