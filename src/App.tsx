@@ -45,7 +45,9 @@ function ProjectPreview({ project, sizes, className = "" }: { project: SelectedP
         openPreview({ project, trigger: event.currentTarget });
       }}>
       <img src={preview.src} srcSet={`${preview.smallSrc} 720w, ${preview.src} ${preview.width}w`}
-        sizes={sizes} width={preview.width} height={preview.height} loading="lazy" decoding="async" alt={preview.alt} />
+        sizes={sizes} width={preview.width} height={preview.height}
+        style={{ aspectRatio: `${preview.width} / ${preview.height}`, maxWidth: `min(100%, calc(var(--preview-height) * ${preview.width / preview.height}))` }}
+        loading="lazy" decoding="async" alt={preview.alt} />
       <span>Enlarge screenshot</span>
     </a>
     {preview.caption && <figcaption>{preview.caption}</figcaption>}

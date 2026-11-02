@@ -97,11 +97,11 @@ h4 { font-size: 1rem; line-height: 1.4; font-weight: 600; }
 .featured-work .availability { font-size: .8125rem; }
 .project-preview { min-width: 0; }
 .project-preview > a { position: relative; display: block; max-width: 100%; text-decoration: none; }
-.project-preview img { width: auto; height: auto; max-height: 440px; margin-inline: auto; object-fit: contain; border: 1px solid var(--line); background: #e9e3d9; }
+.project-preview img { --preview-height: 440px; width: 100%; height: auto; max-height: var(--preview-height); margin-inline: auto; object-fit: contain; border: 1px solid var(--line); background: #e9e3d9; }
 .project-preview > a > span { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; font-size: .875rem; color: var(--muted); border-bottom: 1px solid var(--line); }
 .project-preview a:hover > span { color: var(--ink); }
 .project-preview figcaption { color: var(--muted); font-size: .875rem; line-height: 1.5; margin-top: 12px; }
-.featured-work .project-preview img { max-height: 350px; }
+.featured-work .project-preview img { --preview-height: 350px; }
 summary { display: flex; align-items: baseline; gap: 12px; list-style: none; min-height: 44px; padding: 12px 0; cursor: pointer; line-height: 1.4; font-size: .875rem; color: var(--signal); }
 summary::-webkit-details-marker { display: none; }
 summary::before { content: "+" / ""; flex: 0 0 12px; font: 400 1rem/1.2 "IBM Plex Sans Variable",sans-serif; text-align: center; }
@@ -121,7 +121,7 @@ summary:focus-visible { outline-offset: 2px; }
 .engineering-work .study-entry { display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.05fr); grid-template-rows: auto 1fr; gap: 18px 64px; align-items: start; }
 .engineering-work .project-entry__heading,.engineering-work .project-entry__body { grid-column: 1; }
 .engineering-work .study-entry > .project-preview { grid-column: 2; grid-row: 1 / 3; align-self: center; }
-.engineering-work .study-entry .project-preview img { height: auto; max-height: 340px; border: 1px solid var(--line); object-position: center; }
+.engineering-work .study-entry .project-preview img { --preview-height: 340px; border: 1px solid var(--line); object-position: center; }
 .engineering-work .study-entry--lead h3 { font-size: clamp(2rem,3.5vw,3rem); }
 .engineering-work .study-entry--lead .project-entry__heading > p:last-child { font-size: 1.1875rem; line-height: 1.5; max-width: 29ch; }
 .release-note { font-size: .8125rem; color: var(--signal); margin: 0 0 14px !important; }
@@ -134,7 +134,7 @@ summary:focus-visible { outline-offset: 2px; }
 .study-pair { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 48px; margin-bottom: 44px; }
 .study-entry { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
 .study-entry .project-preview > a { padding: 0; }
-.study-entry .project-preview img { height: auto; max-height: 280px; border: 0; background: transparent; }
+.study-entry .project-preview img { --preview-height: 280px; border: 0; background: transparent; }
 .study-entry .project-preview > a > span { border: 0; }
 .study-entry h3 { font-size: 2rem; }
 .study-entry .project-entry__body > p { margin-top: 12px; }
@@ -148,7 +148,7 @@ summary:focus-visible { outline-offset: 2px; }
 .project-index .availability { margin-top: 8px; }
 .project-index__body > p { color: var(--muted); }
 .project-index > article > .text-link { justify-content: space-between; }
-.project-index .project-preview img { max-height: 280px; }
+.project-index .project-preview img { --preview-height: 280px; }
 .project-story__steps section { margin-top: 18px; }
 .project-story__steps h4 { margin-block: 6px; }
 .private-work { margin-top: 20px; }
@@ -165,7 +165,7 @@ summary:focus-visible { outline-offset: 2px; }
 }
 .playground-layout { display: grid; grid-template-columns: minmax(0,1.65fr) minmax(0,1fr); gap: 64px; }
 .learning-feature { min-width: 0; }
-.learning-feature .project-preview img { max-height: 360px; background: var(--carbon); }
+.learning-feature .project-preview img { --preview-height: 360px; background: var(--carbon); }
 .learning-feature__heading { margin-bottom: 24px; }
 .learning-feature__heading h3 { font-size: clamp(1.8rem,3vw,2.65rem); }
 .learning-feature__heading p { margin-top: 14px; max-width: 52ch; color: var(--muted); }
@@ -249,7 +249,7 @@ summary:focus-visible { outline-offset: 2px; }
   .desk-links > span { display: none; }
   .atlas-feature { gap: 18px 32px; }
   .study-pair { gap: 32px; }
-  .study-entry .project-preview img { max-height: 240px; }
+  .study-entry .project-preview img { --preview-height: 240px; }
   .engineering-work .study-entry { gap: 18px 32px; }
   .project-paths { gap: 16px; }
   .project-index > article { grid-template-columns: 1fr 1.5fr; gap: 12px 32px; }
@@ -283,7 +283,7 @@ summary:focus-visible { outline-offset: 2px; }
   .featured-work { margin-bottom: 32px; }
   .atlas-feature { display: flex; flex-direction: column; gap: 20px; }
   .atlas-feature > * { width: 100%; }
-  .featured-work .project-preview img { max-height: 260px; }
+  .featured-work .project-preview img { --preview-height: 260px; }
   .featured-work h3 { font-size: 1.85rem; }
   .work-subheading { display: block; padding-top: 26px; margin-bottom: 24px; }
   .work-subheading p { margin-top: 10px; }
@@ -293,13 +293,13 @@ summary:focus-visible { outline-offset: 2px; }
   .engineering-work .study-pair { gap: 30px; margin-bottom: 36px; }
   .engineering-work .study-entry,.engineering-work .study-entry--compact { display: flex; flex-direction: column; gap: 18px; }
   .engineering-work .study-entry > * { width: 100%; }
-  .engineering-work .study-entry .project-preview img { max-height: 260px; }
+  .engineering-work .study-entry .project-preview img { --preview-height: 260px; }
   .engineering-work .study-entry--compact .project-preview { max-width: none; }
   .engineering-work .study-entry--lead h3 { font-size: 2.2rem; }
   .project-actions { margin-top: 16px; }
   .study-pair { grid-template-columns: 1fr; gap: 34px; margin-bottom: 32px; }
   .study-entry { gap: 18px; }
-  .study-entry .project-preview img { max-height: 260px; }
+  .study-entry .project-preview img { --preview-height: 260px; }
   .study-entry h3 { font-size: 1.85rem; }
   .project-index > article { grid-template-columns: 1fr; padding: 24px 0; gap: 12px; }
   .project-index > article > .text-link { grid-column: auto; }
@@ -308,7 +308,7 @@ summary:focus-visible { outline-offset: 2px; }
   .playground { padding-block: 42px 48px; }
   .playground-layout { grid-template-columns: 1fr; gap: 34px; }
   .learning-feature__heading h3 { font-size: 2rem; }
-  .learning-feature .project-preview img { max-height: 260px; }
+  .learning-feature .project-preview img { --preview-height: 260px; }
   .learning-experiments > article + article { margin-top: 24px; }
   .reading-columns { grid-template-columns: 1fr; padding: 44px 20px; gap: 42px; }
   .reading-columns .section-heading { margin-bottom: 22px; }

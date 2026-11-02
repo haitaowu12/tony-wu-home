@@ -309,6 +309,35 @@ test("uncached preview reserves its frame while the full image loads", async ({ 
   await dialog.getByRole("button",{name:"Close preview"}).click();
 });
 
+test("late project images retain the chapter positions reserved before loading", async ({ page }) => {
+  let release!: () => void;
+  let requested = false;
+  const gate = new Promise<void>(resolve => { release = resolve; });
+  await page.route("**/project-previews/world-history-atlas-vermilion-2026-11-01*.webp", async route => {
+    requested = true;
+    await gate;
+    await route.continue();
+  });
+  try {
+    await page.goto(".#world-atlas", { waitUntil: "domcontentloaded" });
+    await page.evaluate(() => document.fonts.ready);
+    const image = page.locator("#world-atlas .project-preview img");
+    await image.scrollIntoViewIfNeeded();
+    await expect.poll(() => requested).toBe(true);
+    const geometry = () => image.evaluate(element => ({
+      width: element.getBoundingClientRect().width,
+      height: element.getBoundingClientRect().height,
+      nextChapter: document.getElementById("playground")!.getBoundingClientRect().top + scrollY,
+    }));
+    const before = await geometry();
+    expect(before.height).toBeGreaterThan(100);
+    release();
+    await expect.poll(() => image.evaluate(element => (element as HTMLImageElement).complete && (element as HTMLImageElement).naturalWidth > 0)).toBe(true);
+    const after = await geometry();
+    for (const key of ["width", "height", "nextChapter"] as const) expect(Math.abs(after[key] - before[key]), key).toBeLessThan(2);
+  } finally { release(); }
+});
+
 test("desk links reach their project and preserve navigation context", async ({ page }) => {
   for (const [name,id,chapter] of [["Engineering studies","engineering-studies","work"],["Inside the system","anatomy","work"],["Maps, models & stories","collections","work"],["Learning through play","playground","playground"]]) {
     await page.goto(".#work");
