@@ -309,7 +309,10 @@ test("uncached preview reserves its frame while the full image loads", async ({ 
   await dialog.getByRole("button",{name:"Close preview"}).click();
 });
 
-test("late project images retain the chapter positions reserved before loading", async ({ page }) => {
+test("late project images retain the chapter positions reserved before loading", async ({ browser, baseURL }, info) => {
+  // Route before the first document so a previously decoded image cannot bypass the delay.
+  const context = await browser.newContext({ viewport: info.project.use.viewport, reducedMotion: info.project.name.endsWith("-reduce") ? "reduce" : "no-preference" });
+  const page = await context.newPage();
   let release!: () => void;
   let requested = false;
   const gate = new Promise<void>(resolve => { release = resolve; });
@@ -319,7 +322,7 @@ test("late project images retain the chapter positions reserved before loading",
     await route.continue();
   });
   try {
-    await page.goto(".#world-atlas", { waitUntil: "domcontentloaded" });
+    await page.goto(`${baseURL}#world-atlas`, { waitUntil: "domcontentloaded" });
     await page.evaluate(() => document.fonts.ready);
     const image = page.locator("#world-atlas .project-preview img");
     await image.scrollIntoViewIfNeeded();
@@ -335,7 +338,7 @@ test("late project images retain the chapter positions reserved before loading",
     await expect.poll(() => image.evaluate(element => (element as HTMLImageElement).complete && (element as HTMLImageElement).naturalWidth > 0)).toBe(true);
     const after = await geometry();
     for (const key of ["width", "height", "nextChapter"] as const) expect(Math.abs(after[key] - before[key]), key).toBeLessThan(2);
-  } finally { release(); }
+  } finally { release(); await context.close(); }
 });
 
 test("desk links reach their project and preserve navigation context", async ({ page }) => {
