@@ -4,6 +4,10 @@ Standalone personal brand and author page for Tony Wu, P.Eng (Ontario and Britis
 
 This is a static Vite + React + TypeScript site. It is designed as the canonical public profile page for linking from project READMEs, project footers, conference materials, and pet-project pages.
 
+## Anatomy projects
+
+The Inside the system section introduces Railway Anatomy and Engine Anatomy with their current illustrated views and the personal stories behind them. Engine Anatomy connects my early Pratt & Whitney Canada controls work with learning alongside my daughter, including our LEGO H175 model. Railway Anatomy grew from helping people understand the railway systems and interfaces they encounter in practice. The project repositories retain their technical explanations and model scope.
+
 ## Run
 
 ```bash
