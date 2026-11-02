@@ -178,7 +178,7 @@ function App() {
     };
   }, []);
 
-  return <PreviewProvider projects={[...studyProjects, atlasProject, modelingProject, ...anatomyProjects, ...indexedProjects, learningSpotlight]}>
+  return <PreviewProvider projects={[...studyProjects, ...anatomyProjects, atlasProject, modelingProject, ...indexedProjects, learningSpotlight]}>
     <a className="skip-link" href="#main-content">Skip to content</a>
     <nav className="site-nav" aria-label="Page sections">
       <a className="site-nav__brand" href="#top" aria-current={activeSection === "top" ? "location" : undefined} onClick={() => setMenuOpen(false)}>Tony Wu</a>
@@ -242,6 +242,20 @@ function App() {
         </div>
         </section>
 
+        <section className="anatomy-work" id="anatomy" aria-labelledby="anatomy-title" tabIndex={-1}>
+          <header className="work-subheading"><h3 id="anatomy-title">Inside the system</h3><p>Illustrated studies of railway systems, engines and working mechanisms.</p></header>
+          <div className="study-pair anatomy-pair">
+            {anatomyProjects.map((project) => <article className="project-entry study-entry" id={project.title === "Railway Anatomy" ? "railway-anatomy" : "engine-anatomy"} key={project.title}>
+              <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(44vw, 600px)" />
+              <div className="project-entry__body"><h3>{project.title}</h3><p>{project.teaser}</p>
+                <p className="availability">{project.availabilityLabel}</p>
+                <div className="project-actions">{project.link && <a className="text-link" href={project.link.href}>{project.link.label}</a>}{project.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
+                <details className="inline-details"><summary>What you can explore</summary><p>{project.summary}</p></details>
+              </div>
+            </article>)}
+          </div>
+        </section>
+
         <section className="collections-work" id="collections" tabIndex={-1} aria-labelledby="collections-title">
         <header className="work-subheading"><h3 id="collections-title">Maps, models &amp; stories</h3><p>Different ways into a complex world.</p></header>
         <div className="featured-work" role="group" aria-label="History, engineering and learning projects">
@@ -285,20 +299,6 @@ function App() {
           </article>
         </div>
 
-        </section>
-
-        <section className="anatomy-work" id="anatomy" aria-labelledby="anatomy-title" tabIndex={-1}>
-          <header className="work-subheading"><h3 id="anatomy-title">Inside the system</h3><p>Two interactive atlases, from the whole to the parts.</p></header>
-          <div className="study-pair anatomy-pair">
-            {anatomyProjects.map((project) => <article className="project-entry study-entry" id={project.title === "Railway Anatomy" ? "railway-anatomy" : "engine-anatomy"} key={project.title}>
-              <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(44vw, 600px)" />
-              <div className="project-entry__body"><h3>{project.title}</h3><p>{project.teaser}</p>
-                <p className="availability">{project.availabilityLabel}</p>
-                {project.link && <a className="text-link" href={project.link.href}>{project.link.label}</a>}
-                <details className="inline-details"><summary>What you can explore</summary><p>{project.summary}</p></details>
-              </div>
-            </article>)}
-          </div>
         </section>
 
         <div className="project-index" role="group" aria-label="More selected work">
