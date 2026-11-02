@@ -129,19 +129,29 @@ test("bounded project previews support browsing and full-size image navigation",
       await expect(image).toHaveCSS("object-fit", "contain");
     }
   }
+  if (testInfo.project.use.viewport!.width <= 700) {
+    // A visitor must identify the project before encountering its interface.
+    for (const id of ["rams-workbench", "railclear", "railway-anatomy", "engine-anatomy", "world-atlas", "asterfall"]) {
+      const entry = page.locator(`#${id}`);
+      const heading = await entry.locator("h3").first().boundingBox();
+      const image = await entry.locator(".project-preview img").boundingBox();
+      expect(heading!.y + heading!.height, id).toBeLessThan(image!.y);
+    }
+  }
   if (testInfo.project.use.viewport!.width >= 1100) {
-    // The latest study leads; the two anatomy atlases remain a paired comparison.
+    // The lead studies and Atlas have stable adjacent proof; anatomy stays paired.
     const scan = await page.locator("#work").evaluate((work) => {
-      const features = work.querySelector(".featured-work")!.getBoundingClientRect();
-      const cards = [...work.querySelectorAll(".featured-work > article")].map(entry => entry.getBoundingClientRect());
+      const atlas = work.querySelector("#world-atlas")!;
+      const atlasHeading = atlas.querySelector("header")!.getBoundingClientRect();
+      const atlasPreview = atlas.querySelector("figure")!.getBoundingClientRect();
       const rams = work.querySelector("#rams-workbench")!.getBoundingClientRect();
       const railclear = work.querySelector("#railclear")!.getBoundingClientRect();
       const anatomy = [...work.querySelectorAll(".anatomy-pair > article")].map(entry => entry.getBoundingClientRect());
-      return { aligned: cards.every(card => Math.abs(card.top - cards[0].top) < 1),
+      return { atlasBeside: atlasHeading.right < atlasPreview.left,
         anatomyPaired: Math.abs(anatomy[0].top - anatomy[1].top) < 1,
-        leadSeparated: rams.bottom <= railclear.top && railclear.bottom <= features.top };
+        leadSeparated: rams.bottom <= railclear.top && railclear.bottom <= atlasHeading.top };
     });
-    expect(scan.aligned).toBe(true);
+    expect(scan.atlasBeside).toBe(true);
     expect(scan.anatomyPaired).toBe(true);
     expect(scan.leadSeparated).toBe(true);
   }
@@ -186,13 +196,21 @@ test("paired About and Writing navigation retains the chosen chapter", async ({ 
     await expectVisibleTargetFocus(page, id, false);
     await expect(page.locator(`.site-nav a[href="#${id}"]`)).toHaveAttribute("aria-current", "location");
   }
-  // Modeling Lab is now a featured project; its image is visible before disclosure.
-  // Tailoring retains its detailed preview inside disclosure. Both remain real links.
+  // Secondary projects disclose their evidence without interrupting the index.
   for (const title of ["Modeling Lab", "SE Tailoring Model"]) {
     const entry = page.locator("#work article").filter({ has: page.getByRole("heading", { name: title, exact: true }) });
-    await entry.locator("summary").click();
-    await expect(entry.getByRole("link", { name: `View full screenshot: ${title}`, exact: true })).toBeVisible();
-    await entry.locator("summary").click();
+    const summary = entry.locator("summary");
+    const imageLink = entry.getByRole("link", { name: `View full screenshot: ${title}`, exact: true });
+    await expect(imageLink).not.toBeVisible();
+    await summary.focus();
+    await summary.press("Enter");
+    await expect(imageLink).toBeVisible();
+    await imageLink.click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(imageLink).toBeFocused();
+    await summary.press("Enter");
+    await expect(imageLink).not.toBeVisible();
   }
   for (const id of ["practice", "experience"]) {
     await page.goto(`./#${id}`);

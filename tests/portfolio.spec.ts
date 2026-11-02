@@ -11,23 +11,25 @@ test('personal identity, breadth, public links and scope notes survive the redo'
   await expect(page.locator('.hero__visual img')).toHaveAttribute('src', './hero-practice-story.webp');
   await expect(page.locator('.hero__copy')).toContainText('aircraft engines to rail networks');
   for (const name of ['Models', 'History', 'Play']) await expect(page.locator('.desk-links').getByRole('link', { name, exact: true })).toBeVisible();
-  // Protect two defects found in actual first-pass screenshots, not by the earlier tests.
-  await expect(page.locator('.play-cover img')).toHaveCSS('object-fit', 'contain');
+  // Retain uncropped evidence and usable phone actions.
+  await expect(page.locator('.learning-feature .project-preview img')).toHaveCSS('object-fit', 'contain');
   const width = info.project.use.viewport!.width;
   if (width >= 375 && width <= 414) {
     const actions = await page.locator('.hero__actions a').evaluateAll(links => links.map(link => link.getBoundingClientRect().top));
     expect(Math.abs(actions[0] - actions[1])).toBeLessThan(1);
   }
-  const firstProjects = page.locator('.featured-work');
-  await expect(firstProjects.getByRole('heading', { name: /World History Atlas/ })).toBeVisible();
-  await expect(firstProjects.getByRole('heading', { name: 'Modeling Lab', exact: true })).toBeVisible();
-  await expect(firstProjects.getByRole('heading', { name: 'Asterfall', exact: true })).toBeVisible();
-  await expect(firstProjects.getByRole('link', { name: 'Explore World Atlas', exact: true })).toHaveAttribute('href', 'https://world-history-atlas-tony.techiesea.chatgpt.site/');
-  await expect(firstProjects.getByRole('link', { name: 'Open Modeling Lab', exact: true })).toHaveAttribute('href', 'https://haitaowu12.github.io/sysmlv2_viewer/');
-  await expect(firstProjects.getByRole('link', { name: 'Play Asterfall', exact: true })).toHaveAttribute('href', 'https://haitaowu12.github.io/SE-Learning-Quest/');
-  await expect(firstProjects).toContainText('Selected coverage');
-  await expect(firstProjects).toContainText('Bounded language and diagram coverage');
-  await expect(firstProjects).toContainText('Effectiveness not evaluated');
+  const atlas = page.locator('#world-atlas');
+  const modeling = page.locator('#modeling-lab');
+  const play = page.locator('#asterfall');
+  await expect(atlas.getByRole('heading', { name: /World History Atlas/ })).toBeVisible();
+  await expect(modeling.getByRole('heading', { name: 'Modeling Lab', exact: true })).toBeVisible();
+  await expect(play.getByRole('heading', { name: 'Asterfall: The Last Relay', exact: true })).toBeVisible();
+  await expect(atlas.getByRole('link', { name: 'Explore World Atlas', exact: true })).toHaveAttribute('href', 'https://world-history-atlas-tony.techiesea.chatgpt.site/');
+  await expect(modeling.getByRole('link', { name: 'Open Modeling Lab', exact: true })).toHaveAttribute('href', 'https://haitaowu12.github.io/sysmlv2_viewer/');
+  await expect(play.getByRole('link', { name: 'Play Asterfall', exact: true })).toHaveAttribute('href', 'https://haitaowu12.github.io/SE-Learning-Quest/');
+  await expect(atlas).toContainText('Selected coverage');
+  await expect(modeling).toContainText('Bounded language and diagram coverage');
+  await expect(play.locator('.project-limit')).toContainText('effectiveness has not been evaluated');
   for (const name of ['RailClear', 'RAMS Workbench']) {
     const entry = page.locator('.study-entry').filter({ has: page.getByRole('heading', { name, exact: true }) });
     await expect(entry.locator('.project-limit')).toContainText('qualification');
