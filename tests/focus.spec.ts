@@ -18,7 +18,7 @@ async function openPage(page: Page) {
   await page.evaluate(() => document.fonts.ready);
   if (!await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches)) {
     await expect(page.locator("html")).toHaveClass(/page-ready/);
-    await page.evaluate(() => Promise.all(document.getAnimations().map((animation) => animation.finished.catch(() => {}))));
+    await page.evaluate(() => Promise.all(document.getAnimations().filter(animation => animation.timeline === document.timeline).map((animation) => animation.finished.catch(() => {}))));
   }
 }
 async function tabTo(page: Page, selector: string) {
@@ -339,6 +339,24 @@ test("late project images retain the chapter positions reserved before loading",
     const after = await geometry();
     for (const key of ["width", "height", "nextChapter"] as const) expect(Math.abs(after[key] - before[key]), key).toBeLessThan(2);
   } finally { release(); await context.close(); }
+});
+
+test("desktop work previews respond to pointer and keyboard without shifting the next chapter", async ({ page }) => {
+  await page.goto(".#work");
+  const preview = page.locator(".work-index__preview");
+  if (await page.evaluate(() => innerWidth < 1024)) {
+    await expect(preview).toBeHidden();
+    return;
+  }
+  const links = page.getByRole("navigation", { name: "Explore projects by interest" });
+  const chapterOffset = () => page.locator("#engineering-studies").evaluate(section => section.getBoundingClientRect().top + scrollY);
+  const before = await chapterOffset();
+  await links.getByRole("link", { name: "Inside the system" }).hover();
+  await expect(preview.locator("figcaption")).toContainText("Railway Anatomy");
+  await links.getByRole("link", { name: "Maps, models & stories" }).focus();
+  await expect(preview.locator("figcaption")).toContainText("World History Atlas");
+  await expect.poll(() => preview.locator("img").evaluate(img => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+  expect(Math.abs(await chapterOffset() - before)).toBeLessThan(2);
 });
 
 test("desk links reach their project and preserve navigation context", async ({ page }) => {

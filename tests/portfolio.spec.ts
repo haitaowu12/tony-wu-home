@@ -52,7 +52,7 @@ test('personal identity, breadth, public links and scope notes survive the redo'
     }
     const prefix = info.project.name.startsWith('375') ? 'phone' : 'desktop';
     await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
-    await page.evaluate(() => Promise.all(document.getAnimations().map(animation => animation.finished.catch(() => {}))));
+    await page.evaluate(() => Promise.all(document.getAnimations().filter(animation => animation.timeline === document.timeline).map(animation => animation.finished.catch(() => {}))));
     await page.screenshot({ path: info.outputPath(`${prefix}-home.png`), animations: 'disabled' });
     await page.screenshot({ path: info.outputPath(`${prefix}-full-page.png`), animations: 'disabled', fullPage: true });
     for (const [id, label] of [['work', 'projects'], ['playground', 'playground'], ['about', 'about'], ['writing', 'writing']]) {

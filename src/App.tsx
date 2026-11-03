@@ -54,6 +54,38 @@ function ProjectPreview({ project, sizes, className = "" }: { project: SelectedP
   </figure>;
 }
 
+const workPaths = [
+  { id: "engineering-studies", label: "Engineering studies", project: studyProjects[0] },
+  { id: "anatomy", label: "Inside the system", project: anatomyProjects[0] },
+  { id: "collections", label: "Maps, models & stories", project: atlasProject },
+  { id: "playground", label: "Learning through play", project: learningSpotlight },
+];
+
+function WorkIndex({ navigate }: { navigate: (event: MouseEvent<HTMLAnchorElement>) => void }) {
+  const [selected, setSelected] = useState(0);
+  const project = workPaths[selected].project;
+  const preview = project.preview!;
+  return <div className="work-index">
+    <nav className="project-paths" aria-label="Explore projects by interest">
+      {workPaths.map(({ id, label }, index) => <a key={id} href={`#${id}`} onClick={navigate}
+        data-preview={index === selected ? "active" : undefined}
+        onPointerEnter={(event) => { if (event.pointerType === "mouse") setSelected(index); }}
+        onFocus={() => setSelected(index)}>
+        <span className="work-index__number" aria-hidden="true">0{index + 1}</span>
+        <span>{label}</span><span className="work-index__arrow" aria-hidden="true">↘</span>
+      </a>)}
+    </nav>
+    <figure className="work-index__preview" aria-label="Project preview">
+      <div className="work-index__frame">
+        <img key={preview.smallSrc} src={preview.smallSrc} alt={preview.alt} loading="lazy" decoding="async" />
+      </div>
+      <figcaption><strong>{selected === 3 ? "Asterfall: The Last Relay" : project.title}</strong>
+        {preview.caption && <span>{preview.caption}</span>}
+      </figcaption>
+    </figure>
+  </div>;
+}
+
 function App() {
   const [activeSection, setActiveSection] = useState("top");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -227,7 +259,7 @@ function App() {
           <div><p className="section-kicker">Selected projects</p><h2 id="work-title">A few things I’ve made.</h2></div>
           <p>Practical tools, connected histories, and games that turn questions into experiences.</p>
         </header>
-        <nav className="project-paths" aria-label="Explore projects by interest"><a onClick={navigateToSection} href="#engineering-studies">Engineering studies</a><a onClick={navigateToSection} href="#anatomy">Inside the system</a><a onClick={navigateToSection} href="#collections">Maps, models &amp; stories</a><a onClick={navigateToSection} href="#playground">Learning through play</a></nav>
+        <WorkIndex navigate={navigateToSection} />
         <section className="engineering-work" id="engineering-studies" tabIndex={-1} aria-labelledby="engineering-title">
         <header className="work-subheading"><h3 id="engineering-title">Engineering studies</h3><p>From an assumption to evidence you can review.</p></header>
         <div className="study-pair" role="group" aria-label="Engineering study tools">

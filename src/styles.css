@@ -352,3 +352,81 @@ summary:focus-visible { outline-offset: 2px; }
 
 .anatomy-work { scroll-margin-top: calc(var(--nav-height) + 24px); }
 .anatomy-pair .project-preview img { object-position: center; }
+
+/* Desktop project index. Phone shortcuts keep their original layout. */
+.work-index__preview,.work-index__number,.work-index__arrow { display: none; }
+
+@media (min-width: 1024px) {
+  .work-index {
+    display: grid;
+    grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+    gap: clamp(40px, 5vw, 76px);
+    align-items: start;
+    margin-bottom: 64px;
+  }
+  .work-index .project-paths { display: block; margin: 0; }
+  .work-index .project-paths a {
+    display: grid;
+    grid-template-columns: 2rem 1fr 1.25rem;
+    align-items: center;
+    min-height: 79px;
+    padding: 18px 12px;
+    font: clamp(1.3rem, 2vw, 1.8rem)/1.15 Georgia, serif;
+  }
+  .work-index .project-paths a + a { border-top: 1px solid var(--line); }
+  .work-index .project-paths a[data-preview="active"] { background: #eae1d5; color: var(--signal); }
+  .work-index__number,.work-index__arrow { display: block; color: var(--signal); }
+  .work-index__number { font: .75rem/1 monospace; }
+  .work-index__arrow { font: 1rem/1 system-ui; }
+  .work-index__preview { display: block; min-width: 0; }
+  .work-index__frame {
+    height: clamp(225px, 22vw, 300px);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: #eae1d5;
+    border: 1px solid var(--line);
+    padding: 14px;
+  }
+  .work-index__frame img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+  .work-index__preview figcaption {
+    min-height: 64px;
+    padding-top: 10px;
+    font-size: .875rem;
+    line-height: 1.5;
+  }
+  .work-index__preview figcaption span { display: block; color: var(--muted); }
+  .section-heading--work h2 { font-size: clamp(2.7rem, 4vw, 4rem); }
+  .contact { align-items: center; padding-block: 76px 88px; }
+  .contact h2 { font-size: clamp(3.75rem, 6vw, 6rem); }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .work-index__frame img { animation: preview-arrive 330ms var(--ease) both; }
+  .work-index__arrow { transition: transform 220ms var(--ease); }
+  .project-paths a[data-preview="active"] .work-index__arrow { transform: translate(2px, 2px); }
+  @keyframes preview-arrive {
+    from { opacity: .4; transform: translateX(10px); }
+    to { opacity: 1; transform: none; }
+  }
+  @supports (animation-timeline: scroll()) {
+    .site-nav::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 -1px;
+      height: 2px;
+      background: var(--signal);
+      pointer-events: none;
+      transform-origin: left;
+      animation: reading-progress linear both;
+      animation-timeline: scroll(root);
+    }
+    .hero__visual img {
+      animation: desk-depth linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0px 560px;
+    }
+    @keyframes reading-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @keyframes desk-depth { from { transform: none; } to { transform: scale(1.07) translateY(2%); } }
+  }
+}
