@@ -1,13 +1,19 @@
-name: Keyboard focus regression
+name: Homepage checks and publishing
 
 on:
   pull_request:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: read
+  pages: read
+
+concurrency:
+  group: homepage-${{ github.ref }}
+  cancel-in-progress: false
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -22,6 +28,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - run: npm run audit
       - run: npx playwright install --with-deps chromium
       - run: npm run build
       - run: npm run test:focus
@@ -30,3 +37,24 @@ jobs:
         with:
           name: keyboard-focus-results
           path: test-results/
+      - uses: actions/configure-pages@v6
+        if: github.ref == 'refs/heads/main'
+      - uses: actions/upload-pages-artifact@v5
+        if: github.ref == 'refs/heads/main'
+        with:
+          path: dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: focus
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy homepage
+        id: deployment
+        uses: actions/deploy-pages@v5
