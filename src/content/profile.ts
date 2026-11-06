@@ -432,15 +432,23 @@ export const profile = {
     {
       title: "Rail Energy",
       group: "tool",
+      origin: ["Over the past year, I’ve worked with power engineers and a client on load-flow studies for a railway network. I saw how easily the subject could become a black box for people without a power-engineering background. It was often hard to explain what was being modelled, why the study mattered, and which decisions its results could support.", "I built Rail Energy to make that reasoning easier to follow. The illustrated guide connects electrical behaviour with the train service people care about, and lets readers explore what changes when demand rises or a supply is unavailable. From there, they can try the live lab or inspect recorded simulations."],
       teaser: "Follow electricity through a railway, see how limited power can delay trains, and compare supply upgrades.",
       summary: "An illustrated introduction to load-flow and energy studies, with interactive teaching examples, a live browser lab and recorded synthetic railway simulations.",
       status: "public",
       featured: true,
       themes: ["rail energy", "DC traction power", "interactive experiments"],
       link: { label: "Read the illustrated guide", href: "https://haitaowu12.github.io/rail-energy-public-demo/learn.html" },
+      preview: {
+        src: "./project-previews/rail-energy-shared-supply-2026-11-06.webp",
+        smallSrc: "./project-previews/rail-energy-shared-supply-2026-11-06-720.webp",
+        alt: "Rail Energy guide showing three separate trains sharing a DC power section, with one substation isolated and calculated train voltages",
+        width: 843,
+        height: 469,
+      },
       resources: [
         { label: "Try the live lab", href: "https://haitaowu12.github.io/rail-energy-public-demo/lab.html" },
-        { label: "Explore recorded simulations", href: "https://haitaowu12.github.io/rail-energy-public-demo/" },
+        { label: "Explore recorded simulations", href: "https://haitaowu12.github.io/rail-energy-public-demo/explorer.html" },
       ],
     },
     {

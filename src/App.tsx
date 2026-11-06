@@ -181,7 +181,7 @@ function App() {
     };
   }, []);
 
-  return <PreviewProvider projects={[...studyProjects, ...anatomyProjects, atlasProject, ...indexedProjects, learningSpotlight]}>
+  return <PreviewProvider projects={[...studyProjects, railEnergyProject, ...anatomyProjects, atlasProject, ...indexedProjects, learningSpotlight]}>
     <a className="skip-link" href="#main-content">Skip to content</a>
     <nav className="site-nav" aria-label="Page sections">
       <a className="site-nav__brand" href="#top" aria-current={activeSection === "top" ? "location" : undefined} onClick={(event) => { navigateToSection(event); setMenuOpen(false); }}>Tony Wu</a>
@@ -244,14 +244,15 @@ function App() {
               <details className="inline-details"><summary>{project.title === "RAMS Workbench" ? "About the project" : "Study scope & limits"}</summary><p>{project.summary}</p></details>
             </div>
           </article>)}
+          <article className="project-entry study-entry study-entry--compact" id="rail-energy" tabIndex={-1}>
+            <header className="project-entry__heading"><h3>{railEnergyProject.title}</h3><p>{railEnergyProject.teaser}</p></header>
+            <ProjectPreview project={railEnergyProject} sizes="(max-width: 700px) calc(100vw - 40px), min(48vw, 620px)" />
+            <div className="project-entry__body">
+              <div className="project-actions">{railEnergyProject.link && <a className="text-link" href={railEnergyProject.link.href}>{railEnergyProject.link.label}</a>}{railEnergyProject.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
+              <details className="inline-details"><summary>Why I built Rail Energy</summary>{railEnergyProject.origin?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</details>
+            </div>
+          </article>
         </div>
-          <div className="project-index">
-            <article id="rail-energy" tabIndex={-1}>
-              <header className="project-index__heading"><h3>{railEnergyProject.title}</h3></header>
-              <div className="project-index__body"><p>{railEnergyProject.teaser}</p><div className="project-actions">{railEnergyProject.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div></div>
-              {railEnergyProject.link && <a className="text-link" href={railEnergyProject.link.href}>{railEnergyProject.link.label}</a>}
-            </article>
-          </div>
         </section>
 
         <section className="anatomy-work" id="anatomy" aria-labelledby="anatomy-title" tabIndex={-1}>

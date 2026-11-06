@@ -131,7 +131,7 @@ test("bounded project previews support browsing and full-size image navigation",
   }
   if (testInfo.project.use.viewport!.width <= 700) {
     // A visitor must identify the project before encountering its interface.
-    for (const id of ["rams-workbench", "railclear", "railway-anatomy", "engine-anatomy", "world-atlas", "asterfall"]) {
+    for (const id of ["rams-workbench", "railclear", "rail-energy", "railway-anatomy", "engine-anatomy", "world-atlas", "asterfall"]) {
       const entry = page.locator(`#${id}`);
       const heading = await entry.locator("h3").first().boundingBox();
       const image = await entry.locator(".project-preview img").boundingBox();
@@ -155,7 +155,7 @@ test("bounded project previews support browsing and full-size image navigation",
     expect(scan.anatomyPaired).toBe(true);
     expect(scan.leadSeparated).toBe(true);
   }
-  for (const title of ["World History Atlas", "RailClear", "RAMS Workbench", "SE Learning Quest"]) {
+  for (const title of ["World History Atlas", "RailClear", "RAMS Workbench", "Rail Energy", "SE Learning Quest"]) {
     const link = page.getByRole("link", { name: `View full screenshot: ${title}`, exact: true });
     await expect(link).toHaveAttribute("href", /^\.\/project-previews\/.*\.(?:webp|jpg)$/);
     await link.scrollIntoViewIfNeeded();
