@@ -22,12 +22,12 @@ test('personal identity, public links and responsive content remain usable', asy
   await expect(atlas.getByRole('heading', { name: /World History Atlas/ })).toBeVisible();
   await expect(modeling.getByRole('heading', { name: 'Modeling Lab', exact: true })).toBeVisible();
   await expect(play.getByRole('heading', { name: 'Asterfall: The Last Relay', exact: true })).toBeVisible();
-  await expect(atlas.getByRole('link', { name: 'Explore World Atlas', exact: true })).toHaveAttribute('href', 'https://world-history-atlas-tony.techiesea.chatgpt.site/');
-  await expect(modeling.getByRole('link', { name: 'Open Modeling Lab', exact: true })).toHaveAttribute('href', 'https://haitaowu12.github.io/sysmlv2_viewer/');
-  await expect(play.getByRole('link', { name: 'Play Asterfall', exact: true })).toHaveAttribute('href', 'https://haitaowu12.github.io/SE-Learning-Quest/');
+  await expect(atlas.getByRole('link', { name: 'Explore World Atlas', exact: true })).toHaveAttribute('href', 'https://world-history-atlas-guide.web.app/');
+  await expect(modeling.getByRole('link', { name: 'Open Modeling Lab', exact: true })).toHaveAttribute('href', 'https://modeling-lab.web.app/');
+  await expect(play.getByRole('link', { name: 'Play Asterfall', exact: true })).toHaveAttribute('href', 'https://asterfall.web.app/');
   for (const [name, slug] of [['Railway Anatomy', 'railway-anatomy'], ['Engine Anatomy', 'engine-anatomy']]) {
     const entry = page.locator(`#${slug}`);
-    await expect(entry.getByRole('link', { name: `Explore ${name}`, exact: true })).toHaveAttribute('href', `https://haitaowu12.github.io/${slug}/`);
+    await expect(entry.getByRole('link', { name: `Explore ${name}`, exact: true })).toHaveAttribute('href', `https://${slug}.web.app/`);
     const image = entry.locator('img');
     await image.scrollIntoViewIfNeeded();
     await expect.poll(() => image.evaluate(element => (element as HTMLImageElement).complete && (element as HTMLImageElement).naturalWidth > 0)).toBe(true);

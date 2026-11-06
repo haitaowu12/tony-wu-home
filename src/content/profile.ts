@@ -208,7 +208,7 @@ export const profile = {
         "World History Atlas connects histories, places, lives, and sources in English and Chinese. Asterfall explores systems thinking through story and consequences; Personal Growth Copilot adds practice and reflection.",
       link: {
         label: "Explore Asterfall",
-        href: "https://haitaowu12.github.io/SE-Learning-Quest/",
+        href: "https://asterfall.web.app/",
       },
     },
   ] satisfies FieldNote[],
@@ -280,7 +280,7 @@ export const profile = {
       status: "public",
       featured: true,
       themes: ["history & geography", "connected lives", "English / 中文"],
-      link: { label: "Explore World Atlas", href: "https://world-history-atlas-tony.techiesea.chatgpt.site/" },
+      link: { label: "Explore World Atlas", href: "https://world-history-atlas-guide.web.app/" },
       preview: {
         src: "./project-previews/world-history-atlas-vermilion-2026-11-01.webp",
         smallSrc: "./project-previews/world-history-atlas-vermilion-2026-11-01-720.webp",
@@ -299,11 +299,11 @@ export const profile = {
       featured: true,
       availabilityLabel: "Public · v10.2.0 · Illustrated railway studies",
       themes: ["railway systems", "illustrated assemblies", "guided learning"],
-      link: { label: "Explore Railway Anatomy", href: "https://haitaowu12.github.io/railway-anatomy/" },
+      link: { label: "Explore Railway Anatomy", href: "https://railway-anatomy.web.app/" },
       resources: [
-        { label: "Follow wheels through a turnout", href: "https://haitaowu12.github.io/railway-anatomy/#learn/turnout-wheels" },
-        { label: "Follow a point machine", href: "https://haitaowu12.github.io/railway-anatomy/#learn/point-proof" },
-        { label: "Read the turnout guide", href: "https://haitaowu12.github.io/railway-anatomy/reading.html#guide-turnout-wheels" },
+        { label: "Follow wheels through a turnout", href: "https://railway-anatomy.web.app/#learn/turnout-wheels" },
+        { label: "Follow a point machine", href: "https://railway-anatomy.web.app/#learn/point-proof" },
+        { label: "Read the turnout guide", href: "https://railway-anatomy.web.app/reading.html#guide-turnout-wheels" },
       ],
       preview: {
         src: "./project-previews/railway-anatomy-turnout-2026-11-06.webp",
@@ -322,8 +322,8 @@ export const profile = {
       status: "public",
       featured: true,
       themes: ["engine architecture", "control response", "interactive models"],
-      link: { label: "Explore Engine Anatomy", href: "https://haitaowu12.github.io/engine-anatomy/" },
-      resources: [{ label: "Explore H175 mechanisms", href: "https://haitaowu12.github.io/engine-anatomy/h175.html" }],
+      link: { label: "Explore Engine Anatomy", href: "https://engine-anatomy.web.app/" },
+      resources: [{ label: "Explore H175 mechanisms", href: "https://engine-anatomy.web.app/h175.html" }],
       preview: {
         src: "./project-previews/engine-anatomy-5-0-1-2026-11-01.webp",
         smallSrc: "./project-previews/engine-anatomy-5-0-1-2026-11-01-720.webp",
@@ -341,7 +341,7 @@ export const profile = {
       status: "public",
       featured: true,
       themes: ["rail energy", "DC traction power", "interactive experiments"],
-      link: { label: "Read the illustrated guide", href: "https://haitaowu12.github.io/rail-energy-public-demo/learn.html" },
+      link: { label: "Read the illustrated guide", href: "https://rail-energy.web.app/learn.html" },
       preview: {
         src: "./project-previews/rail-energy-shared-supply-2026-11-06.webp",
         smallSrc: "./project-previews/rail-energy-shared-supply-2026-11-06-720.webp",
@@ -350,8 +350,8 @@ export const profile = {
         height: 469,
       },
       resources: [
-        { label: "Try the live lab", href: "https://haitaowu12.github.io/rail-energy-public-demo/lab.html" },
-        { label: "Explore recorded simulations", href: "https://haitaowu12.github.io/rail-energy-public-demo/explorer.html" },
+        { label: "Try the live lab", href: "https://rail-energy.web.app/lab.html" },
+        { label: "Explore recorded simulations", href: "https://rail-energy.web.app/explorer.html" },
       ],
     },
     {
@@ -362,7 +362,7 @@ export const profile = {
       status: "public",
       featured: true,
       themes: ["INCOSE TIW 2026", "tailoring", "infrastructure SE"],
-      link: { label: "Open", href: "https://haitaowu12.github.io/SE_Tailoring_Framework/" },
+      link: { label: "Open", href: "https://se-tailoring-model.web.app/" },
       preview: {
         src: "./project-previews/se-tailoring-2026-11-01.webp",
         smallSrc: "./project-previews/se-tailoring-2026-11-01-720.webp",
@@ -381,7 +381,7 @@ export const profile = {
       featured: true,
       availabilityLabel: "Browser prototype",
       themes: ["SysML v2", "engineering & stakeholder views", "source-grounded models"],
-      link: { label: "Open Modeling Lab", href: "https://haitaowu12.github.io/sysmlv2_viewer/" },
+      link: { label: "Open Modeling Lab", href: "https://modeling-lab.web.app/" },
       preview: {
         src: "./project-previews/modeling-lab-2026-10-25.webp",
         smallSrc: "./project-previews/modeling-lab-2026-10-25-720.webp",
@@ -398,7 +398,7 @@ export const profile = {
         "Compare safe-braking distances for different train fleets, failures and route options. Inspect the governing cases and export calculation records.",
       status: "prototype",
       availabilityLabel: "Prototype",
-      link: { label: "Open RailClear", href: "https://haitaowu12.github.io/railclear-pages/" },
+      link: { label: "Open RailClear", href: "https://railclear.web.app/" },
       featured: true,
       themes: ["safe-braking models", "railway safety-distance studies", "mixed-fleet comparison"],
       preview: {
@@ -418,10 +418,10 @@ export const profile = {
       status: "prototype",
       availabilityLabel: "Prototype",
       resources: [
-        { label: "Read the user guide", href: "https://haitaowu12.github.io/rams-workbench-pages/guide/" },
-        { label: "Watch the walkthrough · 5:52", href: "https://haitaowu12.github.io/rams-workbench-pages/guide/#walkthrough" },
+        { label: "Read the user guide", href: "https://rams-workbench.web.app/guide/" },
+        { label: "Watch the walkthrough · 5:52", href: "https://rams-workbench.web.app/guide/#walkthrough" },
       ],
-      link: { label: "Open RAMS Workbench", href: "https://haitaowu12.github.io/rams-workbench-pages/" },
+      link: { label: "Open RAMS Workbench", href: "https://rams-workbench.web.app/" },
       featured: true,
       themes: ["hazard analysis", "RAM studies", "evidence traceability"],
       preview: {
@@ -440,7 +440,7 @@ export const profile = {
       status: "public",
       featured: true,
       themes: ["technical leadership", "practical methods", "source-backed guidance"],
-      link: { label: "Explore Leadership Toolbox", href: "https://haitaowu12.github.io/leadership-toolbox/" },
+      link: { label: "Explore Leadership Toolbox", href: "https://leadership-toolbox.web.app/" },
     },
     {
       title: "SE Learning Quest",
@@ -451,7 +451,7 @@ export const profile = {
       status: "public",
       featured: true,
       themes: ["systems thinking", "story-driven learning", "lifecycle decisions"],
-      link: { label: "Play Asterfall", href: "https://haitaowu12.github.io/SE-Learning-Quest/" },
+      link: { label: "Play Asterfall", href: "https://asterfall.web.app/" },
       preview: {
         src: "./project-previews/asterfall-2026-10-25.webp",
         smallSrc: "./project-previews/asterfall-2026-10-25-720.webp",
@@ -472,7 +472,7 @@ export const profile = {
       themes: ["reflection", "source-grounded learning", "user-owned progress"],
       link: {
         label: "Try the lesson and explore the skill",
-        href: "https://haitaowu12.github.io/personal-growth-copilot/",
+        href: "https://personal-growth-copilot.web.app/",
       },
     },
     {
@@ -511,7 +511,7 @@ export const profile = {
       status: "prototype",
       featured: true,
       themes: ["technical leadership", "learning game", "facilitation"],
-      link: { label: "Open", href: "https://haitaowu12.github.io/TLI_Shared_Model_game/" },
+      link: { label: "Open", href: "https://shared-model-game.web.app/" },
     },
     {
       title: "FOCAL POINT: Hold the Vision",
@@ -522,7 +522,7 @@ export const profile = {
       status: "public",
       featured: true,
       themes: ["systems thinking", "workshop game", "shared vision"],
-      link: { label: "Open", href: "https://haitaowu12.github.io/Focal-Point-Game/" },
+      link: { label: "Open", href: "https://focal-point-game.web.app/" },
     },
   ] satisfies SelectedProject[],
   publications: [
