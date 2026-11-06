@@ -155,7 +155,7 @@ test("bounded project previews support browsing and full-size image navigation",
     expect(scan.anatomyPaired).toBe(true);
     expect(scan.leadSeparated).toBe(true);
   }
-  for (const title of ["World History Atlas", "RailClear", "RAMS Workbench"]) {
+  for (const title of ["World History Atlas", "RailClear", "RAMS Workbench", "Rail Energy"]) {
     const link = page.getByRole("link", { name: `View full screenshot: ${title}`, exact: true });
     await expect(link).toHaveAttribute("href", /^\.\/project-previews\/.*\.(?:webp|jpg)$/);
     await link.scrollIntoViewIfNeeded();
