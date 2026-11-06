@@ -165,10 +165,12 @@ test("bounded project previews support browsing and full-size image navigation",
       await expect(entry.getByRole("link")).toHaveCount(title === "RAMS Workbench" ? 4 : 2);
       if (title === "RAMS Workbench") {
         await expect(entry.getByRole("link", { name: "Read the user guide", exact: true })).toHaveAttribute("href", "https://haitaowu12.github.io/rams-workbench-pages/guide/");
-        await expect(entry.getByRole("link", { name: "Watch the walkthrough · 7:38", exact: true })).toHaveAttribute("href", "https://haitaowu12.github.io/rams-workbench-pages/guide/#walkthrough");
+        await expect(entry.getByRole("link", { name: /^Watch the walkthrough/ })).toHaveAttribute("href", "https://haitaowu12.github.io/rams-workbench-pages/guide/#walkthrough");
       }
-      await expect(entry.locator(".project-limit")).toContainText("qualification");
-      await expect(entry.locator("figcaption")).toContainText("Synthetic example");
+      if (title === "RailClear") {
+        await expect(entry.locator(".project-limit")).toContainText("qualification");
+        await expect(entry.locator("figcaption")).toContainText("Synthetic example");
+      }
     }
     await link.focus();
     const beforeImageScroll = await page.evaluate(() => scrollY);

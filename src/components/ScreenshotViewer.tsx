@@ -89,7 +89,7 @@ export function PreviewProvider({ children, projects }: { children: ReactNode; p
             <button type="button" onClick={() => move(-1)} aria-label="Previous project">Previous</button>
             <button type="button" onClick={() => move(1)} aria-label="Next project">Next</button>
           </div>
-          <p id="viewer-caption">{preview.caption ?? "Interface preview"}</p>
+          {preview.caption && <p id="viewer-caption">{preview.caption}</p>}
           <button type="button" aria-pressed={zoomed} disabled={failed || !loaded} onClick={() => {
             setZoomed((value) => !value);
             surface.current?.scrollTo(0, 0);

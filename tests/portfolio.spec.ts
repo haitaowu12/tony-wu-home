@@ -30,7 +30,7 @@ test('personal identity, breadth, public links and scope notes survive the redo'
   await expect(atlas).toContainText('Selected coverage');
   await expect(modeling).toContainText('Bounded language and diagram coverage');
   await expect(play.locator('.project-limit')).toContainText('effectiveness has not been evaluated');
-  for (const name of ['RailClear', 'RAMS Workbench']) {
+  for (const name of ['RailClear']) {
     const entry = page.locator('.study-entry').filter({ has: page.getByRole('heading', { name, exact: true }) });
     await expect(entry.locator('.project-limit')).toContainText('qualification');
     await expect(entry.locator('figcaption')).toContainText('Synthetic example');

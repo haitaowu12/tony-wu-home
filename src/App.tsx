@@ -232,15 +232,15 @@ function App() {
         <header className="work-subheading"><h3 id="engineering-title">Engineering studies</h3><p>From an assumption to evidence you can review.</p></header>
         <div className="study-pair" role="group" aria-label="Engineering study tools">
           {studyProjects.map((project) => <article className={`project-entry study-entry${project.title === "RAMS Workbench" ? " study-entry--lead" : " study-entry--compact"}`} id={project.title === "RAMS Workbench" ? "rams-workbench" : "railclear"} key={project.title}>
-            <header className="project-entry__heading">{project.title === "RAMS Workbench" && <p className="release-note">Latest release · November 2026</p>}<h3>{project.title}</h3>
-              <p className="feature-dek">{project.title === "RailClear" ? "Safe-braking studies" : "Hazards, reliability & evidence"}</p>
+            <header className="project-entry__heading"><h3>{project.title}</h3>
+              {project.title === "RailClear" && <p className="feature-dek">Safe-braking studies</p>}
               <p>{project.teaser}</p>
             </header>
             <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(48vw, 620px)" />
             <div className="project-entry__body"><p className="availability">{project.availabilityLabel}</p>
               <div className="project-actions">{project.link && <a className={project.title === "RAMS Workbench" ? "project-open" : "text-link"} href={project.link.href}>{project.link.label}</a>}{project.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
-              <p className="project-limit">{project.title === "RailClear" ? "Outputs require project-specific engineering qualification." : "Single-user study prototype; engineering qualification remains open."}</p>
-              <details className="inline-details"><summary>Study scope &amp; limits</summary><p>{project.summary}</p></details>
+              {project.title === "RailClear" && <p className="project-limit">Outputs require project-specific engineering qualification.</p>}
+              <details className="inline-details"><summary>{project.title === "RAMS Workbench" ? "About the project" : "Study scope & limits"}</summary><p>{project.summary}</p></details>
             </div>
           </article>)}
         </div>
