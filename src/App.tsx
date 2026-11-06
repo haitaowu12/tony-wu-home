@@ -13,7 +13,7 @@ const navItems = [
 const sectionIds = ["top", "work", "playground", "about", "writing", "contact"];
 const navSection = (id: string) => {
   if (["practice", "experience"].includes(id)) return "about";
-  if (["world-atlas", "modeling-lab", "railway-anatomy", "engine-anatomy", "anatomy", "engineering-studies", "collections", "rams-workbench", "railclear"].includes(id)) return "work";
+  if (["world-atlas", "modeling-lab", "railway-anatomy", "engine-anatomy", "anatomy", "engineering-studies", "collections", "rams-workbench", "railclear", "rail-energy"].includes(id)) return "work";
   if (id === "asterfall") return "playground";
   return id;
 };
@@ -24,6 +24,7 @@ const spotlightProject = featuredProjects.find((project) => project.title === pr
 const atlasProject = featuredProjects.find((project) => project.group === "atlas")!;
 const modelingProject = featuredProjects.find((project) => project.title === "Modeling Lab")!;
 const studyProjects = featuredProjects.filter((project) => project.title === "RailClear" || project.title === "RAMS Workbench").sort((a) => a.title === "RAMS Workbench" ? -1 : 1);
+const railEnergyProject = featuredProjects.find((project) => project.title === "Rail Energy")!;
 const anatomyProjects = featuredProjects.filter((project) => project.group === "anatomy");
 const indexedProjects = [modelingProject, spotlightProject, featuredProjects.find((project) => project.title === "Leadership Toolbox")!];
 const learningProjects = featuredProjects.filter((project) => project.group === "learning");
@@ -244,6 +245,13 @@ function App() {
             </div>
           </article>)}
         </div>
+          <div className="project-index">
+            <article id="rail-energy" tabIndex={-1}>
+              <header className="project-index__heading"><h3>{railEnergyProject.title}</h3></header>
+              <div className="project-index__body"><p>{railEnergyProject.teaser}</p><div className="project-actions">{railEnergyProject.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div></div>
+              {railEnergyProject.link && <a className="text-link" href={railEnergyProject.link.href}>{railEnergyProject.link.label}</a>}
+            </article>
+          </div>
         </section>
 
         <section className="anatomy-work" id="anatomy" aria-labelledby="anatomy-title" tabIndex={-1}>

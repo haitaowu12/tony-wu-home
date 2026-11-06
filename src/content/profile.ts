@@ -430,6 +430,20 @@ export const profile = {
       },
     },
     {
+      title: "Rail Energy",
+      group: "tool",
+      teaser: "Follow electricity through a railway, see how limited power can delay trains, and compare supply upgrades.",
+      summary: "An illustrated introduction to load-flow and energy studies, with interactive teaching examples, a live browser lab and recorded synthetic railway simulations.",
+      status: "public",
+      featured: true,
+      themes: ["rail energy", "DC traction power", "interactive experiments"],
+      link: { label: "Read the illustrated guide", href: "https://haitaowu12.github.io/rail-energy-public-demo/learn.html" },
+      resources: [
+        { label: "Try the live lab", href: "https://haitaowu12.github.io/rail-energy-public-demo/lab.html" },
+        { label: "Explore recorded simulations", href: "https://haitaowu12.github.io/rail-energy-public-demo/" },
+      ],
+    },
+    {
       title: "SE Tailoring Model",
       group: "tool",
       summary:
