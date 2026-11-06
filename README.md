@@ -6,7 +6,7 @@ This is a static Vite + React + TypeScript site. It is designed as the canonical
 
 ## Anatomy projects
 
-The Inside the system section introduces Railway Anatomy and Engine Anatomy with their current illustrated views and the personal stories behind them. Engine Anatomy connects my early Pratt & Whitney Canada controls work with learning alongside my daughter, including our LEGO H175 model. Railway Anatomy grew from helping people understand the railway systems and interfaces they encounter in practice. The Railway Anatomy entry links directly to the four-rod point-machine journey and its field guide. The project repositories retain their technical explanations and model scope.
+The Inside the system section introduces Railway Anatomy and Engine Anatomy with their current illustrated views and the personal stories behind them. Engine Anatomy connects my early Pratt & Whitney Canada controls work with learning alongside my daughter, including our LEGO H175 model. Railway Anatomy grew from helping people understand the railway systems and interfaces they encounter in practice. The Railway Anatomy entry connects the point-machine journey to both wheel paths through a turnout, with a crossing close-up and a matching field guide. The project repositories retain their technical explanations and model scope.
 
 ## Run
 
