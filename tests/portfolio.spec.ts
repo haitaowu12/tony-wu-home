@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 // These checks protect explicit content/behavior decisions, not aesthetic quality.
-test('personal identity, breadth, public links and scope notes survive the redo', async ({ page }, info) => {
+test('personal identity, public links and responsive content remain usable', async ({ page }, info) => {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
@@ -10,9 +10,7 @@ test('personal identity, breadth, public links and scope notes survive the redo'
   await expect(page.locator('#hero-title')).toHaveText('Tony Wu.');
   await expect(page.locator('.hero__visual img')).toHaveAttribute('src', './hero-practice-story.webp');
   await expect(page.locator('.hero__copy')).toContainText('aircraft engines to rail networks');
-  for (const name of ['Models', 'History', 'Play']) await expect(page.locator('.desk-links').getByRole('link', { name, exact: true })).toBeVisible();
-  // Retain uncropped evidence and usable phone actions.
-  await expect(page.locator('.learning-feature .project-preview img')).toHaveCSS('object-fit', 'contain');
+  for (const name of ['Models', 'History', 'Learning']) await expect(page.locator('.desk-links').getByRole('link', { name, exact: true })).toBeVisible();
   const width = info.project.use.viewport!.width;
   if (width >= 375 && width <= 414) {
     const actions = await page.locator('.hero__actions a').evaluateAll(links => links.map(link => link.getBoundingClientRect().top));
@@ -27,14 +25,6 @@ test('personal identity, breadth, public links and scope notes survive the redo'
   await expect(atlas.getByRole('link', { name: 'Explore World Atlas', exact: true })).toHaveAttribute('href', 'https://world-history-atlas-tony.techiesea.chatgpt.site/');
   await expect(modeling.getByRole('link', { name: 'Open Modeling Lab', exact: true })).toHaveAttribute('href', 'https://haitaowu12.github.io/sysmlv2_viewer/');
   await expect(play.getByRole('link', { name: 'Play Asterfall', exact: true })).toHaveAttribute('href', 'https://haitaowu12.github.io/SE-Learning-Quest/');
-  await expect(atlas).toContainText('Selected coverage');
-  await expect(modeling).toContainText('Bounded language and diagram coverage');
-  await expect(play.locator('.project-limit')).toContainText('effectiveness has not been evaluated');
-  for (const name of ['RailClear', 'RAMS Workbench']) {
-    const entry = page.locator('.study-entry').filter({ has: page.getByRole('heading', { name, exact: true }) });
-    await expect(entry.locator('.project-limit')).toContainText('qualification');
-    await expect(entry.locator('figcaption')).toContainText('Synthetic example');
-  }
   for (const [name, slug] of [['Railway Anatomy', 'railway-anatomy'], ['Engine Anatomy', 'engine-anatomy']]) {
     const entry = page.locator(`#${slug}`);
     await expect(entry.getByRole('link', { name: `Explore ${name}`, exact: true })).toHaveAttribute('href', `https://haitaowu12.github.io/${slug}/`);

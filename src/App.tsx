@@ -7,13 +7,13 @@ const navItems = [
   { id: "work", label: "Projects" },
   { id: "playground", label: "Playground" },
   { id: "about", label: "About" },
-  { id: "writing", label: "Writing" },
+  { id: "writing", label: "Research" },
   { id: "contact", label: "Contact" },
 ];
 const sectionIds = ["top", "work", "playground", "about", "writing", "contact"];
 const navSection = (id: string) => {
   if (["practice", "experience"].includes(id)) return "about";
-  if (["world-atlas", "modeling-lab", "railway-anatomy", "engine-anatomy", "anatomy", "engineering-studies", "collections", "rams-workbench", "railclear"].includes(id)) return "work";
+  if (["world-atlas", "modeling-lab", "railway-anatomy", "engine-anatomy", "anatomy", "engineering-studies", "collections", "rams-workbench", "railclear", "rail-energy"].includes(id)) return "work";
   if (id === "asterfall") return "playground";
   return id;
 };
@@ -24,11 +24,12 @@ const spotlightProject = featuredProjects.find((project) => project.title === pr
 const atlasProject = featuredProjects.find((project) => project.group === "atlas")!;
 const modelingProject = featuredProjects.find((project) => project.title === "Modeling Lab")!;
 const studyProjects = featuredProjects.filter((project) => project.title === "RailClear" || project.title === "RAMS Workbench").sort((a) => a.title === "RAMS Workbench" ? -1 : 1);
+const railEnergyProject = featuredProjects.find((project) => project.title === "Rail Energy")!;
 const anatomyProjects = featuredProjects.filter((project) => project.group === "anatomy");
 const indexedProjects = [modelingProject, spotlightProject, featuredProjects.find((project) => project.title === "Leadership Toolbox")!];
 const learningProjects = featuredProjects.filter((project) => project.group === "learning");
-const learningSpotlight = learningProjects.find((project) => project.title === "SE Learning Quest")!;
-const learningExperiments = learningProjects.filter((project) => project !== learningSpotlight);
+const asterfall = learningProjects.find((project) => project.title === "SE Learning Quest")!;
+const learningExperiments = learningProjects.filter((project) => project !== asterfall);
 const publishedNote = profile.fieldNotes[0]!;
 const developingNotes = profile.fieldNotes.slice(1);
 const otherPublications = profile.publications.filter((item) => item.title !== publishedNote.title);
@@ -50,7 +51,6 @@ function ProjectPreview({ project, sizes, className = "" }: { project: SelectedP
         loading="lazy" decoding="async" alt={preview.alt} />
       <span>Enlarge screenshot</span>
     </a>
-    {preview.caption && <figcaption>{preview.caption}</figcaption>}
   </figure>;
 }
 
@@ -180,7 +180,7 @@ function App() {
     };
   }, []);
 
-  return <PreviewProvider projects={[...studyProjects, ...anatomyProjects, atlasProject, ...indexedProjects, learningSpotlight]}>
+  return <PreviewProvider projects={[...studyProjects, railEnergyProject, ...anatomyProjects, atlasProject, ...indexedProjects]}>
     <a className="skip-link" href="#main-content">Skip to content</a>
     <nav className="site-nav" aria-label="Page sections">
       <a className="site-nav__brand" href="#top" aria-current={activeSection === "top" ? "location" : undefined} onClick={(event) => { navigateToSection(event); setMenuOpen(false); }}>Tony Wu</a>
@@ -212,70 +212,73 @@ function App() {
               srcSet="./hero-practice-story-720.webp 720w, ./hero-practice-story-1080.webp 1080w, ./hero-practice-story.webp 1448w"
               sizes="(max-width: 700px) calc(100vw - 40px), min(53vw, 680px)"
               width="1448" height="1086" fetchPriority="high" decoding="async"
-              alt="Illustrated workspace with aerospace and rail sketches, a modeling laptop, leadership notes, a history map, and the Asterfall game beside a Vancouver window" />
+              alt="Illustrated workspace with aerospace and rail sketches, a modeling laptop, leadership notes, a history map, and a game beside a Vancouver window" />
           </div>
           <figcaption className="desk-links"><span>Explore the desk</span>
             <a href="#modeling-lab">Models</a>
             <a href="#world-atlas">History</a>
-            <a href="#asterfall">Play</a>
+            <a href="#playground">Learning</a>
           </figcaption>
         </figure>
       </section>
 
       <section className="section work" id="work" aria-labelledby="work-title" tabIndex={-1}>
         <header className="section-heading section-heading--work">
-          <div><p className="section-kicker">Selected projects</p><h2 id="work-title">A few things I’ve made.</h2></div>
-          <p>Practical tools, connected histories, and games that turn questions into experiences.</p>
+          <h2 id="work-title">A few things I’ve made.</h2>
         </header>
         <nav className="project-paths" aria-label="Explore projects by interest"><a onClick={navigateToSection} href="#engineering-studies">Engineering studies</a><a onClick={navigateToSection} href="#anatomy">Inside the system</a><a onClick={navigateToSection} href="#collections">Maps, models &amp; stories</a><a onClick={navigateToSection} href="#playground">Learning through play</a></nav>
         <section className="engineering-work" id="engineering-studies" tabIndex={-1} aria-labelledby="engineering-title">
-        <header className="work-subheading"><h3 id="engineering-title">Engineering studies</h3><p>From an assumption to evidence you can review.</p></header>
+        <header className="work-subheading"><h3 id="engineering-title">Engineering studies</h3></header>
         <div className="study-pair" role="group" aria-label="Engineering study tools">
           {studyProjects.map((project) => <article className={`project-entry study-entry${project.title === "RAMS Workbench" ? " study-entry--lead" : " study-entry--compact"}`} id={project.title === "RAMS Workbench" ? "rams-workbench" : "railclear"} key={project.title}>
-            <header className="project-entry__heading">{project.title === "RAMS Workbench" && <p className="release-note">Latest release · November 2026</p>}<h3>{project.title}</h3>
-              <p className="feature-dek">{project.title === "RailClear" ? "Safe-braking studies" : "Hazards, reliability & evidence"}</p>
+            <header className="project-entry__heading"><h3>{project.title}</h3>
               <p>{project.teaser}</p>
             </header>
             <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(48vw, 620px)" />
             <div className="project-entry__body"><p className="availability">{project.availabilityLabel}</p>
-              <div className="project-actions">{project.link && <a className={project.title === "RAMS Workbench" ? "project-open" : "text-link"} href={project.link.href}>{project.link.label}</a>}{project.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
-              <p className="project-limit">{project.title === "RailClear" ? "Outputs require project-specific engineering qualification." : "Single-user study prototype; engineering qualification remains open."}</p>
-              <details className="inline-details"><summary>Study scope &amp; limits</summary><p>{project.summary}</p></details>
+              <div className="project-actions">{project.link && <a className="text-link" href={project.link.href}>{project.link.label}</a>}{project.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
+              <details className="inline-details"><summary>About the project</summary><p>{project.summary}</p></details>
             </div>
           </article>)}
+          <article className="project-entry study-entry study-entry--compact" id="rail-energy" tabIndex={-1}>
+            <header className="project-entry__heading"><h3>{railEnergyProject.title}</h3><p>{railEnergyProject.teaser}</p></header>
+            <ProjectPreview project={railEnergyProject} sizes="(max-width: 700px) calc(100vw - 40px), min(48vw, 620px)" />
+            <div className="project-entry__body">
+              <div className="project-actions">{railEnergyProject.link && <a className="text-link" href={railEnergyProject.link.href}>{railEnergyProject.link.label}</a>}{railEnergyProject.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
+              <details className="inline-details"><summary>Why I built Rail Energy</summary>{railEnergyProject.origin?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</details>
+            </div>
+          </article>
         </div>
         </section>
 
         <section className="anatomy-work" id="anatomy" aria-labelledby="anatomy-title" tabIndex={-1}>
-          <header className="work-subheading"><h3 id="anatomy-title">Inside the system</h3><p>Illustrated studies of railway systems, engines and working mechanisms.</p></header>
+          <header className="work-subheading"><h3 id="anatomy-title">Inside the system</h3></header>
           <div className="study-pair anatomy-pair">
             {anatomyProjects.map((project) => <article className="project-entry study-entry" id={project.title === "Railway Anatomy" ? "railway-anatomy" : "engine-anatomy"} key={project.title}>
               <header className="project-entry__heading"><h3>{project.title}</h3><p>{project.teaser}</p></header>
               <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(44vw, 600px)" />
               <div className="project-entry__body">
-                <p className="availability">{project.availabilityLabel}</p>
                 <div className="project-actions">{project.link && <a className="text-link" href={project.link.href}>{project.link.label}</a>}{project.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
-                <details className="inline-details"><summary>About this project</summary>{project.origin?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}<p>{project.summary}</p></details>
+                <details className="inline-details"><summary>About this project</summary>{project.origin?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</details>
               </div>
             </article>)}
           </div>
         </section>
 
         <section className="collections-work" id="collections" tabIndex={-1} aria-labelledby="collections-title">
-        <header className="work-subheading"><h3 id="collections-title">Maps, models &amp; stories</h3><p>Different ways into a complex world.</p></header>
+        <header className="work-subheading"><h3 id="collections-title">Maps, models &amp; stories</h3></header>
         <div className="featured-work">
           <article className="atlas-feature" id="world-atlas" tabIndex={-1} aria-labelledby="atlas-title">
-            <header className="atlas-feature__heading"><p className="type-label">History &amp; geography</p>
+            <header className="atlas-feature__heading">
               <h3 id="atlas-title">{atlasProject.title}<span className="feature-name-note" lang="zh">{atlasProject.chineseTitle}</span></h3>
               <p>Read a history beside its map. Compare regions on a shared timeline—in English and Chinese.</p>
             </header>
             <ProjectPreview project={atlasProject} sizes="(max-width: 700px) calc(100vw - 40px), min(51vw, 660px)" />
             <div className="atlas-feature__body">
-              <p className="availability">{atlasProject.availabilityLabel} · Selected coverage</p>
               {atlasProject.link && <a className="text-link" href={atlasProject.link.href}>{atlasProject.link.label}</a>}
-              <details className="inline-details"><summary>How the atlas grew</summary><p>{atlasProject.summary}</p><p>{profile.atlasStory.basis}</p>
-                <a className="text-link" href="https://haitaowu12.github.io/world-history-atlas/">GitHub Pages mirror</a>
-                <a className="text-link" href={profile.atlasStory.source.href}>{profile.atlasStory.source.label}</a>
+              <details className="inline-details"><summary>How the atlas grew</summary><p>{profile.atlasStory.basis}</p>
+                <div className="project-actions"><a className="text-link" href="https://haitaowu12.github.io/world-history-atlas/">GitHub Pages mirror</a>
+                  <a className="text-link" href={profile.atlasStory.source.href}>{profile.atlasStory.source.label}</a></div>
               </details>
             </div>
           </article>
@@ -285,9 +288,9 @@ function App() {
 
         <div className="project-index" role="group" aria-label="More selected work">
           {indexedProjects.map((project) => <article key={project.title} id={project === modelingProject ? "modeling-lab" : undefined} tabIndex={project === modelingProject ? -1 : undefined}>
-            <header className="project-index__heading"><h3>{project.title}</h3><p className="availability">{project === modelingProject ? "Browser prototype · Bounded language and diagram coverage" : project === spotlightProject ? "Research with Cleo Wong" : (project.availabilityLabel ?? statusLabels[project.status])}</p></header>
-            <div className="project-index__body"><p>{project === modelingProject ? "Open a SysML v2 model. Explore its structure, review changes, and share a reader." : project === spotlightProject ? "Assess project drivers, inspect process recommendations, record decisions and prepare a report. Developed with Cleo Wong; research evaluation is in progress." : project.teaser}</p>
-              <details className="inline-details"><summary>{project === spotlightProject ? "The tailoring approach" : project.preview ? "Interface & project details" : "About the project"}</summary><p>{project.summary}</p>
+            <header className="project-index__heading"><h3>{project.title}</h3>{(project === modelingProject || project === spotlightProject) && <p className="availability">{project === modelingProject ? "Browser prototype" : "Research with Cleo Wong"}</p>}</header>
+            <div className="project-index__body"><p>{project === modelingProject ? "Open a SysML v2 model. Explore its structure, review changes, and share a reader." : project === spotlightProject ? "Assess project drivers, inspect process recommendations, record decisions and prepare a report." : project.teaser}</p>
+              <details className="inline-details"><summary>{project === spotlightProject ? "The tailoring approach" : project.preview ? "Interface & project details" : "About the project"}</summary>{project !== spotlightProject && <p>{project.summary}</p>}
                 {project === spotlightProject && <div className="project-story__steps">{profile.featuredStory.steps.map((step) => <section key={step.label}><h4>{step.title}</h4><p>{step.text}</p></section>)}</div>}
                 {project.preview && <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(45vw, 560px)" />}
               </details>
@@ -295,28 +298,24 @@ function App() {
             {project.link && <a className="text-link" href={project.link.href}>{project.link.label === "Open" ? "Explore the tailoring tool" : project.link.label}</a>}
           </article>)}
         </div>
-        <details className="private-work"><summary>Unpublished experiments <span className="private-work__label">Local/private</span></summary>
-          <ul>{privateProjects.map((project) => <li key={project.title}><h3>{project.title}</h3><p>{project.summary}</p><span className="private-work__status">Local/private</span></li>)}</ul>
+        <details className="private-work"><summary>Unpublished experiments</summary>
+          <ul>{privateProjects.map((project) => <li key={project.title}><h3>{project.title}</h3><p>{project.summary}</p></li>)}</ul>
         </details>
       </section>
 
       <section className="section playground" id="playground" aria-labelledby="playground-title" tabIndex={-1}>
-        <header className="section-heading"><div><p className="section-kicker">Playground</p><h2 id="playground-title">Learning through play.</h2></div><p>Stories, exercises, and workshop games for exploring systems, leadership, and how people work together.</p></header>
-        <div className="playground-layout">
-          <article className="learning-feature" id="asterfall" tabIndex={-1} aria-labelledby="learning-title">
-            <header className="learning-feature__heading"><h3 id="learning-title">Asterfall: The Last Relay</h3><p>{learningSpotlight.teaser}</p></header>
-            <ProjectPreview project={learningSpotlight} sizes="(max-width: 700px) calc(100vw - 40px), min(58vw, 740px)" />
-            <div className="learning-feature__body"><p className="project-limit">{profile.learningStory.limitation}</p>
-              {learningSpotlight.link && <a className="text-link" href={learningSpotlight.link.href}>Play Asterfall</a>}
-              <details className="inline-details"><summary>The learning experiment</summary><p>{learningSpotlight.summary}</p><p>{profile.learningStory.summary}</p></details>
-            </div>
-          </article>
-          <div className="learning-experiments" role="group" aria-label="More learning experiments">
-            {learningExperiments.map((project) => <article key={project.title}><h3>{project.title}</h3><p className="availability">{project.availabilityLabel ?? statusLabels[project.status]}</p><p>{project.teaser}</p>
+        <header className="section-heading"><h2 id="playground-title">Learning through play.</h2><p>Stories, exercises, and workshop games for exploring systems, leadership, and how people work together.</p></header>
+        <div className="learning-experiments" role="group" aria-label="Learning experiments">
+            {learningExperiments.map((project) => <article key={project.title}><h3>{project.title}</h3>{project.status === "prototype" && <p className="availability">{project.availabilityLabel ?? statusLabels[project.status]}</p>}<p>{project.teaser}</p>
               <details className="inline-details"><summary>About the project</summary><p>{project.summary}</p></details>
               {project.link && <a className="text-link" href={project.link.href}>{project.link.label === "Open" ? "Try the game" : project.link.label}</a>}
             </article>)}
-          </div>
+          <article id="asterfall" tabIndex={-1}>
+            <h3>Asterfall: The Last Relay</h3>
+            <p className="availability">Game prototype</p>
+            <p>{asterfall.teaser}</p>
+            {asterfall.link && <a className="text-link" href={asterfall.link.href}>Play Asterfall</a>}
+          </article>
         </div>
       </section>
 
@@ -328,19 +327,18 @@ function App() {
           <ol className="career-thread" aria-label="My route into systems thinking">
             <li><h3>Aerospace controls</h3><p>Control logic, analysis models, and verification for engine programs.</p></li>
             <li><h3>Rail systems integration</h3><p>Requirements, interfaces, assurance, and readiness across rail programs.</p></li>
-            <li><h3>Tools, leadership &amp; learning</h3><p>Models, practical tools, writing, and experiences for learning.</p></li>
+            <li><h3>Tools, leadership &amp; learning</h3><p>Practical tools and experiences for learning.</p></li>
           </ol>
-          <details className="inline-details about-story"><summary>Current work &amp; community</summary>
-            <p>{profile.now.summary}</p><p>{profile.now.research}</p><p>{profile.proofPoints[0].value} {profile.proofPoints[0].label}</p>
-            <p>Director-at-Large / Past President, INCOSE Canada</p>
+          <details className="inline-details about-story"><summary>Professional community</summary>
+            <p>{profile.community}</p>
           </details>
           <details className="practice-compact" id="practice" aria-labelledby="practice-title"><summary id="practice-title">How I work</summary>
-            <div className="practice-essentials">{profile.practiceAreas.map((area) => <article key={area.title}><h4>{area.title}</h4><p>{area.summary}</p></article>)}</div>
-            <div className="supporting-details"><h4 className="detail-heading">Methods &amp; principles</h4>
-              <div className="practice-outcomes">{profile.practiceAreas.map((area) => <section key={area.title}><h4>{area.title}</h4><ul>{area.outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}</ul></section>)}</div>
-              <ol className="method-steps" aria-label="Method">{profile.methodSteps.map((step) => <li key={step.label}><span>{step.label}</span><h4>{step.title}</h4><p>{step.summary}</p></li>)}</ol>
-              <ul className="principle-grid" aria-label="Operating principles">{profile.operatingPrinciples.map((principle) => <li key={principle.title}><h4>{principle.title}</h4><p>{principle.summary}</p></li>)}</ul>
-            </div>
+            <ol className="practice-steps">
+              {profile.practice.map((step) => <li key={step.title}>
+                <h3>{step.title}</h3>
+                <p>{step.summary}</p>
+              </li>)}
+            </ol>
           </details>
           <details className="career-compact" id="experience" aria-labelledby="experience-title"><summary id="experience-title">Experience &amp; credentials</summary>
             <ol className="career-timeline">{profile.experienceChapters.map((chapter) => <li key={chapter.title}><span>{chapter.period}</span><p>{chapter.role}</p></li>)}</ol>
@@ -350,10 +348,9 @@ function App() {
           </details>
         </section>
         <section className="section writing" id="writing" aria-labelledby="writing-title" tabIndex={-1}>
-          <header className="section-heading"><h2 id="writing-title">Writing &amp; research.</h2></header>
-          <p className="writing-intro">Published papers and work in progress, from technical leadership to adapting transit systems.</p>
+          <header className="section-heading"><h2 id="writing-title">Research &amp; publications.</h2></header>
           <article className="published-feature" aria-labelledby="published-title"><div><p className="type-label">{publishedNote.status}</p><h3 id="published-title">{publishedNote.title}</h3></div>
-            <div><p>{publishedNote.summary}</p>{"link" in publishedNote && publishedNote.link && <a className="text-link" href={publishedNote.link.href}>{publishedNote.link.label}</a>}<p className="published-feature__citation">{profile.publications[0].status}</p></div>
+            <div>{"link" in publishedNote && publishedNote.link && <a className="text-link" href={publishedNote.link.href}>{publishedNote.link.label}</a>}<p className="published-feature__citation">{profile.publications[0].status}</p></div>
           </article>
           <div className="research-index"><details className="supporting-details"><summary>Research in progress <span>{developingNotes.length} papers &amp; practice threads</span></summary>
             <div className="research-entries">{developingNotes.map((note) => <article key={note.title}><p className="type-label">{note.status}</p><h4>{note.title}</h4><p>{note.summary}</p>{"link" in note && note.link && <a className="text-link" href={note.link.href}>{note.link.label}</a>}</article>)}</div>
@@ -361,9 +358,9 @@ function App() {
         </section>
       </div>
       <section className="contact" id="contact" aria-labelledby="contact-title" tabIndex={-1}>
-        <div><p className="section-kicker">Get in touch</p><h2 id="contact-title">Let’s compare notes.</h2></div>
-        <div><p>I welcome conversations about systems engineering, technical leadership, responsible AI, research, and learning. Start with a question, a project, or something you’re exploring.</p>
-          <div className="contact__links">{profile.links.map((link) => <a key={link.href} href={link.href}>Connect on {link.label}</a>)}<a href="https://github.com/haitaowu12">Explore my GitHub</a></div>
+        <div><h2 id="contact-title">Let’s compare notes.</h2></div>
+        <div><p>Working through a systems integration question, exploring responsible AI in engineering, or developing a learning idea? Send me a note on LinkedIn with a little context and what you’d like to explore together.</p>
+          <div className="contact__links">{profile.links.map((link) => <a key={link.href} href={link.href}>Contact me on {link.label}</a>)}<a href="https://github.com/haitaowu12">Explore my GitHub</a></div>
         </div>
       </section>
     </main>

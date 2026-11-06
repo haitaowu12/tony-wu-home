@@ -52,7 +52,6 @@ export function PreviewProvider({ children, projects }: { children: ReactNode; p
   return <PreviewContext.Provider value={(next) => { setSelection(next); setIsOpen(true); }}>
     {children}
     <dialog ref={dialog} className="image-viewer" aria-labelledby="viewer-title"
-      aria-describedby={preview?.caption ? "viewer-caption" : undefined}
       onClose={() => setIsOpen(false)}
       onKeyDown={(event) => {
         if (!zoomed && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
@@ -89,7 +88,6 @@ export function PreviewProvider({ children, projects }: { children: ReactNode; p
             <button type="button" onClick={() => move(-1)} aria-label="Previous project">Previous</button>
             <button type="button" onClick={() => move(1)} aria-label="Next project">Next</button>
           </div>
-          <p id="viewer-caption">{preview.caption ?? "Interface preview"}</p>
           <button type="button" aria-pressed={zoomed} disabled={failed || !loaded} onClick={() => {
             setZoomed((value) => !value);
             surface.current?.scrollTo(0, 0);

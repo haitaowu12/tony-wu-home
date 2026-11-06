@@ -25,8 +25,6 @@ export type SelectedProject = {
     /** Intrinsic pixel size, so the browser can reserve layout space. */
     width: number;
     height: number;
-    /** Explain the synthetic example shown, without implying app access. */
-    caption?: string;
   };
   availabilityLabel?: string;
   resources?: Link[];
@@ -43,23 +41,6 @@ export type Publication = {
 export type ProofPoint = {
   value: string;
   label: string;
-};
-
-export type PracticeArea = {
-  title: string;
-  summary: string;
-  outcomes: string[];
-};
-
-export type MethodStep = {
-  label: string;
-  title: string;
-  summary: string;
-};
-
-export type OperatingPrinciple = {
-  title: string;
-  summary: string;
 };
 
 export type FieldNote = {
@@ -110,18 +91,17 @@ export const profile = {
     title: "My route into systems thinking.",
     paragraphs: [
       "I started in aerospace controls, then moved into rail systems integration. Across models, interfaces, assurance, and readiness, I look for the connections that make a whole system work.",
-      "My work now connects engineering with technical leadership, responsible AI, writing, and learning. I build models, tools, and experiences that help people examine assumptions and make decisions.",
+      "My work now connects engineering with technical leadership, responsible AI, and learning. I build models, tools, and experiences that help people examine assumptions and make decisions.",
     ],
   },
   learningStory: {
     title: "What if a systems problem were an adventure?",
     summary: "Play Iona Vale, a keeper in training, across six island regions. Discover why working parts do not always make a working whole.",
     invitation: "Read the scene. Choose an action. Explore the consequences.",
-    limitation: "A learning experiment; its effectiveness has not been evaluated.",
   },
   atlasStory: {
     title: "A world of histories, side by side.",
-    basis: "I started this atlas while telling my daughter history stories: where did each story happen, and what was happening elsewhere? English and Chinese let us explore the wider world while staying connected to our Chinese heritage. Inspired by DeanChensj and the contributors to Jiangshan Map (江山时序), the atlas includes attributed adaptations of their work and is now independently maintained. Historical views and modern reference geography are labeled separately; coverage remains selective.",
+    basis: "I started this atlas while telling my daughter history stories: where did each story happen, and what was happening elsewhere? English and Chinese let us explore the wider world while staying connected to our Chinese heritage. Inspired by DeanChensj and the contributors to Jiangshan Map (江山时序), the atlas includes attributed adaptations of their work and is now independently maintained.",
     source: {
       label: "Project source and credits",
       href: "https://github.com/haitaowu12/world-history-atlas",
@@ -139,22 +119,16 @@ export const profile = {
       {
         label: "The approach",
         title: "Make the reasoning inspectable.",
-        text: "The framework connects project drivers with process rigor and interdependencies. I developed the tailoring approach with Cleo Wong and built a browser tool to explore it.",
+        text: "The framework connects project drivers with process rigor and interdependencies. I built a browser tool to explore the approach.",
       },
       {
         label: "The artifact",
         title: "A tool you can question.",
-        text: "Explore the assessment, inspect process recommendations, and review the guidance behind them. It is a research tool; evaluation of the method remains in progress.",
+        text: "Explore the assessment, inspect process recommendations, and review the guidance behind them.",
       },
     ],
   },
-  now: {
-    reviewed: "November 2026",
-    summary:
-      "RAMS Workbench 0.4.0 brings hazard review, retained analyses, baselines and a narrated user guide into one study workflow. RailClear supports safe-braking and railway safety-distance studies. RailClear and RAMS Workbench are available in the browser; RAMS Workbench also offers a local app. Both retain explicit engineering qualification limits. Railway Anatomy 10 connects illustrated assemblies with six study workspaces; Engine Anatomy 5 combines engine inspection, walkthroughs and experiments with a separate LEGO H175 mechanism study. World History Atlas now pairs map-based reading with a regional timeline. My wider work includes Modeling Lab, Leadership Toolbox, SE Tailoring, Asterfall and Personal Growth Copilot. A published INCOSE paper connects technical leadership with responsible human–AI collaboration.",
-    research:
-      "My current writing explores SE tailoring, changing transit concepts of operations, future upgrades, and whole-facility operation. Alongside these papers, I am helping advance development of the proposed INCOSE–APTA Systems Lifecycle Engineering standard for transit.",
-  },
+  community: "I serve as Director-at-Large for INCOSE Canada, where I previously served as president. I also help develop the proposed INCOSE–APTA Systems Lifecycle Engineering standard for transit.",
   links: [
     { label: "LinkedIn", href: "https://ca.linkedin.com/in/haitonyw" },
   ] satisfies Link[],
@@ -173,96 +147,24 @@ export const profile = {
       label: "Director-at-Large / Past President, INCOSE Canada; Technical Leadership Institute member",
     },
   ] satisfies ProofPoint[],
-  practiceAreas: [
+  practice: [
     {
-      title: "Systems integration and readiness",
-      summary:
-        "Turn requirements, interfaces, verification, assurance, and operations readiness into a delivery system teams can inspect and act on.",
-      outcomes: [
-        "Interface ownership that survives organizational boundaries",
-        "Acceptance paths connected to evidence and readiness",
-        "Technical forums that move decisions instead of recycling status",
-      ],
+      title: "Start with the decision",
+      summary: "I ask what the team needs to decide, who needs to be involved, and what the system must do in operation.",
     },
     {
-      title: "MBSE and digital engineering adoption",
-      summary:
-        "Use models, traces, and digital workflows when they improve delivery decisions, not because the method looks impressive on paper.",
-      outcomes: [
-        "Model-based work tied to real review questions",
-        "Traceability that exposes assumptions and gaps",
-        "Tooling choices shaped by team behavior and governance",
-      ],
+      title: "Match the effort to the risk",
+      summary: "I use models and formal reviews where they clarify a tradeoff or expose a risk. I keep the process lighter where the team already has enough evidence to act.",
     },
     {
-      title: "Evidence, assurance, and decision memory",
-      summary:
-        "Build the working memory around why a technical decision was made, what evidence supports it, and what still needs closure.",
-      outcomes: [
-        "Requirements-to-verification paths people can follow",
-        "Assurance reviews with sharper entry and exit criteria",
-        "Decision records that support handover and future learning",
-      ],
+      title: "Make ownership and evidence clear",
+      summary: "At each interface, I clarify who owns it and what both sides need to verify. I link requirements, hazards, and test results so teams can see what supports a readiness decision and what still needs work.",
     },
     {
-      title: "Practice leadership and capability building",
-      summary:
-        "Turn delivery lessons into workshops, papers, games, public notes, and reusable methods for engineering teams and professional communities.",
-      outcomes: [
-        "Right-sized systems engineering adoption patterns",
-        "Workshop formats that change how people decide",
-        "Practice assets that can outlive a single project",
-      ],
+      title: "Carry the lessons forward",
+      summary: "I record why decisions were made so the next team can revisit them when conditions change. I turn lessons worth repeating into tools, guides, and workshops.",
     },
-  ] satisfies PracticeArea[],
-  methodSteps: [
-    {
-      label: "01",
-      title: "Frame",
-      summary:
-        "Define the system boundary, stakeholder landscape, operating context, success criteria, and decisions the work must support.",
-    },
-    {
-      label: "02",
-      title: "Tailor",
-      summary:
-        "Fit the systems engineering rigor to risk, novelty, safety, regulatory burden, delivery pressure, and team maturity.",
-    },
-    {
-      label: "03",
-      title: "Connect",
-      summary:
-        "Link requirements, interfaces, models, hazards, V&V, assurance evidence, and readiness claims into one inspectable thread.",
-    },
-    {
-      label: "04",
-      title: "Transfer",
-      summary:
-        "Turn delivery lessons into reusable playbooks, templates, field notes, workshop formats, diagrams, tools, and training aids.",
-    },
-  ] satisfies MethodStep[],
-  operatingPrinciples: [
-    {
-      title: "Start with the decision, not the artifact.",
-      summary:
-        "A model, register, workshop, or report earns its place only if it improves a decision, exposes a tradeoff, or changes what the team does next.",
-    },
-    {
-      title: "Fit the rigor to the risk.",
-      summary:
-        "Over-prescribing systems engineering burns trust; under-scoping it hides risk. Tailoring has to make both sides of that trade visible.",
-    },
-    {
-      title: "Make interfaces owned, not just listed.",
-      summary:
-        "Interface work matters when owners, assumptions, timing, evidence, and acceptance responsibilities are clear across organizations.",
-    },
-    {
-      title: "Keep evidence close to readiness.",
-      summary:
-        "Requirements, hazards, tests, concessions, operations constraints, and residual risk should converge into a defensible readiness position.",
-    },
-  ] satisfies OperatingPrinciple[],
+  ],
   fieldNotes: [
     {
       ...leadershipPaper,
@@ -272,7 +174,7 @@ export const profile = {
       title: "Right-sized systems engineering for infrastructure programs",
       status: "Paper in development",
       summary:
-        "Developing an inspectable method for matching systems engineering rigor to project drivers, process dependencies, organizational conditions, and delivery risk. The paper explains how tailoring decisions are justified and revisited as a project changes; evaluation remains in progress.",
+        "Developing a method for matching systems engineering rigor to project drivers, process dependencies, organizational conditions, and delivery risk. The paper explains how tailoring decisions are justified and revisited as a project changes.",
       linkPlaceholder: "Paper link pending",
     },
     {
@@ -297,13 +199,13 @@ export const profile = {
       title: "INCOSE–APTA Systems Lifecycle Engineering (SLE)",
       status: "Standards development in progress",
       summary:
-        "Helping advance the proposed SLE standard through a transit lifecycle framework, reusable practice modules, and guidance for applying them to different projects. Current preparation focuses on lifecycle responsibilities, interfaces, tailoring, and evidence, with scoped volunteer authoring and lead/deputy continuity. The working material remains a development candidate, not an approved standard.",
+        "Helping develop the proposed SLE standard through a transit lifecycle framework, reusable practice modules, and guidance for applying them to different projects. Current work focuses on lifecycle responsibilities, interfaces, tailoring, and evidence.",
     },
     {
       title: "Learning through decisions, practice, and reflection",
       status: "Work in progress",
       summary:
-        "World History Atlas connects histories, places, lives, and sources in English and Chinese. Asterfall explores systems thinking through story and consequences; Personal Growth Copilot adds source-grounded practice and reflection. These are learning experiments, with effectiveness still to be evaluated.",
+        "World History Atlas connects histories, places, lives, and sources in English and Chinese. Asterfall explores systems thinking through story and consequences; Personal Growth Copilot adds practice and reflection.",
       link: {
         label: "Explore Asterfall",
         href: "https://haitaowu12.github.io/SE-Learning-Quest/",
@@ -376,7 +278,6 @@ export const profile = {
       group: "atlas",
       summary: "Put each story back in its world. Explore people, places, and events across regions and time, in English and Chinese. Follow guided readings, compare histories side by side, and keep a personal notebook with bookmarks and notes.",
       status: "public",
-      availabilityLabel: "Public · English / 中文",
       featured: true,
       themes: ["history & geography", "connected lives", "English / 中文"],
       link: { label: "Explore World Atlas", href: "https://world-history-atlas-tony.techiesea.chatgpt.site/" },
@@ -393,30 +294,33 @@ export const profile = {
       origin: ["I work in the railway industry, and I often see graduates arrive with strong engineering fundamentals but little exposure to how a railway works as a whole. Much of that picture has to be built on the job: how vehicles, track, power, signalling, communications, stations and the people around them fit together.", "I built Railway Anatomy to make that picture easier to explore. You can start with a familiar place or piece of equipment, look inside it, and follow the relationships into other systems. I hope it gives young professionals a useful starting point, and helps experienced practitioners see beyond their own discipline, compare explanations and share what they know."],
       group: "anatomy",
       teaser: "Go inside a railway. Inspect its assemblies, then explore the forces, energy and information that connect them.",
-      summary: "Explore vehicles, energy, track, stations, networks, control-room equipment and maintenance through six connected study workspaces. Inspect named parts, open assemblies and compare mechanisms. Explore control responsibilities in Interfaces and human work in People & processes. Guided tours and public references connect each part with its role. Illustrated geometry and synthetic calculations explain generic arrangements; they are not manufacturer CAD, calibrated predictions or operating procedures.",
+      summary: "Explore vehicles, energy, track, stations, networks and maintenance through six connected study workspaces. Start with a point machine: follow two operating rods and two detector rods, compare complete travel, stopped travel and a missing detector input, then trace the indication to the interlocking. Inspect other assemblies, compare control responsibilities and explore the people behind railway operation and maintenance.",
       status: "public",
       featured: true,
-      availabilityLabel: "Public · v10.0.1 · Illustrated railway studies",
+      availabilityLabel: "Public · v10.1.0 · Illustrated railway studies",
       themes: ["railway systems", "illustrated assemblies", "guided learning"],
       link: { label: "Explore Railway Anatomy", href: "https://haitaowu12.github.io/railway-anatomy/" },
+      resources: [
+        { label: "Follow a point machine", href: "https://haitaowu12.github.io/railway-anatomy/#learn/point-proof" },
+        { label: "Read the point-machine guide", href: "https://haitaowu12.github.io/railway-anatomy/reading.html#guide-point-machine" },
+      ],
       preview: {
-        src: "./project-previews/railway-anatomy-10-illustrated-2026-11-01.webp",
-        smallSrc: "./project-previews/railway-anatomy-10-illustrated-2026-11-01-720.webp",
-        alt: "Railway Anatomy illustrated vehicle cutaway with named equipment and assembly inspection controls",
-        width: 1125,
-        height: 750,
-        caption: "Illustrated teaching model · vehicle equipment and assemblies.",
+        src: "./project-previews/railway-anatomy-point-machine-2026-11-06.webp",
+        smallSrc: "./project-previews/railway-anatomy-point-machine-2026-11-06-720.webp",
+        alt: "Railway Anatomy four-rod point-machine study with blade, lock and indication readouts",
+        width: 1280,
+        height: 891,
+        caption: "Four-rod schematic · blades, locks and returned indication.",
       },
     },
     {
       title: "Engine Anatomy",
-      origin: ["I started my engineering career at Pratt & Whitney Canada, working on controls for turboshaft, turboprop and turbofan engine programmes. Much of my work was in full authority digital engine control (FADEC): control logic, analysis and verification. It took me a long time to understand how those logic gates connected with the engine’s mechanical parts, and how the engine fitted into the aircraft around it.", "Engine Anatomy grew out of wanting to make those connections visible. I can follow a shaft, sensor or fuel command through an interactive model, see how it fits into the wider system, and share some of what I worked on with my daughter.", "The LEGO Technic H175 has a personal place here. The real helicopter uses an engine from one of the programmes I worked on. My daughter and I assembled the LEGO model together and still play with it. Exploring its motor, gears and rotor-pitch mechanism is another way for us to learn together."],
+      origin: ["I began my career at Pratt & Whitney Canada, working on aircraft engine controls. This project grew from wanting to show how control logic connects with the engine’s moving parts.", "My daughter and I built the LEGO Technic H175 together. The real helicopter uses an engine from a programme I worked on, which gave us a personal reason to explore the model’s gears and rotor mechanisms."],
       group: "anatomy",
-      teaser: "Inspect the mechanisms. Follow shafts and service circuits, or change a load and watch the response.",
-      summary: "Explore turboshaft–helicopter, turboprop–propeller and turbofan–jet pairs through coordinated Component, Walkthrough and Experiment activities. Inspect compressor, combustor, turbine, bearing and output-drive assemblies; trace fuel, oil and starting circuits; compare architectures and try control-response experiments. A separate LEGO Technic H175 study explores an electric motor, drive selectors, rotor pitch, landing gear and winch. Illustrated geometry and synthetic running plants are teaching models, not manufacturer dimensions, maintenance sequences, calibrated engine maps or flight performance.",
+      teaser: "Explore the engines that power flight and see how their components work together.",
+      summary: "An interactive look at aircraft engines, with a LEGO H175 mechanism study.",
       status: "public",
       featured: true,
-      availabilityLabel: "Public · v5.0.1 · Engines & H175 mechanisms",
       themes: ["engine architecture", "control response", "interactive models"],
       link: { label: "Explore Engine Anatomy", href: "https://haitaowu12.github.io/engine-anatomy/" },
       resources: [{ label: "Explore H175 mechanisms", href: "https://haitaowu12.github.io/engine-anatomy/h175.html" }],
@@ -426,14 +330,35 @@ export const profile = {
         alt: "Engine Anatomy illustrated turboshaft cutaway with its power shaft, engine layers and inspection controls",
         width: 967,
         height: 620,
-        caption: "Illustrated engine cutaway · synthetic running model.",
       },
+    },
+    {
+      title: "Rail Energy",
+      group: "tool",
+      origin: ["Over the past year, I’ve worked with power engineers and a client on load-flow studies for a railway network. I saw how easily the subject could become a black box for people without a power-engineering background. It was often hard to explain what was being modelled, why the study mattered, and which decisions its results could support.", "I built Rail Energy to make that reasoning easier to follow. The illustrated guide connects electrical behaviour with the train service people care about, and lets readers explore what changes when demand rises or a supply is unavailable. From there, they can try the live lab or inspect recorded simulations."],
+      teaser: "Follow electricity through a railway, see how limited power can delay trains, and compare supply upgrades.",
+      summary: "An illustrated introduction to load-flow and energy studies, with interactive teaching examples, a live browser lab and recorded synthetic railway simulations.",
+      status: "public",
+      featured: true,
+      themes: ["rail energy", "DC traction power", "interactive experiments"],
+      link: { label: "Read the illustrated guide", href: "https://haitaowu12.github.io/rail-energy-public-demo/learn.html" },
+      preview: {
+        src: "./project-previews/rail-energy-shared-supply-2026-11-06.webp",
+        smallSrc: "./project-previews/rail-energy-shared-supply-2026-11-06-720.webp",
+        alt: "Rail Energy guide showing three separate trains sharing a DC power section, with one substation isolated and calculated train voltages",
+        width: 843,
+        height: 469,
+      },
+      resources: [
+        { label: "Try the live lab", href: "https://haitaowu12.github.io/rail-energy-public-demo/lab.html" },
+        { label: "Explore recorded simulations", href: "https://haitaowu12.github.io/rail-energy-public-demo/explorer.html" },
+      ],
     },
     {
       title: "SE Tailoring Model",
       group: "tool",
       summary:
-        "A research framework, developed with Cleo Wong, for right-sizing systems engineering rigor to project drivers, process interdependencies, culture and delivery risk. Work through an assessment, inspect process recommendations, record decisions and prepare a report. The updated assessment and report keep completion state, review actions and method boundaries visible; evaluation remains in progress.",
+        "A framework developed with Cleo Wong for matching systems engineering effort to project needs. Assess project drivers, explore process recommendations, record decisions and prepare a report.",
       status: "public",
       featured: true,
       themes: ["INCOSE TIW 2026", "tailoring", "infrastructure SE"],
@@ -451,7 +376,7 @@ export const profile = {
       teaser: "A browser-based SysML v2 workspace with Engineering and Stakeholder views.",
       group: "tool",
       summary:
-        "Open a SysML v2 model or project folder, explore Engineering and Stakeholder views, and review supported model changes. Download an editable project or a self-contained reader for others to review. Work stays in the browser; language and diagram coverage have explicit limits.",
+        "Open a SysML v2 model or project folder, explore Engineering and Stakeholder views, and review model changes. Download an editable project or a reader to share. Your work stays in the browser.",
       status: "prototype",
       featured: true,
       availabilityLabel: "Browser prototype",
@@ -470,9 +395,9 @@ export const profile = {
       teaser: "Compare mixed fleets, failure scenarios, and route variants.",
       group: "tool",
       summary:
-        "A safe-braking study workspace for signal segments, CBTC track sections, and named engineering sections. Compare mixed fleets, failure scenarios, and route variants; inspect governing cases and export reproducible calculation records. Outputs require project-specific engineering qualification.",
+        "Compare safe-braking distances for different train fleets, failures and route options. Inspect the governing cases and export calculation records.",
       status: "prototype",
-      availabilityLabel: "Public browser study tool",
+      availabilityLabel: "Prototype",
       link: { label: "Open RailClear", href: "https://haitaowu12.github.io/railclear-pages/" },
       featured: true,
       themes: ["safe-braking models", "railway safety-distance studies", "mixed-fleet comparison"],
@@ -482,40 +407,37 @@ export const profile = {
         alt: "RailClear’s synthetic Metro vehicle study, showing stopping-distance results and a speed-versus-distance chart",
         width: 1687,
         height: 1186,
-        caption: "Synthetic example · braking trajectory and study results.",
       },
     },
     {
       title: "RAMS Workbench",
-      teaser: "Build a study from its first hazard to a reviewable baseline.",
+      teaser: "Explore a Crossrail-informed ventilation example, from hazards to verification.",
       group: "tool",
       summary:
-        "A single-user workbench for reliability, availability, maintainability, and safety studies. Define a system, examine hazards through HAZOP, FMEA/FMECA and bow ties, calculate supported RAM and static fault-tree models, and connect requirements with verification and actions. Retain analyses, compare baselines and export a study reader. Studies save on your device, with backup, restore and revision-conflict recovery; a local app is also available. Analysis methods have explicit limits, and engineering qualification remains open.",
+        "Create and review reliability, availability, maintainability and safety studies. Try a Crossrail-informed ventilation example, trace hazards through controls and requirements to verification, and inspect conflicting declarations and receiving conditions. Retain RAM and fault-tree calculations, compare baselines, and export a study to share.",
       status: "prototype",
-      availabilityLabel: "Browser & local app · v0.4.0",
+      availabilityLabel: "Prototype",
       resources: [
         { label: "Read the user guide", href: "https://haitaowu12.github.io/rams-workbench-pages/guide/" },
-        { label: "Watch the walkthrough · 7:38", href: "https://haitaowu12.github.io/rams-workbench-pages/guide/#walkthrough" },
+        { label: "Watch the walkthrough · 5:52", href: "https://haitaowu12.github.io/rams-workbench-pages/guide/#walkthrough" },
       ],
       link: { label: "Open RAMS Workbench", href: "https://haitaowu12.github.io/rams-workbench-pages/" },
       featured: true,
       themes: ["hazard analysis", "RAM studies", "evidence traceability"],
       preview: {
-        src: "./project-previews/rams-workbench-040-2026-11-01.webp",
-        smallSrc: "./project-previews/rams-workbench-040-2026-11-01-720.webp",
-        alt: "RAMS Workbench 0.4.0 showing the fictional station study workspace, hazard-review queue and retained analyses",
-        width: 1265,
-        height: 712,
-        caption: "Synthetic example · hazard review and retained analyses.",
+        src: "./project-previews/rams-workbench-crossrail-2026-11-05.webp",
+        smallSrc: "./project-previews/rams-workbench-crossrail-2026-11-05-720.webp",
+        alt: "RAMS Workbench showing the Crossrail-informed ventilation study, with requirements, controls and verification applicability",
+        width: 1521,
+        height: 856,
       },
     },
     {
       title: "Leadership Toolbox",
       teaser: "Practical methods and a source-backed library for technical leadership.",
       group: "tool",
-      summary: "A portable agent skill and library of 32 methods for preparing conversations, reviewing handoffs, and working through leadership decisions. Explore the situation, challenge assumptions, and choose a method with practical steps, examples, sources, and limits. Leadership effectiveness has not been established.",
+      summary: "An agent skill with 32 methods for preparing conversations, reviewing handoffs and working through leadership decisions. Each method includes practical steps, examples and sources.",
       status: "public",
-      availabilityLabel: "Public skill",
       featured: true,
       themes: ["technical leadership", "practical methods", "source-backed guidance"],
       link: { label: "Explore Leadership Toolbox", href: "https://haitaowu12.github.io/leadership-toolbox/" },
@@ -543,10 +465,10 @@ export const profile = {
       group: "learning",
       teaser: "Reflection, practice, and small experiments in learning.",
       summary:
-        "An explicitly invoked agent skill for reflection, small behavior-change experiments, and learning through practice. The development candidate brings together personal growth, relationships, and leadership practice, alongside an offline requirements-writing lesson with source-linked explanations, written exercises, and delayed retrieval. Human review and effectiveness evaluation remain open.",
+        "An agent skill for reflection, small behaviour-change experiments and learning through practice. Includes an offline requirements-writing lesson with source-linked explanations, exercises and follow-up practice.",
       status: "prototype",
       featured: true,
-      availabilityLabel: "Public alpha",
+      availabilityLabel: "Alpha",
       themes: ["reflection", "source-grounded learning", "user-owned progress"],
       link: {
         label: "Try the lesson and explore the skill",

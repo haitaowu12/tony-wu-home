@@ -131,7 +131,7 @@ test("bounded project previews support browsing and full-size image navigation",
   }
   if (testInfo.project.use.viewport!.width <= 700) {
     // A visitor must identify the project before encountering its interface.
-    for (const id of ["rams-workbench", "railclear", "railway-anatomy", "engine-anatomy", "world-atlas", "asterfall"]) {
+    for (const id of ["rams-workbench", "railclear", "rail-energy", "railway-anatomy", "engine-anatomy", "world-atlas"]) {
       const entry = page.locator(`#${id}`);
       const heading = await entry.locator("h3").first().boundingBox();
       const image = await entry.locator(".project-preview img").boundingBox();
@@ -155,7 +155,7 @@ test("bounded project previews support browsing and full-size image navigation",
     expect(scan.anatomyPaired).toBe(true);
     expect(scan.leadSeparated).toBe(true);
   }
-  for (const title of ["World History Atlas", "RailClear", "RAMS Workbench", "SE Learning Quest"]) {
+  for (const title of ["World History Atlas", "RailClear", "RAMS Workbench"]) {
     const link = page.getByRole("link", { name: `View full screenshot: ${title}`, exact: true });
     await expect(link).toHaveAttribute("href", /^\.\/project-previews\/.*\.(?:webp|jpg)$/);
     await link.scrollIntoViewIfNeeded();
@@ -165,10 +165,8 @@ test("bounded project previews support browsing and full-size image navigation",
       await expect(entry.getByRole("link")).toHaveCount(title === "RAMS Workbench" ? 4 : 2);
       if (title === "RAMS Workbench") {
         await expect(entry.getByRole("link", { name: "Read the user guide", exact: true })).toHaveAttribute("href", "https://haitaowu12.github.io/rams-workbench-pages/guide/");
-        await expect(entry.getByRole("link", { name: "Watch the walkthrough · 7:38", exact: true })).toHaveAttribute("href", "https://haitaowu12.github.io/rams-workbench-pages/guide/#walkthrough");
+        await expect(entry.getByRole("link", { name: /^Watch the walkthrough/ })).toHaveAttribute("href", "https://haitaowu12.github.io/rams-workbench-pages/guide/#walkthrough");
       }
-      await expect(entry.locator(".project-limit")).toContainText("qualification");
-      await expect(entry.locator("figcaption")).toContainText("Synthetic example");
     }
     await link.focus();
     const beforeImageScroll = await page.evaluate(() => scrollY);
@@ -350,7 +348,7 @@ test("desk links reach their project and preserve navigation context", async ({ 
     await expectVisibleTargetFocus(page,id);
     await expect(page.locator(`.site-nav a[href="#${chapter}"]`)).toHaveAttribute("aria-current","location");
   }
-  for(const [name,id,chapter] of [["Models","modeling-lab","work"],["History","world-atlas","work"],["Play","asterfall","playground"]]) {
+  for(const [name,id,chapter] of [["Models","modeling-lab","work"],["History","world-atlas","work"],["Learning","playground","playground"]]) {
     await page.goto(".");
     const link=page.locator(".desk-links").getByRole("link",{name,exact:true});
     await link.focus();
@@ -364,7 +362,7 @@ test("gallery browses all projects and returns to the original trigger", async (
   const trigger=page.getByRole("link",{name:"View full screenshot: World History Atlas",exact:true});
   await trigger.click();
   const dialog=page.getByRole("dialog");
-  for(const title of ["Modeling Lab","SE Tailoring Model","Asterfall: The Last Relay","RAMS Workbench","RailClear","Railway Anatomy","Engine Anatomy","World History Atlas"]) {
+  for(const title of ["Modeling Lab","SE Tailoring Model","RAMS Workbench","RailClear","Rail Energy","Railway Anatomy","Engine Anatomy","World History Atlas"]) {
     await dialog.getByRole("button",{name:"Next project",exact:true}).click();
     await expect(dialog.getByRole("heading")).toHaveText(title);
     await expect(dialog.getByRole("button",{name:"Next project",exact:true})).toBeFocused();
