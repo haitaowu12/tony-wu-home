@@ -504,8 +504,8 @@ export const profile = {
         src: "./project-previews/rams-workbench-crossrail-2026-11-05.webp",
         smallSrc: "./project-previews/rams-workbench-crossrail-2026-11-05-720.webp",
         alt: "RAMS Workbench showing the Crossrail-informed ventilation study, with requirements, controls and verification applicability",
-        width: 1536,
-        height: 864,
+        width: 1521,
+        height: 856,
       },
     },
     {
