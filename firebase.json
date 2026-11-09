@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "site": "tony-wu-home",
+    "public": "dist",
+    "ignore": [
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

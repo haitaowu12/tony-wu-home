@@ -162,10 +162,14 @@ test("bounded project previews support browsing and full-size image navigation",
     await expect.poll(() => link.locator("img").evaluate((image) => (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0)).toBe(true);
     if (["RailClear", "RAMS Workbench"].includes(title)) {
       const entry = page.locator(".study-entry").filter({ has: page.getByRole("heading", { name: title, exact: true }) });
-      await expect(entry.getByRole("link")).toHaveCount(title === "RAMS Workbench" ? 4 : 2);
       if (title === "RAMS Workbench") {
+        await expect(entry.getByRole("link", { name: "Open RAMS Workbench", exact: true })).toHaveAttribute("href", "https://rams-workbench.web.app/");
+        await expect(entry.getByRole("link", { name: "Read the RAMS Field Guide", exact: true })).toHaveAttribute("href", "https://rams-workbench.web.app/learn/");
         await expect(entry.getByRole("link", { name: "Read the user guide", exact: true })).toHaveAttribute("href", "https://rams-workbench.web.app/guide/");
         await expect(entry.getByRole("link", { name: /^Watch the walkthrough/ })).toHaveAttribute("href", "https://rams-workbench.web.app/guide/#walkthrough");
+      } else {
+        await expect(entry.getByRole("link", { name: "Open RailClear", exact: true })).toHaveAttribute("href", "https://railclear.web.app/");
+        await expect(entry.getByRole("link", { name: "Read the braking field guide", exact: true })).toHaveAttribute("href", "https://railclear.web.app/learn/");
       }
     }
     await link.focus();

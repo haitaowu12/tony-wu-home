@@ -237,7 +237,11 @@ function App() {
             <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(48vw, 620px)" />
             <div className="project-entry__body"><p className="availability">{project.availabilityLabel}</p>
               <div className="project-actions">{project.link && <a className="text-link" href={project.link.href}>{project.link.label}</a>}{project.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
-              <details className="inline-details"><summary>About the project</summary><p>{project.summary}</p></details>
+              <details className="inline-details">
+                <summary>{project.origin ? `Why I built ${project.title}` : "About the project"}</summary>
+                {project.origin?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                <p>{project.summary}</p>
+              </details>
             </div>
           </article>)}
           <article className="project-entry study-entry study-entry--compact" id="rail-energy" tabIndex={-1}>

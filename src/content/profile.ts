@@ -72,7 +72,7 @@ const leadershipPaper = {
 };
 
 export const profile = {
-  canonicalUrl: "https://haitaowu12.github.io/tony-wu-home/",
+  canonicalUrl: "https://tony-wu-home.web.app/",
   identity: {
     name: "Tony Wu",
     fullName: "Hai Tao (Tony) Wu",
@@ -392,13 +392,18 @@ export const profile = {
     },
     {
       title: "RailClear",
-      teaser: "Compare mixed fleets, failure scenarios, and route variants.",
+      teaser: "How much room does a train need to stop safely? Explore the calculation and what changes it.",
       group: "tool",
+      origin: [
+        "When I started as a train control systems engineer, my manager, Firas Al-Tahan, asked me to read IEEE 1474.1 and build a spreadsheet to calculate safe braking distances. It was a way to test my understanding. I finished the spreadsheet and later built an iOS companion app so we could try the calculations on the go. I had a lot of fun with that.",
+        "I built RailClear as a reminder of where I started in rail and transit. I hope it gets more people curious about what goes on behind the scenes and gives them a way to explore the thinking that goes into keeping passengers safe.",
+      ],
       summary:
         "Compare safe-braking distances for different train fleets, failures and route options. Inspect the governing cases and export calculation records.",
       status: "prototype",
       availabilityLabel: "Prototype",
       link: { label: "Open RailClear", href: "https://railclear.web.app/" },
+      resources: [{ label: "Read the braking field guide", href: "https://railclear.web.app/learn/" }],
       featured: true,
       themes: ["safe-braking models", "railway safety-distance studies", "mixed-fleet comparison"],
       preview: {
@@ -418,6 +423,7 @@ export const profile = {
       status: "prototype",
       availabilityLabel: "Prototype",
       resources: [
+        { label: "Read the RAMS Field Guide", href: "https://rams-workbench.web.app/learn/" },
         { label: "Read the user guide", href: "https://rams-workbench.web.app/guide/" },
         { label: "Watch the walkthrough · 5:52", href: "https://rams-workbench.web.app/guide/#walkthrough" },
       ],

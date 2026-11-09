@@ -3,7 +3,7 @@
 Use one canonical URL everywhere:
 
 ```text
-https://haitaowu12.github.io/tony-wu-home/
+https://tony-wu-home.web.app/
 ```
 
 ## README
@@ -13,7 +13,7 @@ Place after the project description and before setup.
 ```md
 ## Know the author
 
-Built by [Tony Wu](https://haitaowu12.github.io/tony-wu-home/), focused on systems engineering tools, assurance workflows, and learning simulations.
+Built by [Tony Wu](https://tony-wu-home.web.app/), focused on systems engineering tools, assurance workflows, and learning simulations.
 ```
 
 ## React/Vite
@@ -23,7 +23,7 @@ Use in an app footer, status strip, or low-emphasis topbar area.
 ```tsx
 export function AuthorLink() {
   return (
-    <a className="author-link" href="https://haitaowu12.github.io/tony-wu-home/">
+    <a className="author-link" href="https://tony-wu-home.web.app/">
       Know the author
     </a>
   );
@@ -48,7 +48,7 @@ export function AuthorLink() {
 
 ```html
 <footer class="author-footer">
-  <a class="author-badge" href="https://haitaowu12.github.io/tony-wu-home/">
+  <a class="author-badge" href="https://tony-wu-home.web.app/">
     Know the author: Tony Wu
   </a>
 </footer>
