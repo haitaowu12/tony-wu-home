@@ -233,10 +233,16 @@ function App() {
           {studyProjects.map((project) => <article className={`project-entry study-entry${project.title === "RAMS Workbench" ? " study-entry--lead" : " study-entry--compact"}`} id={project.title === "RAMS Workbench" ? "rams-workbench" : "railclear"} key={project.title}>
             <header className="project-entry__heading"><h3>{project.title}</h3>
               <p>{project.teaser}</p>
+              <div className="project-actions">
+                {project.learningGuide && <a className="text-link" href={project.learningGuide.href}>{project.learningGuide.label}</a>}
+                {project.link && <a className="text-link" href={project.link.href}>{project.link.label}</a>}
+              </div>
             </header>
             <ProjectPreview project={project} sizes="(max-width: 700px) calc(100vw - 40px), min(48vw, 620px)" />
             <div className="project-entry__body"><p className="availability">{project.availabilityLabel}</p>
-              <div className="project-actions">{project.link && <a className="text-link" href={project.link.href}>{project.link.label}</a>}{project.resources?.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}</div>
+              {project.resources && <div className="project-actions">
+                {project.resources.map((link) => <a key={link.href} className="text-link" href={link.href}>{link.label}</a>)}
+              </div>}
               <details className="inline-details">
                 <summary>{project.origin ? `Why I built ${project.title}` : "About the project"}</summary>
                 {project.origin?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}

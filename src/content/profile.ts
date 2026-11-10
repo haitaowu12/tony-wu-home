@@ -16,6 +16,7 @@ export type SelectedProject = {
   teaser?: string;
   themes: string[];
   link?: Link;
+  learningGuide?: Link;
   preview?: {
     /** Full-resolution capture; also the largest srcset entry. */
     src: string;
@@ -403,7 +404,7 @@ export const profile = {
       status: "prototype",
       availabilityLabel: "Prototype",
       link: { label: "Open RailClear", href: "https://railclear.web.app/" },
-      resources: [{ label: "Read the braking field guide", href: "https://railclear.web.app/learn/" }],
+      learningGuide: { label: "Read the braking field guide", href: "https://railclear.web.app/learn/" },
       featured: true,
       themes: ["safe-braking models", "railway safety-distance studies", "mixed-fleet comparison"],
       preview: {
@@ -422,8 +423,8 @@ export const profile = {
         "Create and review reliability, availability, maintainability and safety studies. Try a Crossrail-informed ventilation example, trace hazards through controls and requirements to verification, and inspect conflicting declarations and receiving conditions. Retain RAM and fault-tree calculations, compare baselines, and export a study to share.",
       status: "prototype",
       availabilityLabel: "Prototype",
+      learningGuide: { label: "Read the RAMS Field Guide", href: "https://rams-workbench.web.app/learn/" },
       resources: [
-        { label: "Read the RAMS Field Guide", href: "https://rams-workbench.web.app/learn/" },
         { label: "Read the user guide", href: "https://rams-workbench.web.app/guide/" },
         { label: "Watch the walkthrough · 5:52", href: "https://rams-workbench.web.app/guide/#walkthrough" },
       ],
