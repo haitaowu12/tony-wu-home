@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { profile, type SelectedProject } from "../content/profile";
 import { usePreview } from "../components/ScreenshotViewer";
 import { Icon } from "./Icons";
-import { projectId, projectTitle, publicProjects, statusLabel, type AppId } from "./model";
+import { apps, projectId, projectTitle, publicProjects, statusLabel, type AppId } from "./model";
 
 type OpenApp = (id: AppId, project?: string) => void;
 
@@ -10,17 +10,18 @@ export function Welcome({ open }: { open: OpenApp }) {
   return <div className="os-welcome">
     <div className="os-welcome__intro">
       <div className="os-welcome__words">
-        <p className="os-kicker">Systems engineer · Vancouver, Canada</p>
+        <p className="os-kicker">Hello from Vancouver</p>
         <h1>Tony <em>Wu.</em></h1>
         <p className="os-welcome__tagline">Engineering, leadership<br />&amp; a curious mind.</p>
         <p>From aircraft engines to rail networks, my work is about how things fit together. Here are the tools, stories, and learning experiments I’m making along the way.</p>
         <div className="os-actions"><button className="os-button" onClick={() => open("projects")}>Explore my projects </button><button className="os-text-button" onClick={() => open("about")}>A little about me</button></div>
       </div>
-      <figure className="os-welcome__image"><img src="./hero-practice-story.webp" srcSet="./hero-practice-story-720.webp 720w, ./hero-practice-story-1080.webp 1080w" sizes="(max-width: 700px) 90vw, 450px" width="1448" height="1086" alt="Illustrated workspace with aerospace and rail sketches, a modeling laptop, leadership notes, a history map, and a game beside a Vancouver window" /><figcaption>A few things on my desk.</figcaption></figure>
+      <figure className="os-character-stage"><div className="os-character-halo" /><span className="os-character-orbit" aria-hidden="true" /><img src="./tony/standing.png" width="362" height="362" alt="Tony’s pixel-art character, wearing black glasses and a backpack" /><figcaption>A curious mind, at work.</figcaption></figure>
     </div>
+    <nav className="os-home-apps" aria-label="Explore Tony OS">{apps.filter(app => app.id !== "welcome").map(app => <button key={app.id} onClick={() => open(app.id)}><span className={`os-app-icon os-${app.color}`}><Icon name={app.icon} size={29} /></span><strong>{app.title}</strong></button>)}</nav>
     <div className="os-welcome__shelf" aria-label="Places to start">
       <button onClick={() => open("projects", "modeling-lab")}><span className="os-shelf-icon os-blue"><Icon name="folder" size={25} /></span><span><strong>Make a model</strong><small>Explore Modeling Lab</small></span></button>
-      <button onClick={() => open("atlas")}><span className="os-shelf-icon os-green"><Icon name="globe" size={25} /></span><span><strong>Follow a history</strong><small>Open the World Atlas</small></span></button>
+      <button onClick={() => open("atlas")}><span className="os-shelf-icon os-sky"><Icon name="globe" size={25} /></span><span><strong>Follow a history</strong><small>Open the World Atlas</small></span></button>
       <button onClick={() => open("play")}><span className="os-shelf-icon os-gold"><Icon name="play" size={25} /></span><span><strong>Learn through play</strong><small>Visit the playground</small></span></button>
     </div>
   </div>;
@@ -61,9 +62,24 @@ export function Projects({ selected, select }: { selected?: string; select: (id?
   const [category, setCategory] = useState("all");
   const [query, setQuery] = useState("");
   const surface = useRef<HTMLDivElement>(null);
+  const collections = useRef<HTMLDivElement>(null);
+  const [indicator, setIndicator] = useState({ x: 0, y: 0, width: 0, height: 0 });
+  const listScroll = useRef(0);
   const previousSelection = useRef(selected);
   const project = publicProjects.find(item => projectId(item) === selected);
   const filtered = orderedProjects.filter(item => belongs(item, category) && `${projectTitle(item)} ${item.summary} ${item.themes.join(" ")}`.toLowerCase().includes(query.toLowerCase().trim()));
+  useEffect(() => {
+    const controls = collections.current;
+    if (!controls) return;
+    const measure = () => {
+      const selectedButton = controls.querySelector<HTMLButtonElement>(`[data-category="${category}"]`);
+      if (selectedButton) setIndicator({ x: selectedButton.offsetLeft, y: selectedButton.offsetTop, width: selectedButton.offsetWidth, height: selectedButton.offsetHeight });
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(controls);
+    return () => observer.disconnect();
+  }, [category, project]);
   useEffect(() => {
     const previous = previousSelection.current;
     previousSelection.current = selected;
@@ -72,18 +88,19 @@ export function Projects({ selected, select }: { selected?: string; select: (id?
       surface.current?.closest(".os-window-content")?.scrollTo(0, 0);
       surface.current?.querySelector<HTMLElement>(".os-project-detail h2")?.focus({ preventScroll: true });
     } else if (previous) {
+      const list = surface.current?.querySelector<HTMLElement>(".os-project-list");
+      if (list) list.scrollTop = listScroll.current;
       const card = surface.current?.querySelector<HTMLButtonElement>(`[data-project-id="${previous}"]`);
       card?.focus({ preventScroll: true });
-      card?.scrollIntoView({ block: "nearest" });
     }
   }, [selected, project]);
   if (project) return <div className="os-projects-root" ref={surface}><ProjectDetail project={project} back={() => select(undefined)} /></div>;
   return <div className="os-projects-root" ref={surface}><div className="os-project-browser">
-    <aside className="os-project-sidebar" aria-label="Project collections"><p className="os-kicker">Collections</p>{categories.map(item => <button key={item.id} className={category === item.id ? "is-selected" : ""} aria-pressed={category === item.id} onClick={() => setCategory(item.id)}><Icon name={item.icon} size={18} />{item.title}<span>{publicProjects.filter(project => belongs(project, item.id)).length}</span></button>)}<p className="os-sidebar-note">Things I make to understand how things work.</p></aside>
-    <div className="os-project-list"><header className="os-list-header"><div><p className="os-kicker">The project shelf</p><h2>{categories.find(item => item.id === category)?.title}</h2></div><label className="os-inline-search"><Icon name="search" size={17} /><input type="search" aria-label="Filter projects" placeholder="Find a project" value={query} onChange={event => setQuery(event.target.value)} /></label></header>
+    <aside className="os-project-sidebar" aria-label="Project collections"><p className="os-kicker">Collections</p><div className="os-collection-controls" ref={collections}><span className="os-collection-indicator" aria-hidden="true" style={{ width: indicator.width, height: indicator.height, transform: `translate(${indicator.x}px, ${indicator.y}px)` }} />{categories.map(item => <button key={item.id} data-category={item.id} className={category === item.id ? "is-selected" : ""} aria-pressed={category === item.id} onClick={() => setCategory(item.id)}><Icon name={item.icon} size={18} />{item.title}<span>{publicProjects.filter(project => belongs(project, item.id)).length}</span></button>)}</div><p className="os-sidebar-note">Things I make to understand how things work.</p></aside>
+    <div className="os-project-list" onScroll={event => { listScroll.current = event.currentTarget.scrollTop; }}><header className="os-list-header"><div><p className="os-kicker">The project shelf</p><h2>{categories.find(item => item.id === category)?.title}</h2></div><label className="os-inline-search"><Icon name="search" size={17} /><input type="search" aria-label="Filter projects" placeholder="Find a project" value={query} onChange={event => setQuery(event.target.value)} /></label></header>
       <p className="os-result-count" aria-live="polite">{filtered.length} {filtered.length === 1 ? "project" : "projects"}</p>
-      {filtered.length ? <div className="os-project-grid">{filtered.map(item => <button className="os-project-card" key={item.title} data-project-id={projectId(item)} onClick={() => select(projectId(item))}>
-        <div className={`os-project-card__image os-${item.group === "atlas" ? "green" : item.group === "learning" ? "gold" : "blue"}`}>{item.preview ? <img src={item.preview.smallSrc} alt="" width={item.preview.width} height={item.preview.height} loading="lazy" /> : <Icon name={item.group === "learning" ? "play" : "folder"} size={48} />}</div>
+      {filtered.length ? <div className="os-project-grid" key={category}>{filtered.map(item => <button className="os-project-card" key={item.title} data-project-id={projectId(item)} onClick={() => select(projectId(item))}>
+        <div className={`os-project-card__image os-${item.group === "atlas" ? "sky" : item.group === "learning" ? "gold" : "blue"}`}>{item.preview ? <img src={item.preview.smallSrc} alt="" width={item.preview.width} height={item.preview.height} loading="lazy" /> : <Icon name={item.group === "learning" ? "play" : "folder"} size={48} />}</div>
         <div className="os-project-card__text"><small>{statusLabel(item)}</small><h3>{projectTitle(item)}</h3><p>{item.teaser ?? item.summary}</p><span>Explore project </span></div>
       </button>)}</div> : <div className="os-empty"><Icon name="search" size={32} /><h3>No matching projects</h3><p>Try another word or explore the full shelf.</p><button className="os-button" onClick={() => { setQuery(""); setCategory("all"); }}>Show all projects</button></div>}
     </div>
@@ -99,7 +116,7 @@ export function Playground({ open }: { open: OpenApp }) {
 }
 
 export function About() {
-  return <article className="os-reading os-about"><header><span className="os-monogram">TW</span><div><p className="os-kicker">The person behind the desk</p><h2>{profile.identity.fullName}</h2><p>{profile.identity.title}<br />{profile.identity.credentials}</p></div></header>
+  return <article className="os-reading os-about"><header><span className="os-monogram"><img src="./tony/neutral.png" width="362" height="362" alt="Tony’s pixel-art portrait" /></span><div><p className="os-kicker">The person behind the desk</p><h2>{profile.identity.fullName}</h2><p>{profile.identity.title}<br />{profile.identity.credentials}</p></div></header>
     <h3>{profile.about.title}</h3>{profile.about.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
     <section><h3>How I work</h3><ol className="os-practice">{profile.practice.map((step, index) => <li key={step.title}><span>0{index + 1}</span><div><h4>{step.title}</h4><p>{step.summary}</p></div></li>)}</ol></section>
     <section><h3>Professional community</h3><p>{profile.community}</p></section>
