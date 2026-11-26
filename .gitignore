@@ -10,7 +10,8 @@ test-results
 playwright-report
 node_modules/
 .codex/
-.openai/
+.openai/*
+!.openai/hosting.json
 output/playwright/
 test-results/
 playwright-report/

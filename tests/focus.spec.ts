@@ -14,7 +14,7 @@ const test = base.extend<{ browserErrors: void }>({
 const sectionIds = ["top", "work", "playground", "about", "writing", "contact"];
 
 async function openPage(page: Page) {
-  await page.goto(".");
+  await page.goto("?view=page");
   await page.evaluate(() => document.fonts.ready);
   if (!await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches)) {
     await expect(page.locator("html")).toHaveClass(/page-ready/);
@@ -353,7 +353,7 @@ test("desk links reach their project and preserve navigation context", async ({ 
     await expect(page.locator(`.site-nav a[href="#${chapter}"]`)).toHaveAttribute("aria-current","location");
   }
   for(const [name,id,chapter] of [["Models","modeling-lab","work"],["History","world-atlas","work"],["Learning","playground","playground"]]) {
-    await page.goto(".");
+    await page.goto("?view=page");
     const link=page.locator(".desk-links").getByRole("link",{name,exact:true});
     await link.focus();
     await page.keyboard.press("Enter");
