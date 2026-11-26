@@ -80,7 +80,7 @@ export default function Explorer() {
   const help = useRef<HTMLDialogElement>(null);
   const initialized = useRef(false);
   const topZ = useRef(1);
-  const invokers = useRef(new Map<AppId, HTMLElement>());
+  const pendingDismissalFocus = useRef<AppId | null>(null);
   const activeId = [...windows].filter(item => !item.minimized).sort((a, b) => b.z - a.z)[0]?.id;
 
   const focusWindow = useCallback((id: AppId) => {
@@ -106,7 +106,6 @@ export default function Explorer() {
     window.history.replaceState(null, "", url);
   };
   const open = useCallback((id: AppId, project?: string) => {
-    if (document.activeElement instanceof HTMLElement && !document.activeElement.closest(".os-search-dialog")) invokers.current.set(id, document.activeElement);
     if (id === "projects") setSelectedProject(project);
     setWindows(current => current.some(item => item.id === id)
       ? current.map(item => item.id === id ? { ...item, minimized: false, z: ++topZ.current } : item)
@@ -115,17 +114,28 @@ export default function Explorer() {
     setAnnouncement(`${appFor(id).title} opened`);
     focusContent(id);
   }, []);
-  const restoreFocus = (id: AppId) => requestAnimationFrame(() => {
-    const invoker = invokers.current.get(id);
-    if (invoker?.isConnected && invoker !== document.body && !invoker.closest("[hidden]") && getComputedStyle(invoker).visibility === "visible") invoker.focus({ preventScroll: true });
-    else document.querySelector<HTMLButtonElement>(`.os-dock [data-app="${id}"]`)?.focus();
-  });
   const update = (id: AppId, change: Partial<DesktopWindow>) => {
+    if (change.minimized) pendingDismissalFocus.current = id;
     setWindows(current => current.map(item => item.id === id ? { ...item, ...change } : item));
-    if (change.minimized) { setAnnouncement(`${appFor(id).title} minimized. Reopen it from the dock.`); restoreFocus(id); }
+    if (change.minimized) setAnnouncement(`${appFor(id).title} minimized. Reopen it from the dock.`);
   };
-  const close = (id: AppId) => { setWindows(current => current.filter(item => item.id !== id)); setAnnouncement(`${appFor(id).title} closed`); updateUrl(); restoreFocus(id); };
+  const close = (id: AppId) => { pendingDismissalFocus.current = id; setWindows(current => current.filter(item => item.id !== id)); setAnnouncement(`${appFor(id).title} closed`); updateUrl(); };
   const select = (id?: string) => { setSelectedProject(id); updateUrl("projects", id); };
+
+  // Run after the dismissed window is hidden/removed, so focus cannot return to
+  // an element that React is about to remove or to an inactive mobile window.
+  useEffect(() => {
+    const dismissed = pendingDismissalFocus.current;
+    if (!dismissed) return;
+    pendingDismissalFocus.current = null;
+    const remaining = [...windows].filter(item => !item.minimized).sort((a, b) => b.z - a.z)[0];
+    if (remaining) {
+      const area = document.querySelector<HTMLElement>(`[data-window="${remaining.id}"]`);
+      const target = area?.querySelector<HTMLElement>("h1, h2") ?? area?.querySelector<HTMLElement>(".os-window-title");
+      if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }); return; }
+    }
+    document.querySelector<HTMLButtonElement>(`.os-dock [data-app="${dismissed}"]`)?.focus({ preventScroll: true });
+  }, [windows]);
 
   useEffect(() => {
     document.documentElement.classList.add("os-mode");
