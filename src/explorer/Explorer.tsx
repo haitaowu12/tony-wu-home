@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { PreviewProvider } from "../components/ScreenshotViewer";
-import { Welcome, Projects, ProjectDetail, Playground, About, Research, Contact } from "./AppViews";
+import { Home, Projects, ProjectDetail, Playground, About, Research, Contact } from "./AppViews";
 import { Icon } from "./Icons";
 import { apps, fitWindow, isAppId, makeWindow, projectId, projectTitle, publicProjects, type AppId, type Bounds, type DesktopWindow } from "./model";
 import { cancelSurfaceMotion, enterSurface, exitSurface, reducedMotion, useModalMotion } from "./motion";
@@ -27,8 +27,8 @@ function Search({ visible, close, open }: { visible: boolean; close: () => void;
     <header><h2 id="os-search-title">Find your way around</h2><button className="os-icon-button" onClick={() => dismiss()} aria-label="Close search"><Icon name="close" /></button></header>
     <label className="os-search-input"><Icon name="search" size={23} /><input ref={input} type="search" aria-label="Search apps and projects" placeholder="Search projects, ideas, places…" value={query} onChange={event => setQuery(event.target.value)} autoComplete="off" /></label>
     <div className="os-search-results"><p className="os-sr-only" role="status">{matchingApps.length + matchingProjects.length} results</p>
-      {matchingApps.length > 0 && <section><h3>On this desktop</h3>{matchingApps.map(app => <button key={app.id} onClick={() => launch(app.id)}><span className="os-shelf-icon"><img src={`./icons/${app.icon}.svg`} alt="" className="os-app-art" /></span><span><strong>{app.title}</strong><small>{app.subtitle}</small></span></button>)}</section>}
-      {matchingProjects.length > 0 && <section><h3>Projects</h3>{matchingProjects.map(project => <button key={project.title} onClick={() => launch("projects", projectId(project))}><span className="os-shelf-icon"><img src={`./icons/${project.group === "learning" ? "play" : project.group === "atlas" ? "globe" : "folder"}.svg`} alt="" className="os-app-art" /></span><span><strong>{projectTitle(project)}</strong><small>{project.themes.slice(0, 2).join(" · ")}</small></span></button>)}</section>}
+      {matchingApps.length > 0 && <section><h3>On this desktop</h3>{matchingApps.map(app => <button key={app.id} onClick={() => launch(app.id)}><span className="os-shelf-icon"><Icon name={app.icon} size={28} /></span><span><strong>{app.title}</strong><small>{app.subtitle}</small></span></button>)}</section>}
+      {matchingProjects.length > 0 && <section><h3>Projects</h3>{matchingProjects.map(project => <button key={project.title} onClick={() => launch("projects", projectId(project))}><span className="os-shelf-icon"><Icon name={project.group === "learning" ? "play" : project.group === "atlas" ? "globe" : "folder"} size={28} /></span><span><strong>{projectTitle(project)}</strong><small>{project.themes.slice(0, 2).join(" · ")}</small></span></button>)}</section>}
       {!matchingApps.length && !matchingProjects.length && <div className="os-empty"><h3>No results for “{query}”</h3><p>Try a topic such as history, rail, models or learning.</p><button className="os-text-button" onClick={() => { setQuery(""); input.current?.focus(); }}>Clear search</button></div>}
     </div>
     <footer><span>Tab to explore · Enter to open</span><kbd>Esc</kbd> to close</footer>
@@ -40,7 +40,7 @@ function AppsSheet({ visible, close, open }: { visible: boolean; close: () => vo
   const dismiss = useModalMotion(dialog, visible, close, true);
   return <dialog ref={dialog} className="os-apps-dialog" aria-labelledby="os-apps-title" onClose={close} onCancel={event => { event.preventDefault(); dismiss(); }}>
     <header><div><p className="os-kicker">Make yourself at home</p><h2 id="os-apps-title">All apps</h2></div><button className="os-icon-button" onClick={() => dismiss()} aria-label="Close apps"><Icon name="close" /></button></header>
-    <div className="os-apps-sheet-grid">{apps.map(app => <button key={app.id} onClick={() => dismiss(() => open(app.id))}><span className="os-app-icon"><img src={`./icons/${app.icon}.svg`} alt="" className="os-app-art" /></span><strong>{app.title}</strong><small>{app.subtitle}</small></button>)}</div>
+    <div className="os-apps-sheet-grid">{apps.map(app => <button key={app.id} onClick={() => dismiss(() => open(app.id))}><span className="os-sheet-icon"><Icon name={app.icon} size={28} /></span><strong>{app.title}</strong><small>{app.subtitle}</small></button>)}</div>
   </dialog>;
 }
 
@@ -97,7 +97,7 @@ export default function Explorer() {
   const [appsVisible, setAppsVisible] = useState(false);
   const [helpVisible, setHelpVisible] = useState(false);
   const [motionPreference, setMotionPreference] = useState<"system" | "full" | "reduced">("system");
-  const [clock, setClock] = useState("");
+  const [ready, setReady] = useState(false);
   const [announcement, setAnnouncement] = useState("");
   const help = useRef<HTMLDialogElement>(null);
   const initialized = useRef(false);
@@ -105,6 +105,7 @@ export default function Explorer() {
   const pendingDismissalFocus = useRef<AppId | null>(null);
   const projectTransition = useRef<ViewTransition | null>(null);
   const transitionGeneration = useRef(0);
+  const selectedProjectRef = useRef<string | undefined>(undefined);
   const closeHelp = useModalMotion(help, helpVisible, () => setHelpVisible(false));
   const activeId = [...windows].filter(item => !item.minimized).sort((a, b) => b.z - a.z)[0]?.id;
 
@@ -117,41 +118,59 @@ export default function Explorer() {
     });
   }, []);
   const focusContent = (id: AppId) => requestAnimationFrame(() => {
-    const area = document.querySelector<HTMLElement>(`[data-window="${id}"]`);
+    const area = document.querySelector<HTMLElement>(id === "welcome" ? "[data-home]" : `[data-window="${id}"]`);
     const heading = area?.querySelector<HTMLElement>("h1, h2");
     if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
     else area?.focus({ preventScroll: true });
   });
-  const updateUrl = (id?: AppId, project?: string) => {
+  const updateUrl = (id?: AppId, project?: string, mode: "push" | "replace" | "none" = "replace") => {
+    if (mode === "none") return;
     const url = new URL(window.location.href);
     url.searchParams.set("view", "explorer");
     if (id && id !== "welcome") url.searchParams.set("app", id); else url.searchParams.delete("app");
     if (project) url.searchParams.set("project", project); else url.searchParams.delete("project");
     url.hash = "";
-    window.history.replaceState(null, "", url);
+    if (mode === "push" && url.href !== window.location.href) window.history.pushState({ tonyOS: true }, "", url);
+    else window.history.replaceState({ tonyOS: true }, "", url);
   };
-  const open = useCallback((id: AppId, project?: string) => {
+  const open = useCallback((id: AppId, project?: string, mode: "push" | "replace" | "none" = "push", moveFocus = true) => {
+    if (id === "welcome") {
+      document.querySelectorAll<HTMLElement>("[data-window]").forEach(cancelSurfaceMotion);
+      setWindows(current => current.map(item => ({ ...item, minimized: true })));
+      updateUrl("welcome", undefined, mode);
+      setAnnouncement("Home opened");
+      if (moveFocus) focusContent("welcome");
+      return;
+    }
     cancelSurfaceMotion(document.querySelector<HTMLElement>(`[data-window="${id}"]`));
-    if (id === "projects") setSelectedProject(project);
+    const targetProject = project ?? (mode === "push" ? selectedProjectRef.current : undefined);
+    const projectViewChanged = id === "projects" && targetProject !== selectedProjectRef.current && Boolean(document.querySelector('[data-window="projects"]'));
+    if (id === "projects") { selectedProjectRef.current = targetProject; setSelectedProject(targetProject); }
     setWindows(current => current.some(item => item.id === id)
       ? current.map(item => item.id === id ? { ...item, minimized: false, z: ++topZ.current } : item)
       : [...current, { ...makeWindow(id, bounds.current, current.length), z: ++topZ.current }]);
-    updateUrl(id, project);
+    updateUrl(id, id === "projects" ? targetProject : undefined, mode);
     setAnnouncement(`${appFor(id).title} opened`);
-    focusContent(id);
+    if (moveFocus && !projectViewChanged) focusContent(id);
   }, []);
   const update = (id: AppId, change: Partial<DesktopWindow>) => {
     const commit = () => {
       if (change.minimized) pendingDismissalFocus.current = id;
       setWindows(current => current.map(item => item.id === id ? { ...item, ...change } : item));
-      if (change.minimized) setAnnouncement(`${appFor(id).title} minimized. Reopen it from the dock.`);
+      if (change.minimized) setAnnouncement(`${appFor(id).title} minimized. Reopen it from Home or Apps.`);
     };
     if (change.minimized) exitSurface(document.querySelector<HTMLElement>(`[data-window="${id}"]`), commit);
     else commit();
   };
-  const close = (id: AppId) => exitSurface(document.querySelector<HTMLElement>(`[data-window="${id}"]`), () => { pendingDismissalFocus.current = id; setWindows(current => current.filter(item => item.id !== id)); setAnnouncement(`${appFor(id).title} closed`); updateUrl(); });
+  const close = (id: AppId) => exitSurface(document.querySelector<HTMLElement>(`[data-window="${id}"]`), () => { pendingDismissalFocus.current = id; setWindows(current => current.filter(item => item.id !== id)); setAnnouncement(`${appFor(id).title} closed`); });
   const select = (id?: string) => {
-    const commit = () => { flushSync(() => setSelectedProject(id)); updateUrl("projects", id); };
+    const commit = () => {
+      selectedProjectRef.current = id;
+      // Push before flushSync: its effects synchronize the URL and must not
+      // replace the list entry with detail before this navigation is recorded.
+      updateUrl("projects", id, "push");
+      flushSync(() => setSelectedProject(id));
+    };
     if (reducedMotion() || !document.startViewTransition) { commit(); return; }
     // Motion Prompt #161 · MIT License (c) 2026 Shohei Ohtaki
     // https://showheyohtaki.github.io/motion-prompt/#161
@@ -189,8 +208,7 @@ export default function Explorer() {
       const target = area?.querySelector<HTMLElement>("h1, h2") ?? area?.querySelector<HTMLElement>(".os-window-title");
       if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }); return; }
     }
-    const launcher = window.matchMedia("(max-width: 760px)").matches ? '[data-mobile-app="home"]' : `.os-dock [data-app="${dismissed}"]`;
-    document.querySelector<HTMLButtonElement>(launcher)?.focus({ preventScroll: true });
+    document.querySelector<HTMLButtonElement>(`[data-home-app="${dismissed}"]`)?.focus({ preventScroll: true });
   }, [windows]);
 
   useEffect(() => {
@@ -214,24 +232,31 @@ export default function Explorer() {
       initialized.current = true;
       const params = new URLSearchParams(window.location.search);
       const app = params.get("app");
-      open(isAppId(app) ? app : "welcome", params.get("project") ?? undefined);
+      open(isAppId(app) ? app : "welcome", params.get("project") ?? undefined, "replace", false);
+      setReady(true);
     }
     const observer = new ResizeObserver(measure);
     if (desktop.current) observer.observe(desktop.current);
-    const updateClock = () => setClock(new Intl.DateTimeFormat("en-CA", { timeZone: "America/Vancouver", hour: "numeric", minute: "2-digit" }).format(new Date()));
-    updateClock(); const timer = window.setInterval(updateClock, 30000);
+    const restoreRoute = () => {
+      const params = new URLSearchParams(window.location.search);
+      const app = params.get("app");
+      open(isAppId(app) ? app : "welcome", params.get("project") ?? undefined, "none");
+    };
+    window.addEventListener("popstate", restoreRoute);
     const keydown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k" && !event.isComposing) {
         event.preventDefault(); if (!document.querySelector("dialog[open]")) setSearchVisible(true);
       }
     };
     window.addEventListener("keydown", keydown);
-    return () => { observer.disconnect(); window.clearInterval(timer); window.removeEventListener("keydown", keydown); document.documentElement.classList.remove("os-mode"); };
+    return () => { observer.disconnect(); window.removeEventListener("popstate", restoreRoute); window.removeEventListener("keydown", keydown); document.documentElement.classList.remove("os-mode"); };
   }, [open]);
-  const showDesktop = () => { setWindows(current => current.map(item => ({ ...item, minimized: true }))); setAnnouncement("Desktop shown. Open a window from the dock."); };
+  useEffect(() => {
+    if (ready) updateUrl(activeId ?? "welcome", activeId === "projects" ? selectedProject : undefined);
+  }, [activeId, selectedProject, ready]);
   const content = (id: AppId) => {
     switch (id) {
-      case "welcome": return <Welcome open={open} />;
+      case "welcome": return null;
       case "projects": return <Projects selected={selectedProject} select={select} />;
       case "atlas": return <ProjectDetail project={publicProjects.find(project => project.group === "atlas")!} />;
       case "play": return <Playground open={open} />;
@@ -241,24 +266,18 @@ export default function Explorer() {
     }
   };
   return <PreviewProvider projects={publicProjects}>
-    <div className="tony-os">
-      <a className="os-skip" href="#os-desktop-apps">Skip to apps</a>
-      <header className="os-menubar"><button className="os-brand" onClick={() => open("welcome")} aria-label="Tony OS home"><span><img src="./tony/neutral.png" width="362" height="362" alt="" /></span><strong>Tony OS</strong><span className="os-version">Explorer</span></button><nav aria-label="Desktop controls"><button aria-label="Open search" onClick={() => setSearchVisible(true)}><Icon name="search" size={17} /><span>Search</span><kbd>⌘ K</kbd></button><button onClick={() => setHelpVisible(true)}>Help</button></nav><div className="os-menubar-location"><span>Vancouver</span><time aria-label={`Current time in Vancouver: ${clock}`}>{clock}</time></div></header>
+    <div className={`tony-os${activeId ? " has-open-app" : " is-home"}`}>
+      <div className="os-wallpaper" aria-hidden="true"><img src="./assets/tony-os-wallpaper.webp" alt="" /></div>
+      <a className="os-skip" href="#os-home-apps" onClick={() => open("welcome")}>Skip to apps</a>
+      <header className="os-shell-header"><button className="os-brand" onClick={() => open("welcome")} aria-label="Tony OS home">Tony OS</button><nav className="os-shell-controls" aria-label="Workspace controls">{activeId && <><button onClick={() => open("welcome")} aria-label="Back to Home"><Icon name="home" size={19} /><span>Home</span></button><button onClick={() => setSearchVisible(true)} aria-label="Open search"><Icon name="search" size={20} /><span>Search</span></button><button onClick={() => setAppsVisible(true)} aria-label="Open apps"><Icon name="grid" size={19} /><span>Apps</span></button></>}<button className="os-help-control" onClick={() => setHelpVisible(true)} aria-label="Help and motion settings"><Icon name="info" size={21} /></button></nav></header>
       <main className="os-desktop" ref={desktop} aria-label="Tony OS desktop">
-        <nav className="os-desktop-apps" id="os-desktop-apps" aria-label="Open an app" inert={size.width <= 760 && Boolean(activeId)}>{apps.filter(app => app.id !== "welcome").map(app => <button key={app.id} onClick={() => open(app.id)}><span className="os-app-icon"><img src={`./icons/${app.icon}.svg`} alt="" className="os-app-art" /></span><span>{app.title}</span></button>)}</nav>
+        <div className="os-home-layer" inert={Boolean(activeId)} aria-hidden={Boolean(activeId)}><Home open={open} search={() => setSearchVisible(true)} /></div>
         {windows.map(item => <Window key={item.id} window={item} active={activeId === item.id} bounds={size} focus={() => focusWindow(item.id)} update={change => update(item.id, change)} close={() => close(item.id)} back={() => item.id === "projects" && selectedProject ? select(undefined) : open("welcome")} backLabel={item.id === "projects" && selectedProject ? "Back to projects" : "Back to Home"}>{content(item.id)}</Window>)}
       </main>
-      <footer className="os-footer"><p>Explore the desk. Follow your curiosity.</p><nav className="os-dock" aria-label="Application dock"><button className="os-dock-search" onClick={() => setSearchVisible(true)} aria-label="Search apps and projects" title="Search · Ctrl / ⌘ K"><span className="os-app-icon"><img src="./icons/search.svg" alt="" className="os-app-art" /></span><span className="os-dock-tooltip">Search</span></button><span className="os-dock-divider" aria-hidden="true" />{apps.map(app => { const item = windows.find(item => item.id === app.id); return <button key={app.id} data-app={app.id} className={`${item ? "is-running" : ""}${activeId === app.id ? " is-active" : ""}`} onClick={() => { if (item) { focusWindow(app.id); focusContent(app.id); } else open(app.id); }} aria-label={`${item?.minimized ? "Restore" : "Open"} ${app.title}`} title={app.title}><span className="os-app-icon"><img src={`./icons/${app.icon}.svg`} alt="" className="os-app-art" /></span><span className="os-dock-tooltip">{app.title}</span></button>; })}<span className="os-dock-divider" aria-hidden="true" /><button onClick={showDesktop} aria-label="Show desktop" title="Show desktop"><span className="os-app-icon"><Icon name="monitor" size={26} /></span><span className="os-dock-tooltip">Show desktop</span></button></nav><button className="os-footer-help" onClick={() => setHelpVisible(true)}><Icon name="info" size={16} /><span>Make yourself at home</span></button></footer>
       <div className="os-sr-only" aria-live="polite" aria-atomic="true">{announcement}</div>
-      <nav className="os-mobile-nav" aria-label="Phone navigation">
-        <button data-mobile-app="home" className={activeId === "welcome" || !activeId ? "is-active" : ""} aria-current={activeId === "welcome" || !activeId ? "page" : undefined} onClick={() => open("welcome")}><Icon name="home" size={23} /><span>Home</span></button>
-        <button className={activeId === "projects" ? "is-active" : ""} aria-current={activeId === "projects" ? "page" : undefined} onClick={() => open("projects")}><Icon name="folder" size={23} /><span>Projects</span></button>
-        <button onClick={() => setSearchVisible(true)}><Icon name="search" size={23} /><span>Search</span></button>
-        <button onClick={() => setAppsVisible(true)}><Icon name="grid" size={23} /><span>Apps</span></button>
-      </nav>
       <Search visible={searchVisible} close={() => setSearchVisible(false)} open={open} />
       <AppsSheet visible={appsVisible} close={() => setAppsVisible(false)} open={open} />
-      <dialog className="os-help-dialog" ref={help} onClose={() => setHelpVisible(false)} onCancel={event => { event.preventDefault(); closeHelp(); }} aria-labelledby="os-help-title"><header><h2 id="os-help-title">Make yourself at home.</h2><button className="os-icon-button" onClick={() => closeHelp()} aria-label="Close help"><Icon name="close" /></button></header><p>Open an app to explore the things I’m making. Your place stays here when you switch apps.</p><dl><div><dt>Open an app</dt><dd>Click once, or use Tab and Enter.</dd></div><div><dt>Move a window</dt><dd>Drag its title bar. With the title focused, use the arrow keys.</dd></div><div><dt>Resize or maximize</dt><dd>Drag the lower-right corner, or use its arrow-key control. The square button fills the desktop.</dd></div><div><dt>Find something</dt><dd>Use Search, or press <kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>K</kbd>.</dd></div></dl><fieldset className="os-motion-choice"><legend>Motion</legend><div>{(["system", "full", "reduced"] as const).map(value => <button key={value} type="button" aria-pressed={motionPreference === value} onClick={() => setMotionPreference(value)}>{value === "system" ? "Use device setting" : value === "full" ? "Full" : "Reduced"}</button>)}</div></fieldset><div className="os-actions"><button className="os-button" onClick={() => closeHelp(() => { setWindows([]); open("welcome"); })}>Reset desktop</button></div></dialog>
+      <dialog className="os-help-dialog" ref={help} onClose={() => setHelpVisible(false)} onCancel={event => { event.preventDefault(); closeHelp(); }} aria-labelledby="os-help-title"><header><h2 id="os-help-title">Make yourself at home.</h2><button className="os-icon-button" onClick={() => closeHelp()} aria-label="Close help"><Icon name="close" /></button></header><p>Open an app to explore the things I’m making. Your place stays here when you switch apps.</p><dl><div><dt>Open an app</dt><dd>Click once, or use Tab and Enter.</dd></div><div><dt>Move a window</dt><dd>Drag its title bar. With the title focused, use the arrow keys.</dd></div><div><dt>Resize or maximize</dt><dd>Drag the lower-right corner, or use its arrow-key control. The square button fills the desktop.</dd></div><div><dt>Find something</dt><dd>Use Search, or press <kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>K</kbd>.</dd></div></dl><fieldset className="os-motion-choice"><legend>Motion</legend><div>{(["system", "full", "reduced"] as const).map(value => <button key={value} type="button" aria-pressed={motionPreference === value} onClick={() => setMotionPreference(value)}>{value === "system" ? "Use device setting" : value === "full" ? "Full" : "Reduced"}</button>)}</div></fieldset><div className="os-actions"><button className="os-button" onClick={() => closeHelp(() => { selectedProjectRef.current = undefined; setSelectedProject(undefined); setWindows([]); open("welcome"); })}>Reset desktop</button></div></dialog>
     </div>
   </PreviewProvider>;
 }

@@ -23,8 +23,8 @@ export function enterSurface(element: HTMLElement | null, sheet = false) {
   if (reducedMotion() || !element.animate) return;
   const animation = element.animate(sheet
     ? [{ transform: "translateY(100%)", opacity: 1 }, { transform: "translateY(0)", opacity: 1 }]
-    : [{ transform: "translateY(10px) scale(.9)", opacity: 0 }, { transform: "translateY(0) scale(1)", opacity: 1 }],
-  { duration: sheet ? 400 : 320, easing: OUT });
+    : [{ transform: "translateY(8px) scale(.97)", opacity: 0 }, { transform: "translateY(0) scale(1)", opacity: 1 }],
+  { duration: sheet ? 280 : 260, easing: OUT });
   running.set(element, animation);
   void animation.finished.then(() => { if (running.get(element) === animation) running.delete(element); }).catch(() => {});
 }
@@ -34,8 +34,8 @@ export function exitSurface(element: HTMLElement | null, done: () => void, sheet
   cancelSurfaceMotion(element);
   const animation = element.animate(sheet
     ? [{ transform: "translateY(0)", opacity: 1 }, { transform: "translateY(100%)", opacity: 1 }]
-    : [{ transform: "translateY(0) scale(1)", opacity: 1 }, { transform: "translateY(8px) scale(.94)", opacity: 0 }],
-  { duration: sheet ? 280 : 200, easing: IN_OUT, fill: "forwards" });
+    : [{ transform: "translateY(0) scale(1)", opacity: 1 }, { transform: "translateY(6px) scale(.98)", opacity: 0 }],
+  { duration: sheet ? 240 : 220, easing: IN_OUT, fill: "forwards" });
   running.set(element, animation);
   const finish = () => {
     if (running.get(element) !== animation) return;
@@ -44,7 +44,7 @@ export function exitSurface(element: HTMLElement | null, done: () => void, sheet
     animation.cancel();
   };
   // A canceled/replaced animation cannot complete an older dismissal.
-  const timer = window.setTimeout(finish, 420);
+  const timer = window.setTimeout(finish, 340);
   void animation.finished.then(finish).catch(() => {}).finally(() => window.clearTimeout(timer));
 }
 

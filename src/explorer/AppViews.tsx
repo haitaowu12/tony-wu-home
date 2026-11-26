@@ -6,15 +6,22 @@ import { apps, projectId, projectTitle, publicProjects, statusLabel, type AppId 
 
 type OpenApp = (id: AppId, project?: string) => void;
 
-export function Welcome({ open }: { open: OpenApp }) {
-  return <div className="os-welcome">
-    <header className="os-welcome__intro">
-      <div className="os-welcome__identity"><img src="./tony/neutral.png" width="362" height="362" alt="Tony’s pixel-art portrait" /><div><p className="os-kicker">Hello from Vancouver</p><h1>Tony Wu</h1></div></div>
-      <p className="os-welcome__tagline">Engineering, leadership &amp; a curious mind.</p>
-      <p className="os-welcome__description">From aircraft engines to rail networks, my work is about how things fit together. Here are the tools, stories, and learning experiments I’m making along the way.</p>
-      <div className="os-actions"><button className="os-button" onClick={() => open("projects")}>Explore my projects</button><button className="os-text-button" onClick={() => open("about")}>A little about me</button></div>
-    </header>
-    <section className="os-welcome__apps"><h2>Explore</h2><nav className="os-home-apps" aria-label="Explore Tony OS">{apps.filter(app => app.id !== "welcome").map(app => <button key={app.id} onClick={() => open(app.id)}><span className="os-app-icon"><img src={`./icons/${app.icon}.svg`} alt="" className="os-app-art" /></span><strong>{app.title}</strong></button>)}</nav></section>
+export function Home({ open, search }: { open: OpenApp; search: () => void }) {
+  const atlas = publicProjects.find(project => project.group === "atlas")!;
+  return <div className="os-home-screen" data-home>
+    <div className="os-home-layout">
+      <section className="os-home-launcher" aria-labelledby="os-home-title">
+        <div className="os-home-identity"><span className="os-home-portrait"><img src="./tony/neutral.png" width="362" height="362" alt="Tony’s pixel-art portrait" /></span><div><p>Hello from Vancouver</p><h1 id="os-home-title" tabIndex={-1}>Tony Wu</h1></div></div>
+        <p className="os-home-tagline">Engineering, leadership &amp; a curious mind.</p>
+        <button className="os-button os-home-primary" onClick={() => open("projects")}>Explore projects</button>
+        <nav className="os-home-apps" id="os-home-apps" aria-label="Explore Tony OS">{apps.filter(app => app.id !== "welcome").map(app => <button key={app.id} data-home-app={app.id} onClick={() => open(app.id)}><span className="os-app-icon"><Icon name={app.icon} size={48} /></span><span>{app.title}</span></button>)}</nav>
+      </section>
+      <article className="os-home-feature" aria-labelledby="os-feature-title">
+        <button className="os-home-preview" onClick={() => open("atlas")} aria-label="Explore World History Atlas"><img src={atlas.preview!.src} width={atlas.preview!.width} height={atlas.preview!.height} alt={atlas.preview!.alt} fetchPriority="high" /></button>
+        <div className="os-home-feature-copy"><div><h2 id="os-feature-title">World History Atlas</h2><p>People, places, and stories across time.</p></div><a className="os-button" href={atlas.link!.href} target="_blank" rel="noopener noreferrer">Open atlas<span className="os-sr-only"> (opens in a new tab)</span></a></div>
+      </article>
+    </div>
+    <button className="os-home-search" onClick={search} aria-label="Search apps and projects"><Icon name="search" size={25} /><span>Search</span><kbd>⌘ K</kbd></button>
   </div>;
 }
 
@@ -91,7 +98,7 @@ export function Projects({ selected, select }: { selected?: string; select: (id?
     <div className="os-project-list" onScroll={event => { listScroll.current = event.currentTarget.scrollTop; }}><header className="os-list-header"><div><p className="os-kicker">The project shelf</p><h2>{categories.find(item => item.id === category)?.title}</h2></div><label className="os-inline-search"><Icon name="search" size={17} /><input type="search" aria-label="Filter projects" placeholder="Find a project" value={query} onChange={event => setQuery(event.target.value)} /></label></header>
       <p className="os-result-count" aria-live="polite">{filtered.length} {filtered.length === 1 ? "project" : "projects"}</p>
       {filtered.length ? <div className="os-project-grid" key={category}>{filtered.map(item => <button className="os-project-card" key={item.title} data-project-id={projectId(item)} onClick={() => select(projectId(item))}>
-        <div className="os-project-card__image">{item.preview ? <img src={item.preview.smallSrc} alt="" width={item.preview.width} height={item.preview.height} loading="lazy" /> : <img src={`./icons/${item.group === "learning" ? "play" : "folder"}.svg`} alt="" className="os-app-art" />}</div>
+        <div className="os-project-card__image">{item.preview ? <img src={item.preview.smallSrc} alt="" width={item.preview.width} height={item.preview.height} loading="lazy" /> : <Icon name={item.group === "learning" ? "play" : "folder"} size={48} />}</div>
         <div className="os-project-card__text"><small>{statusLabel(item)}</small><h3>{projectTitle(item)}</h3><p>{item.teaser ?? item.summary}</p><span>Explore project </span></div>
       </button>)}</div> : <div className="os-empty"><Icon name="search" size={32} /><h3>No matching projects</h3><p>Try another word or explore the full shelf.</p><button className="os-button" onClick={() => { setQuery(""); setCategory("all"); }}>Show all projects</button></div>}
     </div>
@@ -102,7 +109,7 @@ export function Playground({ open }: { open: OpenApp }) {
   const asterfall = publicProjects.find(item => item.title === "SE Learning Quest")!;
   return <div className="os-playground"><header><p className="os-kicker">Learning through play</p><h2>A decision. A consequence.<br /><em>A different way to learn.</em></h2><p>Stories, exercises, and workshop games for exploring systems, leadership, and how people work together.</p></header>
     <button className="os-play-feature" onClick={() => open("projects", projectId(asterfall))}><img src={asterfall.preview!.src} width={asterfall.preview!.width} height={asterfall.preview!.height} alt={asterfall.preview!.alt} /><span><small>Game prototype</small><strong>Asterfall: The Last Relay</strong><span>{profile.learningStory.title}</span><b>Enter the story </b></span></button>
-    <div className="os-play-list">{publicProjects.filter(item => item.group === "learning" && item !== asterfall).map(item => <button key={item.title} onClick={() => open("projects", projectId(item))}><span className="os-shelf-icon"><img src="./icons/play.svg" alt="" className="os-app-art" /></span><span><small>{statusLabel(item)}</small><strong>{item.title}</strong><span>{item.teaser}</span></span></button>)}</div>
+    <div className="os-play-list">{publicProjects.filter(item => item.group === "learning" && item !== asterfall).map(item => <button key={item.title} onClick={() => open("projects", projectId(item))}><span className="os-shelf-icon"><Icon name="play" size={28} /></span><span><small>{statusLabel(item)}</small><strong>{item.title}</strong><span>{item.teaser}</span></span></button>)}</div>
   </div>;
 }
 
@@ -123,5 +130,5 @@ export function Research() {
 }
 
 export function Contact() {
-  return <article className="os-contact"><span className="os-shelf-icon"><img src="./icons/mail.svg" alt="" className="os-app-art" /></span><p className="os-kicker">A conversation starts here</p><h2>Let’s compare notes.</h2><p>Working through a systems integration question, exploring responsible AI in engineering, or developing a learning idea? Send me a note on LinkedIn with a little context and what you’d like to explore together.</p><div className="os-actions"><a className="os-button" href={profile.links[0].href} target="_blank" rel="noopener noreferrer">Contact me on LinkedIn<span className="os-sr-only"> (opens in a new tab)</span></a><a className="os-text-link" href="https://github.com/haitaowu12" target="_blank" rel="noopener noreferrer">Explore my GitHub<span className="os-sr-only"> (opens in a new tab)</span></a></div></article>;
+  return <article className="os-contact"><span className="os-shelf-icon"><Icon name="mail" size={32} /></span><p className="os-kicker">A conversation starts here</p><h2>Let’s compare notes.</h2><p>Working through a systems integration question, exploring responsible AI in engineering, or developing a learning idea? Send me a note on LinkedIn with a little context and what you’d like to explore together.</p><div className="os-actions"><a className="os-button" href={profile.links[0].href} target="_blank" rel="noopener noreferrer">Contact me on LinkedIn<span className="os-sr-only"> (opens in a new tab)</span></a><a className="os-text-link" href="https://github.com/haitaowu12" target="_blank" rel="noopener noreferrer">Explore my GitHub<span className="os-sr-only"> (opens in a new tab)</span></a></div></article>;
 }

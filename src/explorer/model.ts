@@ -1,7 +1,7 @@
 import { profile, type SelectedProject } from "../content/profile";
 
 export const apps = [
-  { id: "welcome", title: "Welcome", subtitle: "A curious mind, at work", icon: "home", color: "copper" },
+  { id: "welcome", title: "Home", subtitle: "A curious mind, at work", icon: "home", color: "copper" },
   { id: "projects", title: "Projects", subtitle: "Tools, models & experiments", icon: "folder", color: "blue" },
   { id: "atlas", title: "World Atlas", subtitle: "Histories, side by side", icon: "globe", color: "sky" },
   { id: "play", title: "Playground", subtitle: "Learn through decisions", icon: "play", color: "gold" },
