@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none">
+<defs>
+  <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#76767b" stop-opacity=".63"/><stop offset="1" stop-color="#4c4c51" stop-opacity=".63"/></linearGradient>
+  <linearGradient id="rim" x1="0" y1="0" x2=".5" y2="1"><stop stop-color="#fff" stop-opacity=".8"/><stop offset=".45" stop-color="#fff" stop-opacity=".18"/><stop offset="1" stop-color="#fff" stop-opacity=".45"/></linearGradient>
+  <linearGradient id="symbol" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#f3f3f5" stop-opacity=".95"/></linearGradient>
+</defs>
+<path d="M50 2H71C89 2 98 11 98 29V71C98 89 89 98 71 98H29C11 98 2 89 2 71V29C2 11 11 2 29 2Z" fill="url(#tile)" stroke="url(#rim)" stroke-width="1.25"/>
+<g fill="url(#symbol)"><path d="M29 23H57L70 36V70Q70 77 63 77H29Q23 77 23 70V30Q23 23 29 23Z" opacity=".75"/><path d="M56 23V34Q56 38 60 38H70" fill="none" stroke="#fff" stroke-width="2"/><path d="m44 62 27-27q3-3 6 0l3 3q3 3 0 6L53 71 41 74Z"/><path d="m67 39 8 8" fill="none" stroke="#55555b" stroke-opacity=".45" stroke-width="2"/></g>
+</svg>

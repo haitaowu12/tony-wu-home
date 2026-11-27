@@ -5,7 +5,7 @@ test('personal identity, public links and responsive content remain usable', asy
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
-  await page.goto('.');
+  await page.goto('?view=page');
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('#hero-title')).toHaveText('Tony Wu.');
   await expect(page.locator('.hero__visual img')).toHaveAttribute('src', './hero-practice-story.webp');
